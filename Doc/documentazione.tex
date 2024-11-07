@@ -1,0 +1,106 @@
+\documentclass[a4paper,12pt]{article}
+
+% Carichiamo il pacchetto per la gestione delle intestazioni, per le immagini e per l'indice
+\usepackage{fancyhdr}
+\usepackage{graphicx}  % Per inserire le immagini
+\usepackage{geometry}
+\usepackage{lipsum}
+\usepackage{hyperref}  % Per rendere l'indice cliccabile
+
+\geometry{top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm}
+
+% Intestazioni personalizzate
+\pagestyle{fancy}
+\fancyhf{}  % Pulisce l'intestazione e il piè di pagina
+\fancyhead[C]{Progetto di Ingegneria del Software}
+
+\begin{document}
+
+% Titolo
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    \vspace{1.5cm}
+    
+    % Titolo del progetto
+    \large Documentazione\\
+    \Huge
+    \textbf{UniMarket}
+    
+    \vspace{1.5cm}
+    
+    % Titolo del corso e altri dettagli
+    \LARGE
+    Progetto di Ingegneria del Software
+    
+    \vspace{1.5cm}
+    \includegraphics[width=0.5\textwidth]{../Media/logo.jpeg}
+    
+    \vspace{1.5cm}
+    % Autori del progetto
+    \small
+    \textbf{Di Davide Dell'Anno}, \textbf{Davide Carissoni}, \textbf{Francesca Corrente}
+    
+    \vspace{1.5cm}
+    
+    % Dati dell'università
+    \Large
+    Università degli Studi di Bergamo \\
+    Facoltà di Ingegneria Informatica \\
+    2024-2025
+    
+\end{titlepage}
+
+% Indice
+\renewcommand{\contentsname}{Indice}
+\newpage
+\tableofcontents
+\newpage
+
+% Capitoli e sottosezioni
+\section{Software Engineering Management}
+\subsection{Project Plan}
+
+\section{Software Life Cycle}
+\subsection{Processo di Sviluppo}
+\subsection{Documentazione sul Processo}
+
+\section{Configuration Management}
+\subsection{Uso di Git}
+\subsection{Documentazione su Configuration Management}
+
+\section{People Management and Team Organization}
+\subsection{Organizzazione del Lavoro}
+\subsection{Documentazione sull'Organizzazione}
+
+\section{Software Quality}
+\subsection{Gestione della Qualità}
+\subsection{Documentazione sulla Qualità}
+
+\section{Requirement Engineering}
+\subsection{Requisiti e Specifiche}
+\subsection{Documentazione sui Requisiti}
+
+\section{Modelling}
+\subsection{Diagrammi UML}
+
+\section{Software Architecture}
+\subsection{Descrizione dell'Architettura}
+\subsection{Uso di Maven e Librerie Esterne}
+
+\section{Software Design}
+\subsection{Descrizione del Design}
+\subsection{Design Pattern e Metriche}
+
+\section{Software Testing}
+\subsection{Piano di Test}
+\subsection{Casi di Test}
+\subsection{Misura della Copertura}
+
+\section{Software Maintenance}
+\subsection{Attività di Reverse Engineering}
+\subsection{Refactoring}
+\subsection{Documentazione sul Refactoring}
+
+\end{document}
