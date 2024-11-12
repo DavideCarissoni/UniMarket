@@ -1,33 +1,14 @@
-\contentsline {section}{\numberline {1}Software Engineering Management}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Project Plan}{3}{subsection.1.1}%
-\contentsline {section}{\numberline {2}Software Life Cycle}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Processo di Sviluppo}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Documentazione sul Processo}{3}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Configuration Management}{3}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Uso di Git}{3}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Documentazione su Configuration Management}{3}{subsection.3.2}%
-\contentsline {section}{\numberline {4}People Management and Team Organization}{3}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Organizzazione del Lavoro}{3}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Documentazione sull'Organizzazione}{3}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Software Quality}{3}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Gestione della Qualità}{3}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Documentazione sulla Qualità}{3}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Requirement Engineering}{3}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Requisiti e Specifiche}{3}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Documentazione sui Requisiti}{3}{subsection.6.2}%
-\contentsline {section}{\numberline {7}Modelling}{3}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Diagrammi UML}{3}{subsection.7.1}%
-\contentsline {section}{\numberline {8}Software Architecture}{3}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Descrizione dell'Architettura}{3}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Uso di Maven e Librerie Esterne}{3}{subsection.8.2}%
-\contentsline {section}{\numberline {9}Software Design}{3}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Descrizione del Design}{3}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Design Pattern e Metriche}{3}{subsection.9.2}%
-\contentsline {section}{\numberline {10}Software Testing}{3}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Piano di Test}{3}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Casi di Test}{3}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Misura della Copertura}{3}{subsection.10.3}%
-\contentsline {section}{\numberline {11}Software Maintenance}{3}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Attività di Reverse Engineering}{3}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Refactoring}{3}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Documentazione sul Refactoring}{3}{subsection.11.3}%
+\contentsline {section}{\numberline {1}Introduzione}{2}{section.1}%
+\contentsline {section}{\numberline {2}Modelli di Processo}{2}{section.2}%
+\contentsline {section}{\numberline {3}Organizzazione del Progetto}{2}{section.3}%
+\contentsline {section}{\numberline {4}Standard, Linee Guida, Procedure}{2}{section.4}%
+\contentsline {section}{\numberline {5}Attività di Gestione}{2}{section.5}%
+\contentsline {section}{\numberline {6}Rischi}{2}{section.6}%
+\contentsline {section}{\numberline {7}Personale}{2}{section.7}%
+\contentsline {section}{\numberline {8}Metodi e Tecniche}{2}{section.8}%
+\contentsline {section}{\numberline {9}Garanzie di Qualità}{2}{section.9}%
+\contentsline {section}{\numberline {10}Paccheti di lavoro}{2}{section.10}%
+\contentsline {section}{\numberline {11}Risorse}{2}{section.11}%
+\contentsline {section}{\numberline {12}Budget}{2}{section.12}%
+\contentsline {section}{\numberline {13}Cambiamenti}{2}{section.13}%
+\contentsline {section}{\numberline {14}Consegna}{2}{section.14}%

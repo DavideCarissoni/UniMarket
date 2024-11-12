@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Fedora 40) (preloaded format=pdflatex 2024.11.7)  7 NOV 2024 12:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Fedora 40) (preloaded format=pdflatex 2024.11.7)  12 NOV 2024 11:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -256,21 +256,14 @@ Package hyperref Info: Link coloring OFF on input line 17.
 \@outlinefile=\write3
 \openout3 = `documentazione.out'.
 
-<../Media/logo.jpeg, id=136, 893.3375pt x 821.0675pt>
+<../Media/logo.jpeg, id=60, 893.3375pt x 821.0675pt>
 File: ../Media/logo.jpeg Graphic file (type jpg)
 <use ../Media/logo.jpeg>
 Package pdftex.def Info: ../Media/logo.jpeg  used on input line 38.
 (pdftex.def)             Requested size: 227.62206pt x 209.2003pt.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <../Media/logo.jpeg>] (./documentazione.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 2.
-)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <../Media/logo.jpeg>] (./documentazione.toc)
 \tf@toc=\write4
 \openout4 = `documentazione.toc'.
 
@@ -295,34 +288,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[2]
-Overfull \vbox (226.43373pt too high) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[3] (./documentazione.aux)
+[2] (./documentazione.aux)
 Package rerunfilecheck Info: File `documentazione.out' has not changed.
-(rerunfilecheck)             Checksum: D8DDCA54B6205A96D92EB4ACCF435984;5661.
+(rerunfilecheck)             Checksum: A07A131330AE772B0AAC3A6A8D2CAEE6;1718.
  ) 
 Here is how much of TeX's memory you used:
- 9020 strings out of 478087
- 147495 string characters out of 5842640
- 1863388 words of memory out of 6000000
- 28984 multiletter control sequences out of 15000+600000
- 518054 words of font info for 51 fonts, out of 8000000 for 9000
+ 8962 strings out of 478087
+ 146677 string characters out of 5842640
+ 1855388 words of memory out of 6000000
+ 28953 multiletter control sequences out of 15000+600000
+ 515309 words of font info for 42 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,77p,362b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,77p,306b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on documentazione.pdf (4 pages, 158362 bytes).
+Output written on documentazione.pdf (3 pages, 146916 bytes).
 PDF statistics:
- 228 PDF objects out of 1000 (max. 8388607)
- 208 compressed objects within 3 object streams
- 38 named destinations out of 1000 (max. 500000)
- 270 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 122 PDF objects out of 1000 (max. 8388607)
+ 104 compressed objects within 2 object streams
+ 18 named destinations out of 1000 (max. 500000)
+ 118 words of extra memory for PDF output out of 10000 (max. 10000000)
 
