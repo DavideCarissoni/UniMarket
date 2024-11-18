@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Fedora 40) (preloaded format=pdflatex 2024.11.12)  18 NOV 2024 13:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Fedora 40) (preloaded format=pdflatex 2024.11.12)  18 NOV 2024 13:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -280,10 +280,10 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.58 \newpage
               [1]
-/home/davide/Codes/UniMaket/Doc/documentazione.tex:75: Font TS1/cmr/m/n/12=tcrm1200 at 12.0pt not loadable: Metric (TFM) file not found.
+/home/davide/Codes/UniMaket/Doc/documentazione.tex:79: Font TS1/cmr/m/n/12=tcrm1200 at 12.0pt not loadable: Metric (TFM) file not found.
 <to be read again> 
                    relax 
-l.75     \item \textbf
+l.79     \item \textbf
                       {Scrum Master: X}
 I wasn't able to read the size data for this font,
 so I will ignore the font specification.
@@ -291,10 +291,6 @@ so I will ignore the font specification.
 You might try inserting a different font spec;
 e.g., type `I\font<same font id>=<substitute font name>'.
 
-Missing character: There is no ˆ in font nullfont!
-Missing character: There is no ˆ in font nullfont!
-Missing character: There is no ˆ in font nullfont!
-Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
@@ -309,12 +305,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
-Missing character: There is no ˆ in font nullfont!
-
-Overfull \hbox (56.85664pt too wide) in paragraph at lines 111--112
-[]\OT1/cmr/bx/n/12 Progettazione dell'applicazione: \OT1/cmr/m/n/12 prevede la definizione del fun-zion-a-mento dell'applicazione,
- []
-
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
@@ -331,6 +321,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
+
+Overfull \hbox (56.85664pt too wide) in paragraph at lines 129--130
+[]\OT1/cmr/bx/n/12 Progettazione dell'applicazione: \OT1/cmr/m/n/12 prevede la definizione del fun-zion-a-mento dell'applicazione,
+ []
+
+Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
 Missing character: There is no ˆ in font nullfont!
@@ -343,7 +339,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[4] (./documentazione.aux)
+[4]
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+Missing character: There is no ˆ in font nullfont!
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6] (./documentazione.aux)
 
 Package rerunfilecheck Warning: File `documentazione.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -354,18 +373,18 @@ Package rerunfilecheck Info: Checksums for `documentazione.out':
 (rerunfilecheck)             After:  A07A131330AE772B0AAC3A6A8D2CAEE6;1718.
  ) 
 Here is how much of TeX's memory you used:
- 8952 strings out of 478087
- 146503 string characters out of 5842639
- 1859388 words of memory out of 6000000
- 28945 multiletter control sequences out of 15000+600000
+ 8955 strings out of 478087
+ 146523 string characters out of 5842639
+ 1860388 words of memory out of 6000000
+ 28946 multiletter control sequences out of 15000+600000
  515656 words of font info for 43 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,77p,357b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,77p,488b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on documentazione.pdf (5 pages, 170744 bytes).
+Output written on documentazione.pdf (7 pages, 176298 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
- 20 named destinations out of 1000 (max. 500000)
+ 88 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
+ 22 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
