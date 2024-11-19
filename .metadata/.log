@@ -1,0 +1,386 @@
+!SESSION 2024-11-15 15:40:53.080 -----------------------------------------------
+eclipse.buildId=4.33.0.20240905-0613
+java.version=23
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2024-11-15 15:40:58.029
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY org.eclipse.papyrus.bundles.tests 4 0 2024-11-15 15:40:58.500
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.bundles.tests [671]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.junit.utils; bundle-version="[3.0.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.junit.utils; bundle-version="3.3.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.junit.utils [922]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.junit.utils 4 0 2024-11-15 15:40:58.583
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.junit.utils [922]
+  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.m2m.qvto.tests.tools 4 0 2024-11-15 15:40:58.637
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.m2m.qvto.tests.tools [1007]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.junit.utils; bundle-version="[2.4.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.junit.utils; bundle-version="3.3.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.junit.utils [922]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.profile.assistants.generator.ui 4 0 2024-11-15 15:40:58.691
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.profile.assistants.generator.ui [1030]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.uml.profile.types.generator.ui; bundle-version="[2.0.0,3.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.uml.profile.types.generator.ui; bundle-version="2.1.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.uml.profile.types.generator.ui [1037]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtend.lib)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.xtend.lib
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.util.concurrent)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.util.concurrent; uses:=com.google.common.base
+    export: osgi.wiring.package=com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.profile.types.generator.ui 4 0 2024-11-15 15:40:58.759
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.profile.types.generator.ui [1037]
+  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtend.lib)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.xtend.lib
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.util.concurrent)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.util.concurrent; uses:=com.google.common.base
+    export: osgi.wiring.package=com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY ch.qos.logback.classic 1 0 2024-11-15 15:40:59.894
+!MESSAGE Logback config file: C:\Users\carid\Desktop\UniMaket\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.6.1.20240411-1122.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2024-11-15 15:41:09.115
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\carid'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2024-11-15 15:41:10.847 -----------------------------------------------
+eclipse.buildId=4.33.0.20240905-0613
+java.version=23
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -data C:\Users\carid\Desktop\UniMaket
+
+!ENTRY ch.qos.logback.classic 1 0 2024-11-15 15:41:14.992
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY org.eclipse.papyrus.bundles.tests 4 0 2024-11-15 15:41:15.637
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.bundles.tests [671]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.junit.utils; bundle-version="[3.0.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.junit.utils; bundle-version="3.3.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.junit.utils [922]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.junit.utils 4 0 2024-11-15 15:41:15.737
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.junit.utils [922]
+  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.m2m.qvto.tests.tools 4 0 2024-11-15 15:41:15.890
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.m2m.qvto.tests.tools [1007]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.junit.utils; bundle-version="[2.4.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.junit.utils; bundle-version="3.3.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.junit.utils [922]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.base)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.junit.utils [osgi.identity; type="osgi.bundle"; version:Version="3.3.0.202406051547"; osgi.identity="org.eclipse.papyrus.junit.utils"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtext.ui)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.36.0.v20240825-0714"; osgi.wiring.bundle="org.eclipse.xtext.ui"; singleton:="true"
+  org.eclipse.xtext.util [osgi.identity; type="osgi.bundle"; version:Version="2.36.0.v20240825-0714"; osgi.identity="org.eclipse.xtext.util"]
+    require: (&(osgi.wiring.bundle=com.google.guava)(&(bundle-version>=33.3.0)(!(bundle-version>=34.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.google.guava
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.profile.assistants.generator.ui 4 0 2024-11-15 15:41:15.935
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.profile.assistants.generator.ui [1030]
+  Unresolved requirement: Require-Bundle: org.eclipse.papyrus.uml.profile.types.generator.ui; bundle-version="[2.0.0,3.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.papyrus.uml.profile.types.generator.ui; bundle-version="2.1.0.202406051547"; singleton:="true"
+       org.eclipse.papyrus.uml.profile.types.generator.ui [1037]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtend.lib)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.xtend.lib
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.util.concurrent)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.util.concurrent; uses:=com.google.common.base
+    export: osgi.wiring.package=com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.papyrus.uml.profile.types.generator.ui 4 0 2024-11-15 15:41:15.986
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.papyrus.uml.profile.types.generator.ui [1037]
+  Bundle was not resolved because of a uses constraint violation.
+  org.apache.felix.resolver.reason.ReasonException: Uses constraint violation. Unable to resolve resource org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"] because it is exposed to package 'com.google.common.base' from resources com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"] and com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.xtend.lib)(&(bundle-version>=2.22.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.xtend.lib
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.3.1.jre"; osgi.identity="com.google.guava"]
+
+Chain 2:
+  org.eclipse.papyrus.uml.profile.types.generator.ui [osgi.identity; type="osgi.bundle"; version:Version="2.1.0.202406051547"; osgi.identity="org.eclipse.papyrus.uml.profile.types.generator.ui"; singleton:="true"]
+    import: (&(osgi.wiring.package=com.google.common.util.concurrent)(&(version>=33.2.0)(!(version>=33.3.0))))
+     |
+    export: osgi.wiring.package: com.google.common.util.concurrent; uses:=com.google.common.base
+    export: osgi.wiring.package=com.google.common.base
+  com.google.guava [osgi.identity; type="osgi.bundle"; version:Version="33.2.0.jre"; osgi.identity="com.google.guava"]
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1884)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
