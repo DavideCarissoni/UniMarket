@@ -9,7 +9,7 @@ Progetto Ingegneria del Software del corso di laurea triennale in Ingegneria Inf
 - Francesca Corrente (1087460)
 
 
-Il software che andremo a sviluppare è un software gestionale di un supermercato universitario online pensato per dare supporto agli studenti universitari di Bergamo. 
+Il software che andremo a sviluppare è un software gestionale di un supermercato universitario online pensato per dare supporto agli studenti. 
 
 ## Documentazione: 
-[Project Plan](https://github.com/DavideCarissoni/UniMaket/blob/main/Doc/documentazione.pdf)
+[Project Plan](https://github.com/DavideCarissoni/UniMarket/blob/main/Documentazione/documentazione.pdf)
