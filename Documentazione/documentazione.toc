@@ -18,7 +18,10 @@
 \contentsline {subsection}{\numberline {2.2}Processo}{6}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Gestione della configurazione}{6}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}People Management}{7}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Requisiti}{7}{section.3}%
-\contentsline {section}{\numberline {4}Design}{7}{section.4}%
-\contentsline {section}{\numberline {5}Testing}{7}{section.5}%
-\contentsline {section}{\numberline {6}Maintenance}{7}{section.6}%
+\contentsline {section}{\numberline {3}Requisiti}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Software Quality}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Requirement engineering}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Modello Kano}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Design}{11}{section.4}%
+\contentsline {section}{\numberline {5}Testing}{11}{section.5}%
+\contentsline {section}{\numberline {6}Maintenance}{11}{section.6}%

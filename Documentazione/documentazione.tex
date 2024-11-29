@@ -258,7 +258,7 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
     
     \item \textbf{Obiettivi e scopo}:\\
 
-L’obiettivo di \textit{UniMarket} è fornire agli utenti un’applicazione che permetta di gestire e facilitare la selezione e l’ordinazione dei prodotti, semplificandone la ricerca e l’acquisto.
+    L’obiettivo di \textit{UniMarket} è fornire agli utenti un’applicazione che permetta di gestire e facilitare la selezione e l’ordinazione dei prodotti, semplificandone la ricerca e l’acquisto.
     \end{enumerate}
 \item \textbf{Descrizione generale:}
 \begin{enumerate}
@@ -268,50 +268,82 @@ L’obiettivo di \textit{UniMarket} è fornire agli utenti un’applicazione che
     \item \textbf{Vincoli:}\\
     \begin{enumerate}
         \item \textbf{Modifiche al Database e al Codice:} Gli utenti non hanno la possibilità di modificare il database o il codice dell'applicazione. Le funzionalità sono predefinite e non modificabili dall'utente.
-
-\item \textbf{Disponibilità dei Prodotti:} Non è possibile acquistare prodotti che risultano esauriti. L'app garantisce solo la possibilità di selezionare articoli disponibili in magazzino.
-
-\item \textbf{Lingua:} L'app è progettata per un pubblico specifico e non è destinata a utenti internazionali. La lingua dell'interfaccia e i contenuti sono localizzati per un'area geografica definita.
-
-\item \textbf{Compatibilità con i Dispositivi:} L'app potrebbe non essere compatibile con tutti i dispositivi. 
-
-\item \textbf{Orari di ritiro Limitati:} Le opzioni di ritiro sono vincolate a orari specifici, con possibili limitazioni durante i giorni festivi e nel weekend.
-
-\item \textbf{Funzionalità di Ricerca Limitata:} La ricerca nell'app è limitata al catalogo di prodotti disponibile, che comprende un numero ristretto di articoli (es. 1000 prodotti). Le opzioni di filtraggio e ricerca potrebbero essere meno precise rispetto ad altre piattaforme più ampie. 
-    \end{enumerate}
-
-\section{Specifiche dei requisiti}: 
-\subsection{Funzionalità Utente}:
-\begin{enumerate}
-    \item  \textbf{Registrazione}: Permettere agli utenti di creare un account con e-mail e password o tramite social login.
-    \item \textbf{Login}: Accesso all’account personale per gestire ordini e informazioni.
-    \item Selezione prodotti: Possibilità di navigare e cercare tra categorie o direttamente tramite barra di ricerca.
-    \item \textbf{Aggiunta al carrello}: Funzione per aggiungere prodotti al carrello con possibilità di specificare quantità.
-    \item \textbf{Controllo carrello e modifica}: Revisione degli articoli selezionati con opzioni per rimuovere o modificare quantità.
-    \item \textbf{Opzioni di consegna}: Selezione di modalità e tempi di consegna (consegna a domicilio, ritiro in negozio, fascia oraria).
-    \item \textbf{Pagamenti:} Supporto a metodi di pagamento sicuri come carta di credito, PayPal, e wallet digitali.
-    \item \textbf{Tracciamento ordine:} Monitoraggio dello stato dell’ordine (in preparazione, in consegna, consegnato).
-    \item \textbf{Cronologia ordini:} Visualizzazione degli ordini passati per semplificare riacquisti o richiedere assistenza.
-    \item \textbf{Gestione del profilo:} Modifica delle informazioni personali, indirizzi di consegna e metodi di pagamento.
-    \item \textbf{Sconto applicabile:} L'utente può visualizzare eventuali sconti applicabili (per esempio, promozioni temporanee o sconti per nuovi utenti) e calcolare il prezzo finale con il dettaglio delle offerte attive.
-\subsection{Funzionalità Amministratore: }
-    \item \textbf{Gestione prodotti}: Aggiunta, modifica e rimozione di prodotti dal catalogo, compresi prezzi, descrizioni e immagini.
-    \item \textbf{Modifica disponibilità prodotti: }Aggiornamento delle quantità disponibili o sospensione temporanea di prodotti esauriti.
-    \item \textbf{Gestione ordini:} Visualizzazione e gestione degli ordini ricevuti con opzioni per modificare lo stato (es. in lavorazione, spedito).
-    \item \textbf{Gestione magazzino:} Monitoraggio dello stato delle scorte in tempo reale, con la possibilità di generare avvisi quando un prodotto è in esaurimento.
-\subsection{Funzionalità Aggiuntive (non viene garantita la loro implementazione)}: 
-    \item \textbf{Lista della spesa personalizzata:} Creazione di liste salvate per velocizzare gli acquisti futuri.
-    \item \textbf{Notifiche push o e-mail:} Informazioni su offerte, aggiornamenti di ordini, e nuovi prodotti disponibili.
-    \item \textbf{Filtri avanzati:} Filtraggio dei prodotti per prezzo, marca, disponibilità, o preferenze alimentari (bio, vegano, ecc.).
-    \item \textbf{Programma fedeltà: }Accumulo punti per ogni acquisto con possibilità di riscattare sconti o premi.
-    \item \textbf{Visualizzazione dettagliata dei prodotti: }L'utente può cliccare su ciascun prodotto per visualizzarne dettagli, descrizioni, immagini e prezzo.
-    \item \textbf{Salvataggio preferiti:} L'utente può aggiungere articoli alla lista dei desideri o "preferiti" per acquistarli in un secondo momento.
-    \item \textbf{Gestione resi e reclami:} L'amministratore può ricevere e gestire richieste di reso, rimborsi e reclami, garantendo un processo semplice e veloce per i clienti. (amministratore)
-    \item \textbf{Dark Mode:} L'utente può attivare la modalità scura per un'esperienza di navigazione più comoda in ambienti poco illuminati.
+   
+   \item \textbf{Disponibilità dei Prodotti:} Non è possibile acquistare prodotti che risultano esauriti. L'app garantisce solo la possibilità di selezionare articoli disponibili in magazzino.
+   
+   \item \textbf{Lingua:} L'app è progettata per un pubblico specifico e non è destinata a utenti internazionali. La lingua dell'interfaccia e i contenuti sono localizzati per un'area geografica definita.
+   
+   \item \textbf{Compatibilità con i Dispositivi:} L'app potrebbe non essere compatibile con tutti i dispositivi. 
+   
+   \item \textbf{Orari di ritiro Limitati:} Le opzioni di ritiro sono vincolate a orari specifici, con possibili limitazioni durante i giorni festivi e nel weekend.
+   
+   \item \textbf{Funzionalità di Ricerca Limitata:} La ricerca nell'app è limitata al catalogo di prodotti disponibile, che comprende un numero ristretto di articoli (es. 1000 prodotti). Le opzioni di filtraggio e ricerca potrebbero essere meno precise rispetto ad altre piattaforme più ampie. 
+   \end{enumerate}
+   
+   \item{Funzionalità Utente}
+   
+       \begin{enumerate}
+       \item  \textbf{Registrazione}: Permettere agli utenti di creare un account con e-mail e password o tramite social login.
+       \item \textbf{Login}: Accesso all’account personale per gestire ordini e informazioni.
+       \item Selezione prodotti: Possibilità di navigare e cercare tra categorie o direttamente tramite barra di ricerca.
+       \item \textbf{Aggiunta al carrello}: Funzione per aggiungere prodotti al carrello con possibilità di specificare quantità.
+       \item \textbf{Controllo carrello e modifica}: Revisione degli articoli selezionati con opzioni per rimuovere o modificare quantità.
+       \item \textbf{Opzioni di consegna}: Selezione di modalità e tempi di consegna (consegna a domicilio, ritiro in negozio, fascia oraria).
+       \item \textbf{Pagamenti:} Supporto a metodi di pagamento sicuri come carta di credito, PayPal, e wallet digitali.
+       \item \textbf{Tracciamento ordine:} Monitoraggio dello stato dell’ordine (in preparazione, in consegna, consegnato).
+       \item \textbf{Cronologia ordini:} Visualizzazione degli ordini passati per semplificare riacquisti o richiedere assistenza.
+       \item \textbf{Gestione del profilo:} Modifica delle informazioni personali, indirizzi di consegna e metodi di pagamento.
+       \item \textbf{Sconto applicabile:} L'utente può visualizzare eventuali sconti applicabili (per esempio, promozioni temporanee o sconti per nuovi utenti) e calcolare il prezzo finale con il dettaglio delle offerte attive.
+       \end{enumerate}
+   
+   \item{Funzionalità Amministratore: }
+       \begin{enumerate}
+       \item \textbf{Gestione prodotti}: Aggiunta, modifica e rimozione di prodotti dal catalogo, compresi prezzi, descrizioni e immagini.
+       \item \textbf{Modifica disponibilità prodotti: }Aggiornamento delle quantità disponibili o sospensione temporanea di prodotti esauriti.
+       \item \textbf{Gestione ordini:} Visualizzazione e gestione degli ordini ricevuti con opzioni per modificare lo stato (es. in lavorazione, spedito).
+       \item \textbf{Gestione magazzino:} Monitoraggio dello stato delle scorte in tempo reale, con la possibilità di generare avvisi quando un prodotto è in esaurimento.
+       \end{enumerate}
+   
+   \item{Funzionalità Aggiuntive (non viene garantita la loro implementazione)}: 
+       \begin{enumerate}
+       \item \textbf{Lista della spesa personalizzata:} Creazione di liste salvate per velocizzare gli acquisti futuri.
+       \item \textbf{Notifiche push o e-mail:} Informazioni su offerte, aggiornamenti di ordini, e nuovi prodotti disponibili.
+       \item \textbf{Filtri avanzati:} Filtraggio dei prodotti per prezzo, marca, disponibilità, o preferenze alimentari (bio, vegano, ecc.).
+       \item \textbf{Programma fedeltà: }Accumulo punti per ogni acquisto con possibilità di riscattare sconti o premi.
+       \item \textbf{Visualizzazione dettagliata dei prodotti: }L'utente può cliccare su ciascun prodotto per visualizzarne dettagli, descrizioni, immagini e prezzo.
+       \item \textbf{Salvataggio preferiti:} L'utente può aggiungere articoli alla lista dei desideri o "preferiti" per acquistarli in un secondo momento.
+       \item \textbf{Gestione resi e reclami:} L'amministratore può ricevere e gestire richieste di reso, rimborsi e reclami, garantendo un processo semplice e veloce per i clienti. (amministratore)
+       \item \textbf{Dark Mode:} L'utente può attivare la modalità scura per un'esperienza di navigazione più comoda in ambienti poco illuminati.
+       \end{enumerate}
+   
+   \subsection{Modello Kano}
+   Il modello Kano classifica i requisiti di un prodotto o servizio in base alla loro capacità di influenzare la soddisfazione del cliente, suddividendoli in sei categorie distinte:
+   \begin{enumerate}
+   \item \textbf{Must-Be:} requisiti essenziali.
+   \item \textbf{Attractive:} requisiti interessanti. 
+   \item \textbf{One-Dimensional:} soddisfazione del cliente proporzionale al numero di requisiti soddisfatti.
+   \item \textbf{Indifferent:} requisiti che non influenzano la soddisfazione del cliente.
+   \item \textbf{Reverse:} requisiti la cui soddisfazione del cliente è opposta a quella prevista. Nel sistema non sono previsti requisiti in questa categoria, in quanto 
+   punta a migliorare l’esperienza dell’utente. 
+   \item \textbf{Questionable:} preferenze del cliente non chiare.
+   \end{enumerate}
+\end{enumerate}
 \end{enumerate}
 
-\end{enumerate}
-\end{enumerate}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \textbf{TIPOLOGIA}         & \textbf{REQUISITI}                                                 \\ \hline
+    \textbf{MUST BE}           & \begin{tabular}[c]{@{}l@{}}1, 2, 3, 4, 7\\ 12, 14, 15\end{tabular} \\ \hline
+    \textbf{ATTRACTIVE}        & 11, 16, 18                                                         \\ \hline
+    \textbf{ONE DIMENSIONAL}   & \begin{tabular}[c]{@{}l@{}}5, 6, 8, 9, 10\\ 13, 22\end{tabular}    \\ \hline
+    \textbf{INDIFFERENT}       & 20, 23                                                             \\ \hline
+    \textbf{REVERSE}           &                                                                    \\ \hline
+    \textbf{QUESTIONABLE}      & 17, 29, 21                                                         \\ \hline
+    \end{tabular}
+\end{table}
 
 \section{Design}
 
