@@ -64,7 +64,7 @@
 % Capitoli e sottosezioni
 \subsection{Introduzione} %fra
 UniMarket è stato progettato con l'obiettivo di semplificare la gestione della spesa per gli studenti.\\  
-Si tratta di un'applicazione che consente agli studenti di selezionare facilmente i prodotti desiderati e creare un carrello virtuale, ottimizzando il processo di ricerca e acquisto. \\
+Si tratta di un'applicazione che consente di selezionare facilmente i prodotti desiderati e creare un carrello virtuale, ottimizzando il processo di ricerca e acquisto. \\
 L'applicazione non solo semplifica la gestione della spesa quotidiana, ma offre anche funzionalità pensate per le esigenze specifiche degli studenti, come la possibilità di salvare le proprie liste della spesa, monitorare i costi in tempo reale per rispettare il budget mensile e ricevere notifiche su offerte speciali o sconti. \\
 UniMarket mira a migliorare l'esperienza di spesa online, offrendo una soluzione pratica ed efficiente per le esigenze quotidiane degli studenti.
 
@@ -236,9 +236,54 @@ Di conseguenza, vengono adottati principi propri di un \textbf{team Agile}, con 
 Tutti i membri possiedono competenze tecniche simili, pertanto i ruoli non vengono assegnati in base a specifiche abilità, ma ogni membro partecipa attivamente a tutte le fasi dello sviluppo.\\  
 La suddivisione delle attività è decisa collettivamente durante i \emph{timebox}, con la possibilità di ridefinire i ruoli, se necessario.  \\
 Non viene istituita una gerarchia formale all'interno del gruppo, sebbene sia presente un \textbf{leader} il cui unico compito è garantire la correttezza e la puntualità del lavoro svolto.
-
+\newpage
 
 \section{Requisiti}
+\subsection{Software Quality}
+Per garantire la qualità nello sviluppo del progetto, verrà adottato lo standard \textbf{IEEE 830}, che definisce linee guida per la stesura e la gestione delle specifiche dei requisiti software. In particolare, saranno rispettate le seguenti caratteristiche di qualità:
+
+\begin{itemize}
+    \item \textbf{Correttezza}: i requisiti saranno valutati e convalidati rispetto alle esigenze effettive degli utenti, garantendo che il software soddisfi le aspettative.
+    \item \textbf{Univocità}: i requisiti saranno formulati in modo chiaro e preciso, in modo da evitare ambiguità.
+    \item \textbf{Coerenza}: si assicurerà che non vi siano conflitti logici o temporali tra i requisiti.
+    \item \textbf{Verificabilità}: ogni requisito sarà espresso in termini misurabili, consentendo un processo finito e oggettivo per verificare se sia stato soddisfatto.
+    \item \textbf{Modificabilità}: il software deve evolversi, consentendo la possibilità di cambiamenti e modifiche, senza compromettere l’integrità del sistema.
+\end{itemize}
+
+\subsection{Requirement engineering}
+Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere una descrizione chiara e completa dei problemi da risolvere, le caratteristiche del sistema e i vincoli da soddisfare; ciò avverrà tenendo conto delle funzioni da integrare e dei requisiti imposti dall’ambiente.\\ Per la stesura della documentazione relativa e l’effettiva definizione dei requisiti, viene seguito lo standard stabilito dall’\textbf{IEEE 830}, secondo il seguente modello: \\
+\begin{enumerate}
+\item \textbf{Introduzione:}
+    \begin{enumerate}
+    
+    \item \textbf{Obiettivi e scopo}:\\
+
+L’obiettivo di \textit{UniMarket} è fornire agli utenti un’applicazione che permetta di gestire e facilitare la selezione e l’ordinazione dei prodotti, semplificandone la ricerca e l’acquisto.
+    \end{enumerate}
+\item \textbf{Descrizione generale:}
+\begin{enumerate}
+    \item \textbf{Prospettiva del prodotto:}\\Progettato per essere utilizzato su un PC standard con supporto per Java, l'applicazione offre un'interfaccia semplice e intuitiva, compatibile con i principali sistemi operativi. 
+    \item \textbf{Funzioni del prodotto:}\\\textbf{\textit{UniMarket}} offre una vasta gamma di funzionalità per semplificare l’esperienza di acquisto. Gli utenti possono registrarsi, navigare tra i prodotti, aggiungerli al carrello e scegliere modalità di pagamento sicure.\\ L’amministratore ha il controllo completo sulla gestione dei prodotti, degli ordini e del magazzino, mentre funzionalità aggiuntive come sconti, programmi fedeltà e modalità scura migliorano l’esperienza complessiva.\\ \textit{Tutte le funzionalità sono descritte in dettaglio nel paragrafo 3.}
+    \item \textbf{Caratteristiche dell'utente:}\\Si assume che gli utenti siano in grado di usare in maniera corretta le funzioni di base del sistema, nonostante ciò, si cercherà di guidare il cliente durante l’utilizzo dell’applicazione.
+    \item \textbf{Vincoli:}\\
+    \begin{enumerate}
+        \item \textbf{Modifiche al Database e al Codice:} Gli utenti non hanno la possibilità di modificare il database o il codice dell'applicazione. Le funzionalità sono predefinite e non modificabili dall'utente.
+
+\item \textbf{Disponibilità dei Prodotti:} Non è possibile acquistare prodotti che risultano esauriti. L'app garantisce solo la possibilità di selezionare articoli disponibili in magazzino.
+
+\item \textbf{Lingua:} L'app è progettata per un pubblico specifico e non è destinata a utenti internazionali. La lingua dell'interfaccia e i contenuti sono localizzati per un'area geografica definita.
+
+\item \textbf{Compatibilità con i Dispositivi:} L'app potrebbe non essere compatibile con tutti i dispositivi. 
+
+\item \textbf{Orari di ritiro Limitati:} Le opzioni di ritiro sono vincolate a orari specifici, con possibili limitazioni durante i giorni festivi e nel weekend.
+
+\item \textbf{Funzionalità di Ricerca Limitata:} La ricerca nell'app è limitata al catalogo di prodotti disponibile, che comprende un numero ristretto di articoli (es. 1000 prodotti). Le opzioni di filtraggio e ricerca potrebbero essere meno precise rispetto ad altre piattaforme più ampie. 
+    \end{enumerate}
+
+
+
+\end{enumerate}
+\end{enumerate}
 
 \section{Design}
 
