@@ -1,2 +1,14 @@
 .metadata/
 .sonarlint/
+Documentazione/*.aux
+Documentazione/*.log
+Documentazione/*.out
+Documentazione/*.toc
+Documentazione/*.fls
+Documentazione/*.fdb_latexmk
+Documentazione/*.synctex.gz
+Documentazione/*.bbl
+Documentazione/*.blg
+Documentazione/*.nav
+Documentazione/*.snm
+Documentazione/*.vrb
