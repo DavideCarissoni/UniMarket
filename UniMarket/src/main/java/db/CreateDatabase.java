@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 */
 
 public class CreateDatabase {
-    private static final String DB_PATH = "src/main/db/";
-    private static final String DB_FILE = DB_PATH + "databaseprova.db";
+    private static final String DB_PATH = "src/main/java/db/";
+    private static final String DB_FILE = DB_PATH + "database.db";
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
     private static final Logger LOGGER = Logger.getLogger(CreateDatabase.class.getName());
 

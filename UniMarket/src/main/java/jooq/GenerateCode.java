@@ -8,13 +8,13 @@ public class GenerateCode {
         try {
             Configuration configuration = new Configuration()
                 .withJdbc(new Jdbc().withDriver("org.sqlite.JDBC")
-                .withUrl("jdbc:sqlite:src/main/db/database.db")
+                .withUrl("jdbc:sqlite:src/main/java/db/database.db")
                 )
                 .withGenerator(new Generator()
                 .withDatabase(new Database().withName("org.jooq.meta.sqlite.SQLiteDatabase") 
                 )
                 .withTarget(new Target().withPackageName("jooq.generated") 
-                .withDirectory("src/generated/java")));
+                .withDirectory("src/main/java")));
 
             // Esecuzione della generazione del codice
             GenerationTool.generate(configuration);
