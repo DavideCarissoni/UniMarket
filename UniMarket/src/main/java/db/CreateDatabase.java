@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class CreateDatabase {
     private static final String DB_PATH = "src/main/db/";
-    private static final String DB_FILE = DB_PATH + "database.db";
+    private static final String DB_FILE = DB_PATH + "databaseprova.db";
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
     private static final Logger LOGGER = Logger.getLogger(CreateDatabase.class.getName());
 
@@ -53,8 +53,9 @@ public class CreateDatabase {
         } catch (Exception e) {
         	LOGGER.log(null, "Errore", e);
         }
+        /* Visualizza percorso file
         System.out.println("Cartella di lavoro corrente: " + System.getProperty("user.dir"));
-
+        */
     }
     
     //Metodo per creare la tabella profilo utenti
