@@ -1,0 +1,18 @@
+@import url('./main-layout.css');
+@import url('./views/my-view-view.css');
+@import url('./views/checkout-form-view.css');
+@import url('./views/gridwith-filters-view.css');
+@import url('./views/master-detail-view.css');    html {
+      --lumo-border-radius-s: calc(var(--lumo-size-m) / 6);
+      --lumo-border-radius-m: calc(var(--lumo-size-m) / 2);
+      --lumo-border-radius-l: var(--lumo-size-m);
+
+    }
+
+    [theme~="dark"] {
+      --lumo-primary-color-50pct: hsla(214, 90%, 52%, 0.5);
+      --lumo-primary-color-10pct: hsla(214, 90%, 52%, 0.1);
+      --lumo-primary-color: hsl(214, 90%, 52%);
+      --lumo-base-color: hsla(214, 44%, 43%, 0.64);
+
+    }
