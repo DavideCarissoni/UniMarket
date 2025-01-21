@@ -85,7 +85,7 @@ public class MainLayout extends AppLayout {
         Div layout = new Div();
         layout.addClassNames(Display.FLEX, AlignItems.CENTER, Padding.Horizontal.LARGE);
 
-        H1 appName = new H1("My App");
+        H1 appName = new H1("UniMarket");
         appName.addClassNames(Margin.Vertical.MEDIUM, Margin.End.AUTO, FontSize.LARGE);
         layout.add(appName);
 
@@ -110,9 +110,9 @@ public class MainLayout extends AppLayout {
         return new MenuItemInfo[]{ //
                 new MenuItemInfo("My View", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
 
-                new MenuItemInfo("Person Form", LineAwesomeIcon.USER.create(), PersonFormView.class), //
+                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), PersonFormView.class), //
 
-                new MenuItemInfo("Checkout Form", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class), //
+                new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class), //
 
                 new MenuItemInfo("Grid with Filters", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class), //
 

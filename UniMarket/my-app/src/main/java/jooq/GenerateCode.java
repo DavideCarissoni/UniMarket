@@ -1,9 +1,13 @@
 package jooq;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GenerateCode {
 
+	private static final Logger logger = LoggerFactory.getLogger(GenerateCode.class);
+	
     public static void main(String[] args) {
         try {
             Configuration configuration = new Configuration()
@@ -18,11 +22,11 @@ public class GenerateCode {
 
             // Esecuzione della generazione del codice
             GenerationTool.generate(configuration);
-            System.out.println("Codice generato con successo!");
+            logger.info("Codice generato con successo!");
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Errore durante la generazione del codice JOOQ.");
+           logger.error("Errore durante la generazione del codice JOOQ.");
         }
     }
 }

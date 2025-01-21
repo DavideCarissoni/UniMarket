@@ -26,7 +26,7 @@ public class CreateDatabase {
             if (created) {
             	LOGGER.info("Directory creata: " + DB_PATH);
             } else {
-                throw new RuntimeException("Errore nella creazione della directory " + DB_PATH);
+                LOGGER.info("Errore nella creazione della directory " + DB_PATH);
             }
         }
         return DriverManager.getConnection(URL);

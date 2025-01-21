@@ -18,7 +18,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
-@PageTitle("Person Form")
+@PageTitle("Login")
 @Route("person-form")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
@@ -29,48 +29,54 @@ public class PersonFormView extends Composite<VerticalLayout> {
         FormLayout formLayout2Col = new FormLayout();
         TextField textField = new TextField();
         TextField textField2 = new TextField();
-        DatePicker datePicker = new DatePicker();
         TextField textField3 = new TextField();
         EmailField emailField = new EmailField();
-        TextField textField4 = new TextField();
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
         Button buttonSecondary = new Button();
+        
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
         getContent().setAlignItems(Alignment.CENTER);
+        
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
-        h3.setText("Personal Information");
+        layoutColumn2.add(h3);
+        layoutColumn2.setAlignItems(Alignment.CENTER);
+        layoutColumn2.add(formLayout2Col);
+        layoutColumn2.add(layoutRow);
+        
+        h3.setText("Informazioni personali");
         h3.setWidth("100%");
+        
         formLayout2Col.setWidth("100%");
-        textField.setLabel("First Name");
-        textField2.setLabel("Last Name");
-        datePicker.setLabel("Birthday");
-        textField3.setLabel("Phone Number");
+        formLayout2Col.add(textField);
+        formLayout2Col.add(textField2);
+        formLayout2Col.add(textField3);
+        formLayout2Col.add(emailField);
+        
+        textField.setLabel("Nome");
+        textField2.setLabel("Cognome");
+        textField3.setLabel("Numero di telefono");
         emailField.setLabel("Email");
-        textField4.setLabel("Occupation");
+        
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
-        buttonPrimary.setText("Save");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonSecondary.setText("Cancel");
-        buttonSecondary.setWidth("min-content");
-        getContent().add(layoutColumn2);
-        layoutColumn2.add(h3);
-        layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(textField);
-        formLayout2Col.add(textField2);
-        formLayout2Col.add(datePicker);
-        formLayout2Col.add(textField3);
-        formLayout2Col.add(emailField);
-        formLayout2Col.add(textField4);
-        layoutColumn2.add(layoutRow);
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
+        
+        buttonPrimary.setText("Salva");
+        buttonPrimary.setWidth("fill");
+        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        
+        buttonSecondary.setText("Annulla");
+        buttonSecondary.setWidth("fill");
+        
+        getContent().add(layoutColumn2);
+       
+       
     }
 }

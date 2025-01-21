@@ -33,6 +33,8 @@ import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.Position;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
+import com.vaadin.flow.theme.lumo.LumoUtility.Width;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -43,53 +45,46 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 2, icon = LineAwesomeIconUrl.CREDIT_CARD)
 public class CheckoutFormView extends Div {
 
-    private static final Set<String> states = new LinkedHashSet<>();
     private static final Set<String> countries = new LinkedHashSet<>();
 
     static {
-        states.addAll(Arrays.asList("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-                "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
-                "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
-                "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York",
-                "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
-                "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
-                "West Virginia", "Wisconsin", "Wyoming"));
 
-        countries.addAll(Arrays.asList("Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
-                "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia",
-                "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
-                "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island",
-                "Brazil", "British Indian Ocean Territory", "British Virgin Islands", "Brunei Darussalam", "Bulgaria",
-                "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands",
-                "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands",
-                "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia", "Cuba", "Cyprus",
-                "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
-                "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands",
-                "Faroe Islands", "Federated States of Micronesia", "Fiji", "Finland", "France", "French Guiana",
-                "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
-                "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea",
-                "Guinea-Bissau", "Guyana", "Haiti", "Heard Island and McDonald Islands", "Honduras", "Hong Kong",
-                "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast",
-                "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos",
-                "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau",
-                "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-                "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Moldova", "Monaco", "Mongolia",
-                "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands",
-                "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue",
-                "Norfolk Island", "North Korea", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau",
-                "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal",
-                "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis",
-                "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
-                "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
-                "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands",
-                "South Korea", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname",
-                "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic",
-                "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago",
-                "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine",
-                "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands",
-                "United States Virgin Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela",
-                "Vietnam", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zaire", "Zambia",
+    	countries.addAll(Arrays.asList("Afghanistan", "Albania", "Algeria", "Samoa Americane", "Andorra", "Angola",
+                "Anguilla", "Antartide", "Antigua e Barbuda", "Argentina", "Armenia", "Aruba", "Australia",
+                "Austria", "Azerbaigian", "Bahamas", "Bahrein", "Bangladesh", "Barbados", "Bielorussia", "Belgio", "Belize",
+                "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia ed Erzegovina", "Botswana", "Isola Bouvet",
+                "Brasile", "Territorio Britannico dell'Oceano Indiano", "Isole Vergini Britanniche", "Brunei Darussalam", "Bulgaria",
+                "Burkina Faso", "Burundi", "Cambogia", "Camerun", "Canada", "Capo Verde", "Isole Cayman",
+                "Repubblica Centrafricana", "Ciad", "Cile", "Cina", "Isola di Natale", "Isole Cocos (Keeling)",
+                "Colombia", "Comore", "Congo", "Isole Cook", "Costa Rica", "Croazia", "Cuba", "Cipro",
+                "Repubblica Ceca", "Danimarca", "Gibuti", "Dominica", "Repubblica Dominicana", "Timor Est", "Ecuador",
+                "Egitto", "El Salvador", "Guinea Equatoriale", "Eritrea", "Estonia", "Etiopia", "Isole Falkland",
+                "Isole Faroe", "Stati Federati di Micronesia", "Figi", "Finlandia", "Francia", "Guiana Francese",
+                "Polinesia Francese", "Territori Francesi del Sud", "Gabon", "Gambia", "Georgia", "Germania", "Ghana",
+                "Gibilterra", "Grecia", "Groenlandia", "Grenada", "Guadalupa", "Guam", "Guatemala", "Guinea",
+                "Guinea-Bissau", "Guyana", "Haiti", "Isole Heard e McDonald", "Honduras", "Hong Kong",
+                "Ungheria", "Islanda", "India", "Indonesia", "Iran", "Iraq", "Irlanda", "Israele", "Italia", "Costa d'Avorio",
+                "Giamaica", "Giappone", "Giordania", "Kazakistan", "Kenya", "Kiribati", "Kuwait", "Kirghizistan", "Laos",
+                "Lettonia", "Libano", "Lesotho", "Liberia", "Libia", "Liechtenstein", "Lituania", "Lussemburgo", "Macao",
+                "Macedonia", "Madagascar", "Malawi", "Malesia", "Maldive", "Mali", "Malta", "Isole Marshall",
+                "Martinica", "Mauritania", "Mauritius", "Mayotte", "Messico", "Moldavia", "Monaco", "Mongolia",
+                "Montserrat", "Marocco", "Mozambico", "Myanmar", "Namibia", "Nauru", "Nepal", "Paesi Bassi",
+                "Antille Olandesi", "Nuova Caledonia", "Nuova Zelanda", "Nicaragua", "Niger", "Nigeria", "Niue",
+                "Isola Norfolk", "Corea del Nord", "Isole Marianne Settentrionali", "Norvegia", "Oman", "Pakistan", "Palau",
+                "Panama", "Papua Nuova Guinea", "Paraguay", "Perù", "Filippine", "Pitcairn", "Polonia", "Portogallo",
+                "Porto Rico", "Qatar", "Riunione", "Romania", "Federazione Russa", "Ruanda", "Saint Kitts e Nevis",
+                "Saint Lucia", "Saint Vincent e Grenadine", "Samoa", "San Marino", "Sao Tomé e Principe",
+                "Arabia Saudita", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovacchia", "Slovenia",
+                "Isole Salomone", "Somalia", "Sudafrica", "Georgia del Sud e Isole Sandwich Australi",
+                "Corea del Sud", "Spagna", "Sri Lanka", "Sant'Elena", "Saint-Pierre e Miquelon", "Sudan", "Suriname",
+                "Isole Svalbard e Jan Mayen", "Eswatini", "Svezia", "Svizzera", "Repubblica Araba Siriana",
+                "Taiwan", "Tagikistan", "Tanzania", "Thailandia", "Togo", "Tokelau", "Tonga", "Trinidad e Tobago",
+                "Tunisia", "Turchia", "Turkmenistan", "Isole Turks e Caicos", "Tuvalu", "Uganda", "Ucraina",
+                "Emirati Arabi Uniti", "Regno Unito", "Stati Uniti", "Isole Minori degli Stati Uniti",
+                "Isole Vergini Americane", "Uruguay", "Uzbekistan", "Vanuatu", "Città del Vaticano", "Venezuela",
+                "Vietnam", "Isole Wallis e Futuna", "Sahara Occidentale", "Yemen", "Jugoslavia", "Zaire", "Zambia",
                 "Zimbabwe"));
+
     }
 
     public CheckoutFormView() {
@@ -111,7 +106,7 @@ public class CheckoutFormView extends Div {
 
         H2 header = new H2("Checkout");
         header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
-        Paragraph note = new Paragraph("All fields are required unless otherwise noted");
+        Paragraph note = new Paragraph("Compila tutti i campi richiesti");
         note.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
         checkoutForm.add(header, note);
 
@@ -131,24 +126,29 @@ public class CheckoutFormView extends Div {
         Paragraph stepOne = new Paragraph("Checkout 1/3");
         stepOne.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
 
-        H3 header = new H3("Personal details");
+        H3 header = new H3("Informazioni personali");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
-        TextField name = new TextField("Name");
+        TextField name = new TextField("Nome");
         name.setRequiredIndicatorVisible(true);
         name.setPattern("[\\p{L} \\-]+");
         name.addClassNames(Margin.Bottom.SMALL);
 
-        EmailField email = new EmailField("Email address");
+        TextField lastName = new TextField("Cognome");
+        lastName.setRequiredIndicatorVisible(true);
+        lastName.setPattern("[\\p{L} \\-]+");
+        lastName.addClassNames(Margin.Bottom.SMALL);
+        
+        EmailField email = new EmailField("Email");
         email.setRequiredIndicatorVisible(true);
         email.addClassNames(Margin.Bottom.SMALL);
 
-        TextField phone = new TextField("Phone number");
+        TextField phone = new TextField("Numero di telefono");
         phone.setRequiredIndicatorVisible(true);
         phone.setPattern("[\\d \\-\\+]+");
         phone.addClassNames(Margin.Bottom.SMALL);
 
-        Checkbox rememberDetails = new Checkbox("Remember personal details for next time");
+        Checkbox rememberDetails = new Checkbox("Ricoda i miei dati");
         rememberDetails.addClassNames(Margin.Top.SMALL);
 
         personalDetails.add(stepOne, header, name, email, phone, rememberDetails);
@@ -162,14 +162,10 @@ public class CheckoutFormView extends Div {
         Paragraph stepTwo = new Paragraph("Checkout 2/3");
         stepTwo.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
 
-        H3 header = new H3("Shipping address");
+        H3 header = new H3("Indirizzo di spedizione");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
-        ComboBox<String> countrySelect = new ComboBox<>("Country");
-        countrySelect.setRequiredIndicatorVisible(true);
-        countrySelect.addClassNames(Margin.Bottom.SMALL);
-
-        TextArea address = new TextArea("Street address");
+        TextArea address = new TextArea("Indirizzo");
         address.setMaxLength(200);
         address.setRequiredIndicatorVisible(true);
         address.addClassNames(Margin.Bottom.SMALL);
@@ -177,33 +173,20 @@ public class CheckoutFormView extends Div {
         Div subSection = new Div();
         subSection.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
 
-        TextField postalCode = new TextField("Postal Code");
+        TextField postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
         postalCode.setPattern("[\\d \\p{L}]*");
         postalCode.addClassNames(Margin.Bottom.SMALL);
 
-        TextField city = new TextField("City");
+        TextField city = new TextField("Provincia");
         city.setRequiredIndicatorVisible(true);
         city.addClassNames(Flex.GROW, Margin.Bottom.SMALL);
 
         subSection.add(postalCode, city);
 
-        ComboBox<String> stateSelect = new ComboBox<>("State");
-        stateSelect.setRequiredIndicatorVisible(true);
+        Checkbox rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
-        stateSelect.setItems(states);
-        stateSelect.setVisible(false);
-        countrySelect.setItems(countries);
-        countrySelect
-                .addValueChangeListener(e -> stateSelect.setVisible(countrySelect.getValue().equals("United States")));
-
-        Checkbox sameAddress = new Checkbox("Billing address is the same as shipping address");
-        sameAddress.addClassNames(Margin.Top.SMALL);
-
-        Checkbox rememberAddress = new Checkbox("Remember address for next time");
-
-        shippingDetails.add(stepTwo, header, countrySelect, address, subSection, stateSelect, sameAddress,
-                rememberAddress);
+        shippingDetails.add(stepTwo, header, address, subSection, rememberAddress);
         return shippingDetails;
     }
 
@@ -214,10 +197,10 @@ public class CheckoutFormView extends Div {
         Paragraph stepThree = new Paragraph("Checkout 3/3");
         stepThree.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
 
-        H3 header = new H3("Personal details");
+        H3 header = new H3("Informazioni pagamento");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
-        TextField cardHolder = new TextField("Cardholder name");
+        TextField cardHolder = new TextField("Intestatario");
         cardHolder.setRequiredIndicatorVisible(true);
         cardHolder.setPattern("[\\p{L} \\-]+");
         cardHolder.addClassNames(Margin.Bottom.SMALL);
@@ -225,7 +208,7 @@ public class CheckoutFormView extends Div {
         Div subSectionOne = new Div();
         subSectionOne.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
 
-        TextField cardNumber = new TextField("Card Number");
+        TextField cardNumber = new TextField("Numero carta");
         cardNumber.setRequiredIndicatorVisible(true);
         cardNumber.setPattern("[\\d ]{12,23}");
         cardNumber.addClassNames(Margin.Bottom.SMALL);
@@ -242,14 +225,14 @@ public class CheckoutFormView extends Div {
         subSectionTwo.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
 
         Select<String> expirationMonth = new Select<>();
-        expirationMonth.setLabel("Expiration month");
+        expirationMonth.setLabel("Mese scadenza");
         expirationMonth.setRequiredIndicatorVisible(true);
         expirationMonth.setItems("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
         Select<String> expirationYear = new Select<>();
-        expirationYear.setLabel("Expiration year");
+        expirationYear.setLabel("Anno scadenza");
         expirationYear.setRequiredIndicatorVisible(true);
-        expirationYear.setItems("22", "23", "24", "25", "26");
+        expirationYear.setItems("25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35");
 
         subSectionTwo.add(expirationMonth, expirationYear);
 
@@ -261,10 +244,10 @@ public class CheckoutFormView extends Div {
         Footer footer = new Footer();
         footer.addClassNames(Display.FLEX, AlignItems.CENTER, JustifyContent.BETWEEN, Margin.Vertical.MEDIUM);
 
-        Button cancel = new Button("Cancel order");
+        Button cancel = new Button("Annulla ordine");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        Button pay = new Button("Pay securely", new Icon(VaadinIcon.LOCK));
+        Button pay = new Button("Conferma", new Icon(VaadinIcon.LOCK));
         pay.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
 
         footer.add(cancel, pay);
@@ -284,9 +267,9 @@ public class CheckoutFormView extends Div {
         headerSection.add(header, edit);
 
         UnorderedList ul = new UnorderedList();
-        ul.addClassNames(ListStyleType.NONE, Margin.NONE, Padding.NONE, Display.FLEX, FlexDirection.COLUMN, Gap.MEDIUM);
+        ul.addClassNames(ListStyleType.NONE, Margin.NONE, Padding.NONE, Display.FLEX, FlexDirection.COLUMN, Gap.MEDIUM, Height.LARGE);
 
-        ul.add(createListItem("Vanilla cracker", "With wholemeal flour", "$7.00"));
+        ul.add(createListItem("da correggere", "With poca voglia di farlo io", "420.69"));
         ul.add(createListItem("Vanilla blueberry cake", "With blueberry jam", "$8.00"));
         ul.add(createListItem("Vanilla pastry", "With wholemeal flour", "$5.00"));
 
