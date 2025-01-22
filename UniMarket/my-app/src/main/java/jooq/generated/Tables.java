@@ -4,9 +4,12 @@
 package jooq.generated;
 
 
-import jooq.generated.tables.Admin;
-import jooq.generated.tables.Prodotti;
-import jooq.generated.tables.ProfiliUtente;
+import jooq.generated.tables.Amministratore;
+import jooq.generated.tables.Carrello;
+import jooq.generated.tables.CartaCredito;
+import jooq.generated.tables.Cliente;
+import jooq.generated.tables.Prodotto;
+import jooq.generated.tables.Utente;
 
 
 /**
@@ -16,17 +19,32 @@ import jooq.generated.tables.ProfiliUtente;
 public class Tables {
 
     /**
-     * The table <code>admin</code>.
+     * The table <code>amministratore</code>.
      */
-    public static final Admin ADMIN = Admin.ADMIN;
+    public static final Amministratore AMMINISTRATORE = Amministratore.AMMINISTRATORE;
 
     /**
-     * The table <code>prodotti</code>.
+     * The table <code>carrello</code>.
      */
-    public static final Prodotti PRODOTTI = Prodotti.PRODOTTI;
+    public static final Carrello CARRELLO = Carrello.CARRELLO;
 
     /**
-     * The table <code>profili_utente</code>.
+     * The table <code>carta_credito</code>.
      */
-    public static final ProfiliUtente PROFILI_UTENTE = ProfiliUtente.PROFILI_UTENTE;
+    public static final CartaCredito CARTA_CREDITO = CartaCredito.CARTA_CREDITO;
+
+    /**
+     * The table <code>cliente</code>.
+     */
+    public static final Cliente CLIENTE = Cliente.CLIENTE;
+
+    /**
+     * The table <code>prodotto</code>.
+     */
+    public static final Prodotto PRODOTTO = Prodotto.PRODOTTO;
+
+    /**
+     * The table <code>utente</code>.
+     */
+    public static final Utente UTENTE = Utente.UTENTE;
 }

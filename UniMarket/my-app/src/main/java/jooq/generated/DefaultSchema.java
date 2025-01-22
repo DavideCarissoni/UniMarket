@@ -7,9 +7,12 @@ package jooq.generated;
 import java.util.Arrays;
 import java.util.List;
 
-import jooq.generated.tables.Admin;
-import jooq.generated.tables.Prodotti;
-import jooq.generated.tables.ProfiliUtente;
+import jooq.generated.tables.Amministratore;
+import jooq.generated.tables.Carrello;
+import jooq.generated.tables.CartaCredito;
+import jooq.generated.tables.Cliente;
+import jooq.generated.tables.Prodotto;
+import jooq.generated.tables.Utente;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
@@ -30,19 +33,34 @@ public class DefaultSchema extends SchemaImpl {
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
 
     /**
-     * The table <code>admin</code>.
+     * The table <code>amministratore</code>.
      */
-    public final Admin ADMIN = Admin.ADMIN;
+    public final Amministratore AMMINISTRATORE = Amministratore.AMMINISTRATORE;
 
     /**
-     * The table <code>prodotti</code>.
+     * The table <code>carrello</code>.
      */
-    public final Prodotti PRODOTTI = Prodotti.PRODOTTI;
+    public final Carrello CARRELLO = Carrello.CARRELLO;
 
     /**
-     * The table <code>profili_utente</code>.
+     * The table <code>carta_credito</code>.
      */
-    public final ProfiliUtente PROFILI_UTENTE = ProfiliUtente.PROFILI_UTENTE;
+    public final CartaCredito CARTA_CREDITO = CartaCredito.CARTA_CREDITO;
+
+    /**
+     * The table <code>cliente</code>.
+     */
+    public final Cliente CLIENTE = Cliente.CLIENTE;
+
+    /**
+     * The table <code>prodotto</code>.
+     */
+    public final Prodotto PRODOTTO = Prodotto.PRODOTTO;
+
+    /**
+     * The table <code>utente</code>.
+     */
+    public final Utente UTENTE = Utente.UTENTE;
 
     /**
      * No further instances allowed
@@ -60,9 +78,12 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Admin.ADMIN,
-            Prodotti.PRODOTTI,
-            ProfiliUtente.PROFILI_UTENTE
+            Amministratore.AMMINISTRATORE,
+            Carrello.CARRELLO,
+            CartaCredito.CARTA_CREDITO,
+            Cliente.CLIENTE,
+            Prodotto.PRODOTTO,
+            Utente.UTENTE
         );
     }
 }
