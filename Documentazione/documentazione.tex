@@ -399,6 +399,41 @@ Il diagramma seguente mostra il flusso di lavoro per l'aggiunta di un prodotto a
 \subsubsection{Component Diagram}
 \subsubsection{Package Diagram}
 
+\subsection{Architettura del software}
+\subsubsection{Viste architettoniche}
+Le viste architettoniche e i punti di vista utilizzati sono:
+\begin{itemize}
+    \item \textbf{Modulo:} È stato utilizzato il punto di vista \textbf{a strati}, che permette di visualizzare il sistema su livelli, i cui elementi possono utilizzare elementi di un livello inferiore.  
+    \item \textbf{Componenti e connettori:} È stato utilizzato il punto di vista \textbf{client-server}, che descrive un sistema costituito da client e server cooperanti. In questo progetto, il client rappresenta l'interfaccia utente dell'applicazione e il server gestisce la logica di business e l'accesso ai dati.
+    \item \textbf{Realizzativa:} È stato utilizzato il punto di vista dell'\textbf{implementazione}, che descrive come i componenti logici e le funzionalità di alto livello vengono tradotti in strutture fisiche e tecniche. 
+    \begin{itemize}
+        \item Il progetto è organizzato seguendo un approccio \textbf{maven}, con una struttura standard: \textbf{src/main/java} per il codice sorgente, \textbf{src/main/resources} per le risorse, \textbf{src/test/java} per i test.
+        \item I framework utilizzati sono: \textbf{Vaadin} per l'interfaccia utente, \textbf{JOOQ} per l'accesso ai dati, \textbf{SQLite} per il database.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Stile architettonico}
+Il progetto è basato sullo stile architettonico a \textbf{tre livelli}, che prevede la suddivisione del sistema in tre strati distinti: livello database, livello di persistenza e livello di presentazione. Questo approccio consente di separare le funzionalità e i compiti del sistema, semplificando la gestione e la manutenzione del codice.
+\begin{itemize}
+    \item \textbf{Livello Database:} 
+    Il livello database gestisce la memorizzazione e l'accesso ai dati, garantendo la persistenza delle informazioni. In questo progetto, è implementato un \textit{database embedded} utilizzando \textit{SQLite}.
+    \item \textbf{Livello di Persistenza:} 
+    Il livello di persistenza si occupa di gestire la comunicazione tra il livello database e il livello di presentazione, fornendo un'interfaccia per l'accesso ai dati. In questo progetto, il livello di persistenza è implementato utilizzando \textit{JOOQ}, un framework Java per la creazione di query SQL.   
+    \item \textbf{Livello di Presentazione:} 
+    Il livello di presentazione gestisce l'interfaccia utente e l'interazione con l'utente. In questo progetto, il livello di presentazione è implementato utilizzando \textit{Vaadin}, un framework Java per lo sviluppo di applicazioni web.
+\end{itemize}
+\subsection{Software Design}
+
+\subsubsection{Design Patterns}
+\subsubsection{Complessità e misurazioni}
+Da calcolare alla fine del progetto. 
+Alcuni dei pattern utilizzati sono:
+\begin{itemize}
+    \item \textbf{Singleton Pattern:} 
+    Il pattern Singleton è stato utilizzato per garantire che una classe abbia una sola istanza e fornisca un punto di accesso globale a tale istanza. Questo pattern è stato utilizzato per la classe \textit{Database}, che gestisce la connessione al database e l'accesso ai dati.    
+    \item \textbf{x Pattern:}
+\end{itemize}
+
 \section{Testing}
 
 \section{Maintenance}
@@ -420,11 +455,9 @@ Il diagramma seguente mostra il flusso di lavoro per l'aggiunta di un prodotto a
 \hline
 25/11/2024 - 29/11/2024 & Documentazione, Specifica dei requisiti  & 3 \\
 \hline
-2/12/2024 - x/12/2024 & UML &  \\
-\hline
 2/12/2024 - 5/2/2025 & UML & 2 \\
 \hline
-6/1/2025 - 26/1/2025 & Database & 1 \\
+6/1/2025 - 26/1/2025 & Database, documentazione & 1 \\
 \hline
 
 \end{tabular}
