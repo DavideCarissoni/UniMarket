@@ -1,8 +1,12 @@
 \documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
 
 % caricamento dei diversi pacchetti
 \usepackage{fancyhdr}
 \usepackage{graphicx}  % Per inserire le immagini
+\usepackage{float}     % Per l'opzione H nei float
 \usepackage{geometry}
 \usepackage{lipsum}
 \usepackage{hyperref}  % Per rendere l'indice cliccabile
@@ -350,6 +354,50 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
 \end{table}
 
 \section{Design}
+\subsection{UML}
+Di seguito i diagrammi UML; per una visione migliore, fare riferimento alle immagini contenute nel repository UML.
+\subsubsection{Use Case Diagram}
+Il diagramma dei casi d'uso modella l'interazione tra gli attori (Utenti e gestori) e il sistema, mostrando le funzionalità supportate.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../UML/UML png/UseCaseDiagram.png}
+    \label{fig:Use Case Diagram}
+\end{figure}
+
+\subsubsection{Class Diagram}
+Il diagramma delle classi modella le classi contenute nel sitema, con i relativi metodi e attributi.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../UML/UML png/ClassDiagram.png}
+    \label{fig:Class Diagram}
+\end{figure}
+\subsubsection{State Machinne}
+Il diagramma degli stati modella il comportamento di un oggetto in base allo stato in cui si trova.
+Nello specifico, il seguente diagramma modella gli stati attivi durante l'utilizzo del sistema da un utente.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../UML/UML png/StateMachine.png}
+    \label{fig:State Machine}
+\end{figure}
+\subsubsection{Sequence Diagram}
+\subsubsection{Communication Diagram}
+Il diagramma di comunicazione modella lo scambio di messaggi tra le componenti del sistema durante l'aggiunta, da parte dell'utente, di prodotti al carrello.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../UML/UML png/CommunicationDiagram.png}
+    \label{fig:Communication Diagram}
+\end{figure}
+\subsubsection{Activity Diagram}
+Il diagramma delle attività modella il flusso di lavoro all'interno del sistema, mostrando le attività e le decisioni che vengono prese durante l'interazione con l'applicazione.   
+Il diagramma seguente mostra il flusso di lavoro per l'aggiunta di un prodotto al carrello.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../UML/UML png/ActivityDiagram.png}
+    \label{fig:Activity Diagram}
+\end{figure}
+\textit{Nota: i connettori(A,B,C,D) sono stati rappresentati usando blocchi azione per l'assenza di un blocco dedicato da parte di Papyrus.}
+\subsubsection{Component Diagram}
+\subsubsection{Package Diagram}
 
 \section{Testing}
 
@@ -376,7 +424,7 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
 \hline
 2/12/2024 - 5/2/2025 & UML & 2 \\
 \hline
-6/1/2025 - 26/1/2025 & Database &  \\
+6/1/2025 - 26/1/2025 & Database & 1 \\
 \hline
 
 \end{tabular}
