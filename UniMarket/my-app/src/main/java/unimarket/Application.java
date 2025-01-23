@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDataba
 import org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties;
 import org.springframework.context.annotation.Bean;
 import unimarket.data.SamplePersonRepository;
+
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 /**
@@ -33,12 +35,23 @@ public class Application implements AppShellConfigurator {
         SpringApplication.run(Application.class, args);
     }
 	public Application() {
-		try {
-            CreateDatabase.getConnection();
+		Connection connection = null;
+        try {
+            connection = CreateDatabase.getInstance().getConnection();
             LOGGER.info("Connessione al database stabilita con successo!");
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.severe("Errore durante la connessione al database");
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    LOGGER.info("Connessione al database chiusa con successo.");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    LOGGER.severe("Errore durante la chiusura della connessione al database");
+                }
+            }
         }
 	}
     SqlDataSourceScriptDatabaseInitializer dataSourceScriptDatabaseInitializer(DataSource dataSource,

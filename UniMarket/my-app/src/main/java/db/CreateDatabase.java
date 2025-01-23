@@ -18,8 +18,11 @@ public class CreateDatabase {
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
     private static final Logger LOGGER = Logger.getLogger(CreateDatabase.class.getName());
 
+    private static CreateDatabase instance;
+    private Connection connection;
+    
     // Metodo per ottenere la connessione al database
-    public static Connection getConnection() throws SQLException {
+    private CreateDatabase(){
         // Controlla che la directory esista, altrimenti la crea
         File dbDir = new File(DB_PATH);
         if (!dbDir.exists()) {
@@ -30,15 +33,19 @@ public class CreateDatabase {
                 LOGGER.warning("Errore nella creazione della directory " + DB_PATH);
             }
         }
-        return DriverManager.getConnection(URL);
     }
-
-    // Metodo main per testare la connessione e creazione tabelle
-    public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
-            LOGGER.info("Connessione al database stabilita con successo!");
-        } catch (SQLException e) {
-        	LOGGER.log(Level.SEVERE, "Errore nella connessione al database:", e);
+    
+    public static synchronized CreateDatabase getInstance() {
+        if (instance == null) {
+            instance = new CreateDatabase();
         }
+        return instance;
+    }
+    
+    public synchronized Connection getConnection() throws SQLException {
+        if(connection == null || connection.isClosed()) {
+        	connection = DriverManager.getConnection(URL);
+        }
+		return connection;	
     }
 }
