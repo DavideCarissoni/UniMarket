@@ -50,7 +50,7 @@ public class CartaCredito extends TableImpl<CartaCreditoRecord> {
     /**
      * The column <code>carta_credito.numero_carta</code>.
      */
-    public final TableField<CartaCreditoRecord, Integer> NUMERO_CARTA = createField(DSL.name("numero_carta"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CartaCreditoRecord, String> NUMERO_CARTA = createField(DSL.name("numero_carta"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>carta_credito.codice_sicurezza</code>.

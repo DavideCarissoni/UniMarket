@@ -32,6 +32,7 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 import unimarket.views.checkoutform.CheckoutFormView;
 import unimarket.views.gridwithfilters.GridwithFiltersView;
 import unimarket.views.masterdetail.MasterDetailView;
+import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
 import unimarket.views.personform.PersonFormView;
 
@@ -110,13 +111,15 @@ public class MainLayout extends AppLayout {
         return new MenuItemInfo[]{ //
                 new MenuItemInfo("My View", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
 
-                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), PersonFormView.class), //
+                new MenuItemInfo("Registrazione", LineAwesomeIcon.USER.create(), PersonFormView.class), //
 
                 new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class), //
 
                 new MenuItemInfo("Grid with Filters", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class), //
 
                 new MenuItemInfo("Master-Detail", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class), //
+
+                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
 
         };
     }

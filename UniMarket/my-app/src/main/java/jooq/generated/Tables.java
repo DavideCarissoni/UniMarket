@@ -3,7 +3,6 @@
  */
 package jooq.generated;
 
-
 import jooq.generated.tables.Amministratore;
 import jooq.generated.tables.Carrello;
 import jooq.generated.tables.CartaCredito;

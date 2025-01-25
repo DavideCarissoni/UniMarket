@@ -3,9 +3,10 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 
 /*Classe per la generazione del database con connessione 
  * + creazione tabelle
@@ -34,7 +35,11 @@ public class CreateDatabase {
             }
         }
     }
-    
+
+    public static DSLContext getDSLContext() throws SQLException {
+        return DSL.using(getInstance().getConnection());
+    }
+
     public static synchronized CreateDatabase getInstance() {
         if (instance == null) {
             instance = new CreateDatabase();
