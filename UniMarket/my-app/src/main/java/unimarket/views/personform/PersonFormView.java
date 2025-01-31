@@ -24,12 +24,7 @@ import com.vaadin.flow.component.UI;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
-<<<<<<< Updated upstream
 @PageTitle("Registrazione")
-=======
-
-@PageTitle("Login")
->>>>>>> Stashed changes
 @Route("login")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
