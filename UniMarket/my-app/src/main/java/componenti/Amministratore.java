@@ -2,8 +2,8 @@ package componenti;
 
 public class Amministratore extends Utente{
 
-	public Amministratore(String nome, String cognome, String numero_telefono, String email, String password, String ruolo) {
-		super(nome, cognome, numero_telefono, email, password);
+	public Amministratore(String nome, String cognome, String numeroTelefono, String email, String password, String ruolo) {
+		super(nome, cognome, numeroTelefono, email, password);
 	}
 
 	private String ruolo;

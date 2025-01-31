@@ -3,7 +3,7 @@
  */
 package jooq.generated;
 
-import jooq.generated.tables.Amministratore;
+
 import jooq.generated.tables.Carrello;
 import jooq.generated.tables.CartaCredito;
 import jooq.generated.tables.Cliente;
@@ -16,11 +16,6 @@ import jooq.generated.tables.Utente;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
-
-    /**
-     * The table <code>amministratore</code>.
-     */
-    public static final Amministratore AMMINISTRATORE = Amministratore.AMMINISTRATORE;
 
     /**
      * The table <code>carrello</code>.

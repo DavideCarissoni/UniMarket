@@ -9,7 +9,9 @@ import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.components.avataritem.AvatarItem;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("My View")
 @Route("")
@@ -65,12 +69,9 @@ public class MyViewView extends Composite<VerticalLayout> {
         formLayout3Col.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2), new ResponsiveStep("500px", 3));
         formLayout3Col.add(h1);
         formLayout3Col.add(routerLink);
-        
+
         h1.setText("UniMarket");
         h1.setWidth("max-content");
-        
-        routerLink.setText("Custom View");
-        routerLink.setRoute(MyViewView.class);
         
         layoutRow2.addClassName(Gap.MEDIUM);
         layoutRow2.setWidth("100%");
@@ -104,6 +105,34 @@ public class MyViewView extends Composite<VerticalLayout> {
         layoutColumn3.getStyle().set("flex-grow", "1");
         layoutColumn3.add(hr);
         
+        // Create a new VerticalLayout for the box
+        VerticalLayout boxLayout = new VerticalLayout();
+        boxLayout.setWidth("200px"); // Set the width of the box
+        boxLayout.setHeight("300px"); // Set the height of the box
+        boxLayout.getStyle().set("border", "1px solid #000"); // Add a border to the box
+        boxLayout.getStyle().set("padding", "10px"); // Add padding to the box
+
+        // Create an Image component
+        Image image = new Image("path/to/image.jpg", "Product Image");
+        image.setWidth("100%"); // Set the image to fill the width of the box
+
+        // Create a Span for the name
+        Span name = new Span("Product Name");
+        name.getStyle().set("font-weight", "bold"); // Make the name bold
+
+        // Create a Span for the price
+        Span price = new Span("$100.00");
+        price.getStyle().set("color", "green"); // Set the price color to green
+
+        // Add the components to the box layout
+        boxLayout.add(image, name, price);
+
+        // Add the box layout to the right column
+        layoutColumn3.add(boxLayout);
+
+        // Add the right column to the second row layout
+        layoutRow2.add(layoutColumn3);
+  
     }
 
     record SampleItem(String value, String label, Boolean disabled) {

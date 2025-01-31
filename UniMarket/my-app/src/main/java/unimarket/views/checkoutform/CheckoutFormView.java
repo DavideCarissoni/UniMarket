@@ -36,6 +36,14 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.server.VaadinSession;
+import unimarket.views.myview.MyViewView;
 
 @PageTitle("Checkout Form")
 @Route("checkout-form")
@@ -108,6 +116,7 @@ public class CheckoutFormView extends Div {
 
         personalDetails.add(stepOne, header, name, lastName, email, phone, rememberDetails);
         return personalDetails;
+        
     }
 
     private Section createShippingAddressSection() {
@@ -131,6 +140,7 @@ public class CheckoutFormView extends Div {
         TextField postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
         postalCode.setPattern("[\\d \\p{L}]*");
+        postalCode.setErrorMessage("Il codice postale deve essere composto da 5 numeri");
         postalCode.addClassNames(Margin.Bottom.SMALL);
 
         TextField city = new TextField("Provincia");
@@ -204,9 +214,44 @@ public class CheckoutFormView extends Div {
 
         Button pay = new Button("Conferma", new Icon(VaadinIcon.LOCK));
         pay.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+        
+        // Listener per il bottone "Conferma"
+        pay.addClickListener(event -> {
+        	Notification.show("Ordine confermato! Graze per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
 
+        	// Naviga alla homepage 
+        	UI.getCurrent().navigate(MyViewView.class);
+        });
+        
+        // Aggiungi il listener di clic per il pulsante "Annulla ordine"
+        cancel.addClickListener(event -> {
+            Dialog confirmationDialog = new Dialog();
+    
+            Paragraph confirmationMessage = new Paragraph("Sei sicuro di voler annullare l'ordine?");
+            confirmationDialog.add(confirmationMessage);
+    
+            Button confirmButton = new Button("Sì", e -> {
+            // Se confermato, navighiamo alla pagina di my-view
+            UI.getCurrent().navigate(MyViewView.class); 
+                confirmationDialog.close(); 
+            });
+    
+            Button cancelButton = new Button("No", e -> {
+                // Se annullato, chiudiamo solo il dialogo
+                confirmationDialog.close();
+            });
+    
+            // Aggiungiamo i pulsanti nel dialogo
+            confirmationDialog.add(confirmButton, cancelButton);
+    
+            // Mostriamo il dialogo
+            confirmationDialog.open();
+        });
+        
         footer.add(cancel, pay);
         return footer;
+        
+        
     }
 
     private Aside createAside() {
