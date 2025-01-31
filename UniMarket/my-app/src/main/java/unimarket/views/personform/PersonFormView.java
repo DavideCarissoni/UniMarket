@@ -16,12 +16,11 @@ import com.vaadin.flow.dom.ElementFactory;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import unimarket.views.myview.MyViewView;  // Import della schermata MyView
 import com.vaadin.flow.component.notification.Notification;
-
 import com.vaadin.flow.component.UI;
-
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Registrazione")
@@ -38,8 +37,9 @@ public class PersonFormView extends Composite<VerticalLayout> {
         TextField textField3 = new TextField();
         EmailField emailField = new EmailField();
         HorizontalLayout layoutRow = new HorizontalLayout();
-        Button buttonPrimary = new Button();
-        Button buttonSecondary = new Button();
+        Button buttonPrimary = new Button("Salva");
+        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Button buttonSecondary = new Button("Annulla");
         PasswordField password = new PasswordField();
         PasswordField repeatPassword = new PasswordField();
           
@@ -76,7 +76,6 @@ public class PersonFormView extends Composite<VerticalLayout> {
         repeatPassword.setLabel("Ripeti password");
         
         password.setWidth("100%");
-        
         repeatPassword.setWidth("100%");
         
         layoutRow.addClassName(Gap.MEDIUM);
@@ -85,52 +84,55 @@ public class PersonFormView extends Composite<VerticalLayout> {
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
         
-        buttonPrimary.setText("Salva");
-        buttonPrimary.setWidth("fill");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        
-        buttonSecondary.setText("Annulla");
-        buttonSecondary.setWidth("fill");
+        buttonPrimary.addClickListener(event -> {
+            String nome = textField.getValue().trim();
+            String cognome = textField2.getValue().trim();
+            String telefono = textField3.getValue().trim();
+            String email = emailField.getValue().trim();
+            String passwordValue = password.getValue().trim();
+            String repeatPasswordValue = repeatPassword.getValue().trim();
 
-         buttonPrimary.addClickListener(event -> {
-            String email = emailField.getValue();
-            String telefono = textField3.getValue();
-            String passwordValue = password.getValue();
-            String repeatPasswordValue = repeatPassword.getValue();
-
-           
-            // Validazione email
-            if (!email.contains("@") ) {
-                Notification.show("L'email non valida", 3000, Notification.Position.MIDDLE);
+            if (nome.isEmpty() || cognome.isEmpty() || telefono.isEmpty() || email.isEmpty() || passwordValue.isEmpty() || repeatPasswordValue.isEmpty()) {
+                Notification.show("Ci sono dei campi vuoti", 3000, Notification.Position.MIDDLE);
                 return;
             }
 
-            // Validazione numero di telefono (deve avere 10 cifre)
+            if (!email.contains("@")) {
+                Notification.show("L'email non è valida", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
             if (!telefono.matches("\\d{10}")) {
                 Notification.show("Il numero di telefono deve avere esattamente 10 cifre", 3000, Notification.Position.MIDDLE);
                 return;
             }
 
-            // Validazione password (almeno 6 caratteri, una maiuscola e un numero)
             if (!isValidPassword(passwordValue)) {
                 Notification.show("La password deve essere lunga almeno 6 caratteri, contenere una maiuscola e un numero", 3000, Notification.Position.MIDDLE);
                 return;
             }
 
-            // Controllo che le password siano uguali
             if (!passwordValue.equals(repeatPasswordValue)) {
                 Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
                 return;
             }
 
-            // Se tutte le validazioni passano, naviga a MyView
+            VaadinSession session = VaadinSession.getCurrent();
+            if (session != null) {
+                session.setAttribute("nome", nome);
+                session.setAttribute("cognome", cognome);
+                session.setAttribute("telefono", telefono);
+                session.setAttribute("email", email);
+            }
+
+            Notification.show("Registrazione completata!", 3000, Notification.Position.MIDDLE);
             UI.getCurrent().navigate(MyViewView.class);
         });
 
+        buttonSecondary.addClickListener(event -> UI.getCurrent().navigate("home"));
         getContent().add(layoutColumn2);
     }
 
-    // Metodo per validare la password
     private boolean isValidPassword(String password) {
         return password.length() >= 6 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*");
     }

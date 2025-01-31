@@ -2,16 +2,12 @@ package unimarket.views.myview;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.avatar.Avatar;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Hr;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -51,62 +47,57 @@ public class MyViewView extends Composite<VerticalLayout> {
         MultiSelectListBox avatarItems = new MultiSelectListBox();
         VerticalLayout layoutColumn3 = new VerticalLayout();
         Hr hr = new Hr();
-        
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
-        getContent().add(layoutRow);
-        getContent().add(layoutRow2);
-
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.setHeight("100px");
-        layoutRow.add(tabs);
-        layoutRow.add(formLayout3Col);
         tabs.setWidth("555px");
-        
+        setTabsSampleData(tabs);
         formLayout3Col.setWidth("100%");
-        formLayout3Col.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2), new ResponsiveStep("500px", 3));
-        formLayout3Col.add(h1);
-        formLayout3Col.add(routerLink);
-        
+        formLayout3Col.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2),
+                new ResponsiveStep("500px", 3));
         h1.setText("UniMarket");
         h1.setWidth("max-content");
-        
         routerLink.setText("Custom View");
         routerLink.setRoute(MyViewView.class);
-        
         layoutRow2.addClassName(Gap.MEDIUM);
         layoutRow2.setWidth("100%");
         layoutRow2.getStyle().set("flex-grow", "1");
-        layoutRow2.add(layoutColumn2);
-        layoutRow2.add(layoutColumn3);
-
         layoutColumn2.setWidth("150px");
-        layoutColumn2.getStyle().set("flex-grow", "1");  
+        layoutColumn2.getStyle().set("flex-grow", "1");
+        select.setLabel("Select");
+        select.setWidth("130px");
+        setSelectSampleData(select);
+        multiSelectComboBox.setLabel("Multi-Select Combo Box");
+        multiSelectComboBox.setWidth("130px");
+        setMultiSelectComboBoxSampleData(multiSelectComboBox);
+        textItems.setWidth("130px");
+        setMultiSelectListBoxSampleData(textItems);
+        avatarItems.setWidth("130px");
+        setAvatarItemsSampleData(avatarItems);
+        layoutColumn3.addClassName(Padding.LARGE);
+        layoutColumn3.setWidth("100%");
+        layoutColumn3.getStyle().set("flex-grow", "1");
+        getContent().add(layoutRow);
+        layoutRow.add(tabs);
+        layoutRow.add(formLayout3Col);
+        formLayout3Col.add(h1);
+        formLayout3Col.add(routerLink);
+        getContent().add(layoutRow2);
+        layoutRow2.add(layoutColumn2);
         layoutColumn2.add(select);
         layoutColumn2.add(multiSelectComboBox);
         layoutColumn2.add(textItems);
         layoutColumn2.add(avatarItems);
-        
-        select.setLabel("Select");
-        select.setWidth("130px");
-        setSelectSampleData(select);
-        
-        multiSelectComboBox.setLabel("Multi-Select Combo Box");
-        multiSelectComboBox.setWidth("130px");
-        setMultiSelectComboBoxSampleData(multiSelectComboBox);
-        
-        textItems.setWidth("130px");
-        setMultiSelectListBoxSampleData(textItems);
-        
-        avatarItems.setWidth("130px");
-        setAvatarItemsSampleData(avatarItems);
-        
-        layoutColumn3.addClassName(Padding.LARGE);
-        layoutColumn3.setWidth("100%");
-        layoutColumn3.getStyle().set("flex-grow", "1");
+        layoutRow2.add(layoutColumn3);
         layoutColumn3.add(hr);
-        
+    }
+
+    private void setTabsSampleData(Tabs tabs) {
+        tabs.add(new Tab("Dashboard"));
+        tabs.add(new Tab("Payment"));
+        tabs.add(new Tab("Shipping"));
     }
 
     record SampleItem(String value, String label, Boolean disabled) {

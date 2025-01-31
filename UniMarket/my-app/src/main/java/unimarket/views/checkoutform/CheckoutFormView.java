@@ -1,9 +1,17 @@
 package unimarket.views.checkoutform;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.Component;
+
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
+
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -13,7 +21,8 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
 import com.vaadin.flow.theme.lumo.LumoUtility.Background;
 import com.vaadin.flow.theme.lumo.LumoUtility.BorderRadius;
@@ -32,6 +41,9 @@ import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.Position;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
+
+import unimarket.views.myview.MyViewView;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -84,33 +96,41 @@ public class CheckoutFormView extends Div {
         H3 header = new H3("Informazioni personali");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
+        // Recupera i dati dalla sessione
+        VaadinSession session = VaadinSession.getCurrent();
+        String nome = (String) session.getAttribute("nome");
+        String cognome = (String) session.getAttribute("cognome");
+        String email = (String) session.getAttribute("email");
+        String telefono = (String) session.getAttribute("telefono");
+
+        // Imposta i valori nei campi del modulo
         TextField name = new TextField("Nome");
         name.setRequiredIndicatorVisible(true);
         name.setPattern("[\\p{L} \\-]+");
-        name.addClassNames(Margin.Bottom.SMALL);
+        name.setValue(nome != null ? nome : "");  // Imposta il valore
 
         TextField lastName = new TextField("Cognome");
         lastName.setRequiredIndicatorVisible(true);
         lastName.setPattern("[\\p{L} \\-]+");
-        lastName.addClassNames(Margin.Bottom.SMALL);
+        lastName.setValue(cognome != null ? cognome : "");  // Imposta il valore
         
-        EmailField email = new EmailField("Email");
-        email.setRequiredIndicatorVisible(false);
-        email.addClassNames(Margin.Bottom.SMALL);
+        EmailField emailField = new EmailField("Email");
+        emailField.setRequiredIndicatorVisible(false);
+        emailField.setValue(email != null ? email : "");  // Imposta il valore
 
         TextField phone = new TextField("Numero di telefono");
         phone.setRequiredIndicatorVisible(false);
         phone.setPattern("[\\d \\-\\+]+");
-        phone.addClassNames(Margin.Bottom.SMALL);
+        phone.setValue(telefono != null ? telefono : "");  // Imposta il valore
 
-        Checkbox rememberDetails = new Checkbox("Ricoda i miei dati");
+        Checkbox rememberDetails = new Checkbox("Ricorda i miei dati");
         rememberDetails.addClassNames(Margin.Top.SMALL);
 
-        personalDetails.add(stepOne, header, name, lastName, email, phone, rememberDetails);
+        personalDetails.add(stepOne, header, name, lastName, emailField, phone, rememberDetails);
         return personalDetails;
     }
 
-    private Section createShippingAddressSection() {
+    private Component createShippingAddressSection() {
         Section shippingDetails = new Section();
         shippingDetails.addClassNames(Display.FLEX, FlexDirection.COLUMN, Margin.Bottom.XLARGE, Margin.Top.MEDIUM);
 
@@ -130,14 +150,29 @@ public class CheckoutFormView extends Div {
 
         TextField postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
-        postalCode.setPattern("[\\d \\p{L}]*");
+        postalCode.setPattern("\\d{5}");
+        postalCode.setErrorMessage("Il codice postale deve essere composto da 5 numeri");
         postalCode.addClassNames(Margin.Bottom.SMALL);
 
         TextField city = new TextField("Provincia");
         city.setRequiredIndicatorVisible(true);
         city.addClassNames(Flex.GROW, Margin.Bottom.SMALL);
 
-        subSection.add(postalCode, city);
+        Select<String> province = new Select<>();
+        province.setLabel("Provincia");
+        province.setRequiredIndicatorVisible(true);
+        province.setItems("Agrigento", "Alessandria", "Ancona", "Aosta", "Arezzo", "Ascoli Piceno", "Asti", "Avellino", "Bari", "Barletta-Andria-Trani",
+            "Belluno", "Benevento", "Bergamo", "Biella", "Bologna", "Bolzano", "Brescia", "Brindisi", "Cagliari", "Campobasso",
+            "Caserta", "Catania", "Catanzaro", "Chieti", "Cremona", "Crotone", "Cuneo", "Enna", "Fermo", "Ferrara", "Firenze",
+            "Foggia", "Forlì-Cesena", "Genova", "Gorizia", "Grosseto", "Imperia", "Isernia", "La Spezia", "L'Aquila", "Latina",
+            "Lecce", "Lecco", "Livorno", "Lodi", "Lucca", "Macerata", "Mantova", "Massa-Carrara", "Matera", "Milano", "Modena",
+            "Napoli", "Novara", "Nuoro", "Olbia-Tempio", "Padova", "Palermo", "Parma", "Pavia", "Perugia", "Pesaro e Urbino",
+            "Pescara", "Piacenza", "Pisa", "Pistoia", "Potenza", "Prato", "Ragusa", "Ravenna", "Reggio Calabria", "Reggio Emilia",
+            "Rieti", "Rimini", "Roma", "Salerno", "Sassari", "Savona", "Siena", "Siracusa", "Sondrio", "Taranto", "Teramo", "Terni",
+            "Torino", "Trapani", "Trento", "Varese", "Venezia", "Verbania", "Verona", "Vibo Valentia", "Vicenza", "Viterbo");
+        province.addClassNames(Margin.Bottom.SMALL);
+
+        subSection.add(postalCode, province);
 
         Checkbox rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
@@ -198,30 +233,70 @@ public class CheckoutFormView extends Div {
     private Footer createFooter() {
         Footer footer = new Footer();
         footer.addClassNames(Display.FLEX, AlignItems.CENTER, JustifyContent.BETWEEN, Margin.Vertical.MEDIUM);
-
+    
         Button cancel = new Button("Annulla ordine");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-
+    
         Button pay = new Button("Conferma", new Icon(VaadinIcon.LOCK));
         pay.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
-
+    
+        // Listener per il bottone "Conferma"
+        pay.addClickListener(event -> {
+            // Aggiungi un messaggio di conferma
+            Notification.show("Ordine confermato! Grazie per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
+    
+            // Naviga alla homepage (ad esempio "myview")
+            UI.getCurrent().navigate(MyViewView.class);
+        });
+    
         footer.add(cancel, pay);
+    
+        // Aggiungi il listener di clic per il pulsante "Annulla ordine"
+        cancel.addClickListener(event -> {
+            // Creiamo un dialogo di conferma
+            Dialog confirmationDialog = new Dialog();
+    
+            // Aggiungiamo un messaggio di conferma
+            Paragraph confirmationMessage = new Paragraph("Sei sicuro di voler annullare l'ordine?");
+            confirmationDialog.add(confirmationMessage);
+    
+            // Creiamo il pulsante "Sì"
+            Button confirmButton = new Button("Sì", e -> {
+                // Se confermato, navighiamo alla pagina di my-view
+                UI.getCurrent().navigate(MyViewView.class); // Cambia 'MyViewView' con la tua vista
+                confirmationDialog.close(); // Chiudiamo il dialogo
+            });
+    
+            // Creiamo il pulsante "No"
+            Button cancelButton = new Button("No", e -> {
+                // Se annullato, chiudiamo solo il dialogo
+                confirmationDialog.close();
+            });
+    
+            // Aggiungiamo i pulsanti nel dialogo
+            confirmationDialog.add(confirmButton, cancelButton);
+    
+            // Mostriamo il dialogo
+            confirmationDialog.open();
+        });
+    
+        // Aggiungi il pulsante alla tua UI
         return footer;
     }
-
+    
     private Aside createAside() {
         Aside aside = new Aside();
         aside.addClassNames(Background.CONTRAST_5, BoxSizing.BORDER, Padding.LARGE, BorderRadius.LARGE, Position.STICKY);
-        
+
         Header headerSection = new Header();
         headerSection.addClassNames(Display.FLEX, AlignItems.CENTER, JustifyContent.BETWEEN, Margin.Bottom.MEDIUM);
-        
+
         H3 header = new H3("Riepilogo ordine");
         header.addClassNames(Margin.NONE);
-        
+
         Button edit = new Button("Modifica");
         edit.addThemeVariants(ButtonVariant.LUMO_SMALL);
-        
+
         headerSection.add(header, edit);
 
         UnorderedList ul = new UnorderedList();
@@ -252,4 +327,4 @@ public class CheckoutFormView extends Div {
         item.add(subSection, priceSpan);
         return item;
     }
-}
+}  
