@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.components.avataritem.AvatarItem;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+
 
 @PageTitle("My View")
 @Route("")

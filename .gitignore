@@ -12,3 +12,4 @@ Documentazione/*.blg
 Documentazione/*.nav
 Documentazione/*.snm
 Documentazione/*.vrb
+.DS_Store

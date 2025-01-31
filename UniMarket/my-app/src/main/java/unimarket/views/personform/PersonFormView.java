@@ -17,13 +17,23 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import unimarket.views.myview.MyViewView;  // Import della schermata MyView
+import com.vaadin.flow.component.notification.Notification;
+
+import com.vaadin.flow.component.UI;
+
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
+<<<<<<< Updated upstream
 @PageTitle("Registrazione")
+=======
+
+@PageTitle("Login")
+>>>>>>> Stashed changes
 @Route("login")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
-
+   
     public PersonFormView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
@@ -86,9 +96,47 @@ public class PersonFormView extends Composite<VerticalLayout> {
         
         buttonSecondary.setText("Annulla");
         buttonSecondary.setWidth("fill");
-        
+
+         buttonPrimary.addClickListener(event -> {
+            String email = emailField.getValue();
+            String telefono = textField3.getValue();
+            String passwordValue = password.getValue();
+            String repeatPasswordValue = repeatPassword.getValue();
+
+           
+            // Validazione email
+            if (!email.contains("@") ) {
+                Notification.show("L'email non valida", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
+            // Validazione numero di telefono (deve avere 10 cifre)
+            if (!telefono.matches("\\d{10}")) {
+                Notification.show("Il numero di telefono deve avere esattamente 10 cifre", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
+            // Validazione password (almeno 6 caratteri, una maiuscola e un numero)
+            if (!isValidPassword(passwordValue)) {
+                Notification.show("La password deve essere lunga almeno 6 caratteri, contenere una maiuscola e un numero", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
+            // Controllo che le password siano uguali
+            if (!passwordValue.equals(repeatPasswordValue)) {
+                Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
+            // Se tutte le validazioni passano, naviga a MyView
+            UI.getCurrent().navigate(MyViewView.class);
+        });
+
         getContent().add(layoutColumn2);
-       
-       
+    }
+
+    // Metodo per validare la password
+    private boolean isValidPassword(String password) {
+        return password.length() >= 6 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*");
     }
 }
