@@ -11,8 +11,8 @@ public class Cliente extends Utente {
 	private int id;
 	private String indirizzo;
 	
-	public Cliente(int ID, String nome, String cognome, String numero_telefono, String email, String password, String indirizzo) {
-		super(nome, cognome, numero_telefono, email, password);
+	public Cliente(int ID, String nome, String cognome, String numeroTelefono, String email, String password, String indirizzo) {
+		super(nome, cognome, numeroTelefono, email, password);
 		this.indirizzo = indirizzo;
 		this.id = ID;
 	}
@@ -20,11 +20,16 @@ public class Cliente extends Utente {
 	public String getIndirizzo() {
 		return indirizzo;
 	}
+	
 	private List<CartaCredito> carte = new ArrayList<>();
 
 	public void aggiungiCartaCredito(CartaCredito carta) {
 		carta.nuovaCarta();
 		carte.add(carta);
+	}
+	
+	public void rimuoviCartaCredito(CartaCredito carta) {
+		carte.remove(carta);
 	}
 
 	public List<CartaCredito> getCarte() {

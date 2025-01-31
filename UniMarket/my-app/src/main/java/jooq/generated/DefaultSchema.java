@@ -7,7 +7,6 @@ package jooq.generated;
 import java.util.Arrays;
 import java.util.List;
 
-import jooq.generated.tables.Amministratore;
 import jooq.generated.tables.Carrello;
 import jooq.generated.tables.CartaCredito;
 import jooq.generated.tables.Cliente;
@@ -31,11 +30,6 @@ public class DefaultSchema extends SchemaImpl {
      * The reference instance of <code>DEFAULT_SCHEMA</code>
      */
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
-
-    /**
-     * The table <code>amministratore</code>.
-     */
-    public final Amministratore AMMINISTRATORE = Amministratore.AMMINISTRATORE;
 
     /**
      * The table <code>carrello</code>.
@@ -78,7 +72,6 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Amministratore.AMMINISTRATORE,
             Carrello.CARRELLO,
             CartaCredito.CARTA_CREDITO,
             Cliente.CLIENTE,

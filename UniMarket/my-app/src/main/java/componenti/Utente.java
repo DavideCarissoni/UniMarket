@@ -9,7 +9,7 @@ public abstract class Utente {
 
 	private static int ID=0;
 	private String nome;
-	private String  cognome;
+	private String cognome;
 	private String numeroTelefono;
 	private String email;
 	private String password;
@@ -24,11 +24,11 @@ public abstract class Utente {
 		this.password = password;
 	}
 	
-	public void creaAccount(){
+	public void creaAccount(String nome, String cognome, String numetoTelefono, String email, String password){
 		try {
 			DSLContext create = CreateDatabase.getDSLContext();
 			create.insertInto(Tables.UTENTE, Tables.UTENTE.ID, Tables.UTENTE.NOME, Tables.UTENTE.COGNOME, Tables.UTENTE.NUMERO_TELEFONO, Tables.UTENTE.EMAIL, Tables.UTENTE.PASSWORD)
-			.values(null, this.nome, this.cognome, this.numeroTelefono, this.email, this.password)
+			.values(null, nome, cognome, numeroTelefono, email, password)
 			.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

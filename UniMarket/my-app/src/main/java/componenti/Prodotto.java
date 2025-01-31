@@ -26,7 +26,7 @@ public class Prodotto {
             DSLContext create = CreateDatabase.getDSLContext();
             create.insertInto(Tables.PRODOTTO, Tables.PRODOTTO.CODICE, Tables.PRODOTTO.NOME, Tables.PRODOTTO.DESCRIZIONE, 
             Tables.PRODOTTO.PREZZO, Tables.PRODOTTO.QUANTITÀ)
-            .values(Prodotto.codice, this.nome, this.descrizione, this.prezzo, this.quantita)
+            .values(Prodotto.codice, nome, descrizione, prezzo, quantita)
             .execute();
         } catch (SQLException e) {
             e.printStackTrace();
