@@ -17,35 +17,45 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import org.jooq.DSLContext;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
+<<<<<<< Updated upstream
 import unimarket.views.myview.MyViewView;  
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
+=======
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.notification.Notification;
+import unimarket.services.UtenteService;
+>>>>>>> Stashed changes
 
 @PageTitle("Registrazione")
 @Route("login")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
 
-    public PersonFormView() {
+    private final UtenteService utenteService;
+    public PersonFormView(UtenteService utenteService) {
+        this.utenteService = utenteService;
+
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();
-        TextField textField = new TextField();
-        TextField textField2 = new TextField();
-        TextField textField3 = new TextField();
-        EmailField emailField = new EmailField();
+        TextField textField = new TextField(); //nome
+        TextField textField2 = new TextField(); //cognome
+        NumberField textField3 = new NumberField(); //telefono
+        EmailField emailField = new EmailField(); //email
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
         Button buttonSecondary = new Button();
         PasswordField password = new PasswordField();
         PasswordField repeatPassword = new PasswordField();
-          
+
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
         getContent().setAlignItems(Alignment.CENTER);
-        
+
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
@@ -53,10 +63,10 @@ public class PersonFormView extends Composite<VerticalLayout> {
         layoutColumn2.setAlignItems(Alignment.CENTER);
         layoutColumn2.add(formLayout2Col);
         layoutColumn2.add(layoutRow);
-        
+
         h3.setText("Informazioni personali");
         h3.setWidth("100%");
-        
+
         formLayout2Col.setWidth("100%");
         formLayout2Col.add(textField);
         formLayout2Col.add(textField2);
@@ -65,32 +75,56 @@ public class PersonFormView extends Composite<VerticalLayout> {
         formLayout2Col.add(password);
         formLayout2Col.add(repeatPassword);
         formLayout2Col.getElement().appendChild(ElementFactory.createBr());
-        
+
         textField.setLabel("Nome");
         textField2.setLabel("Cognome");
         textField3.setLabel("Numero di telefono");
         emailField.setLabel("Email");
         password.setLabel("Password");
         repeatPassword.setLabel("Ripeti password");
-        
+
         password.setWidth("100%");
-        
+
         repeatPassword.setWidth("100%");
-        
+
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
-        
+
         buttonPrimary.setText("Salva");
         buttonPrimary.setWidth("fill");
         buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        
+
         buttonSecondary.setText("Annulla");
         buttonSecondary.setWidth("fill");
-        
+
+
+        buttonPrimary.addClickListener(event -> {
+            String nome = textField.getValue();
+            String cognome = textField2.getValue();
+            double numeroTelefono = textField3.getValue();
+            String email = emailField.getValue();
+            String pwd = password.getValue();
+            String repeatPwd = repeatPassword.getValue();
+
+            if (!pwd.equals(repeatPwd)) {
+                Notification.show("Le password non coincidono");
+                return;
+            }
+
+            if (!utenteService.isEmailUnique(email)) {
+                Notification.show("L'email è già utilizzata");
+                return;
+            }
+
+            utenteService.saveUser(nome, cognome, numeroTelefono, email, pwd);
+            Notification.show("Utente salvato con successo");
+        });
+
         getContent().add(layoutColumn2);
+<<<<<<< Updated upstream
        
         buttonPrimary.addClickListener(event -> {
         	String nome = textField.getValue();
@@ -136,5 +170,7 @@ public class PersonFormView extends Composite<VerticalLayout> {
     // Metodo per validare la password
     private boolean isValidPassword(String password) {
         return password.length() >= 6 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*");
+=======
+>>>>>>> Stashed changes
     }
 }
