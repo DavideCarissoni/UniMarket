@@ -3,6 +3,7 @@ package unimarket.views.myview;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
@@ -11,13 +12,9 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Menu;
@@ -26,19 +23,19 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
+import componenti.Prodotto;
 import java.util.ArrayList;
 import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.components.avataritem.AvatarItem;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
+import unimarket.services.ProdottoService;
 
-@PageTitle("My View")
+@PageTitle("Homepage")
 @Route("")
 @Menu(order = 0, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class MyViewView extends Composite<VerticalLayout> {
-
-    public MyViewView() {
+  
+    public MyViewView(ProdottoService prodottoService) {
         HorizontalLayout layoutRow = new HorizontalLayout();
         Tabs tabs = new Tabs();
         FormLayout formLayout3Col = new FormLayout();
@@ -105,34 +102,47 @@ public class MyViewView extends Composite<VerticalLayout> {
         layoutColumn3.getStyle().set("flex-grow", "1");
         layoutColumn3.add(hr);
         
-        // Create a new VerticalLayout for the box
-        VerticalLayout boxLayout = new VerticalLayout();
-        boxLayout.setWidth("200px"); // Set the width of the box
-        boxLayout.setHeight("300px"); // Set the height of the box
-        boxLayout.getStyle().set("border", "1px solid #000"); // Add a border to the box
-        boxLayout.getStyle().set("padding", "10px"); // Add padding to the box
+        List<Prodotto> prodotti = prodottoService.getAllProdotti();
+        
+        for(Prodotto prodotto : prodotti) {
 
-        // Create an Image component
-        Image image = new Image("path/to/image.jpg", "Product Image");
-        image.setWidth("100%"); // Set the image to fill the width of the box
+            // Create a new VerticalLayout for the box
+            VerticalLayout boxLayout = new VerticalLayout();
+            boxLayout.setWidth("220px");  
+            boxLayout.setHeight("320px");  
+            boxLayout.getStyle()
+            	.set("border-radius", "15px")
+            	.set("border", "1px solid #ccc")
+            	.set("background-color", "#8ba6cc")
+            	.set("padding", "15px")
+            	.set("box-shadow", "2px 2px 5px rgba(0,0,0,0.1");  
+            
+            Button buttonPrimary = new Button(); 
+            buttonPrimary.setText("Aggiungi");
+            buttonPrimary.setWidthFull();
+            buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        // Create a Span for the name
-        Span name = new Span("Product Name");
-        name.getStyle().set("font-weight", "bold"); // Make the name bold
+            // Create an Image component
+            Image image = new Image("media/icon.jpg", "Product Image");
+            image.setWidth("100%"); 
+            
+            // Create a Span for the name
+            Span name = new Span(prodotto.getNome());
+            name.getStyle().set("font-weight", "bold"); 
 
-        // Create a Span for the price
-        Span price = new Span("$100.00");
-        price.getStyle().set("color", "green"); // Set the price color to green
+            // Create a Span for the price
+            Span price = new Span(String.format("$%.2f", prodotto.getPrezzo()));
+            price.getStyle().set("color", "green"); 
 
-        // Add the components to the box layout
-        boxLayout.add(image, name, price);
+            // Add the components to the box layout
+            boxLayout.add(image, name, price, buttonPrimary);
 
-        // Add the box layout to the right column
-        layoutColumn3.add(boxLayout);
-
-        // Add the right column to the second row layout
+            // Add the box layout to the right column
+            layoutColumn3.add(boxLayout);
+        }
+        
         layoutRow2.add(layoutColumn3);
-  
+
     }
 
     record SampleItem(String value, String label, Boolean disabled) {

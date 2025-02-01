@@ -14,8 +14,8 @@ public class Amministratore extends Utente{
 
 	private Prodotto prodotto;
 	
-	public void aggiungiProdotto(String nome, String descrizione, float prezzo, int quantita) {
-		prodotto.nuovoProdotto(nome, descrizione, prezzo, quantita);
+	public void aggiungiProdotto(Prodotto prodotto) {
+		prodotto.nuovoProdotto(prodotto);
 	}
 
 	public void modificaQuantita(int codice, int quantita) {

@@ -2,12 +2,16 @@ package componenti;
 
 import java.sql.SQLException;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.impl.DSL;
+
 import db.CreateDatabase;
 import jooq.generated.Tables;
 
 public abstract class Utente {
 
 	private static int ID=0;
+	private int id;
 	private String nome;
 	private String cognome;
 	private String numeroTelefono;
@@ -16,7 +20,7 @@ public abstract class Utente {
 	
 	protected Utente(String nome, String cognome, String numero_telefono, String email, String password) {
 		super();
-		Utente.ID = ID++;
+		this.id = ID++;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.numeroTelefono = numero_telefono;
@@ -28,7 +32,7 @@ public abstract class Utente {
 		try {
 			DSLContext create = CreateDatabase.getDSLContext();
 			create.insertInto(Tables.UTENTE, Tables.UTENTE.ID, Tables.UTENTE.NOME, Tables.UTENTE.COGNOME, Tables.UTENTE.NUMERO_TELEFONO, Tables.UTENTE.EMAIL, Tables.UTENTE.PASSWORD)
-			.values(null, nome, cognome, numeroTelefono, email, password)
+			.values(this.id, nome, cognome, numeroTelefono, email, password)
 			.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,7 +51,7 @@ public abstract class Utente {
 	}
 	
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	public String getNome() {
