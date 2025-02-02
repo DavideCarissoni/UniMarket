@@ -1,31 +1,37 @@
 package unimarket.views.gridwithfilters;
 
-import com.vaadin.flow.component.Component;
+import com.vaadin.flow.data.provider.ListDataProvider;
+import org.jooq.DSLContext;
+import org.jooq.Result;
+import org.jooq.impl.DSL;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import db.CreateDatabase;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jooq.generated.tables.Utente;
+import jooq.generated.tables.records.UtenteRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -41,10 +47,12 @@ import unimarket.services.UtenteService;
 public class GridwithFiltersView extends Div {
 
     private final UtenteService utenteService;
-    private Grid<Utente> grid;
+    private Grid<UtenteRecord> grid = new Grid<>(UtenteRecord.class);
+
 
     private Filters filters;
 
+    @Autowired
     public GridwithFiltersView(UtenteService utenteService) {
         this.utenteService = utenteService;
         setSizeFull();
@@ -178,15 +186,23 @@ public class GridwithFiltersView extends Div {
     }
 
     private void configureGrid() {
-        grid = new Grid<>(Utente.class);
-        grid.addClassNames("utente-grid");
         grid.setSizeFull();
-        grid.setColumns("id", "nome", "cognome", "numero_telefono", "email", "password");
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.setColumns("id", "nome", "cognome", "numeroTelefono", "email");
+    }
+
+    private void updateList() {
+        grid.setDataProvider(new ListDataProvider<>(fetchUsersFromDatabase()));
     }
 
 
-    private void updateList() {
-        grid.setItems(query -> utenteService.findAll(PageRequest.of(query.getPage(), query.getPageSize())).stream());
+    private List<UtenteRecord> fetchUsersFromDatabase() {
+        try (Connection conn = CreateDatabase.getInstance().getConnection()) {
+            DSLContext dsl = DSL.using(conn);
+            Result<UtenteRecord> result = dsl.selectFrom(Utente.UTENTE).fetch();
+            return result.stream().collect(Collectors.toList());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return List.of();
+        }
     }
 }
