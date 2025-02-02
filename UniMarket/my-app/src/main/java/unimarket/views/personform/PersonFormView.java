@@ -17,17 +17,13 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
-import org.jooq.DSLContext;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
-<<<<<<< Updated upstream
-import unimarket.views.myview.MyViewView;  
+import unimarket.data.SamplePerson;
+import unimarket.views.myview.MyViewView;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
-=======
-import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.component.notification.Notification;
 import unimarket.services.UtenteService;
->>>>>>> Stashed changes
+import unimarket.data.SamplePersonRepository;
 
 @PageTitle("Registrazione")
 @Route("login")
@@ -43,7 +39,7 @@ public class PersonFormView extends Composite<VerticalLayout> {
         FormLayout formLayout2Col = new FormLayout();
         TextField textField = new TextField(); //nome
         TextField textField2 = new TextField(); //cognome
-        NumberField textField3 = new NumberField(); //telefono
+        TextField textField3 = new TextField(); //telefono
         EmailField emailField = new EmailField(); //email
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
@@ -100,31 +96,7 @@ public class PersonFormView extends Composite<VerticalLayout> {
         buttonSecondary.setText("Annulla");
         buttonSecondary.setWidth("fill");
 
-
-        buttonPrimary.addClickListener(event -> {
-            String nome = textField.getValue();
-            String cognome = textField2.getValue();
-            double numeroTelefono = textField3.getValue();
-            String email = emailField.getValue();
-            String pwd = password.getValue();
-            String repeatPwd = repeatPassword.getValue();
-
-            if (!pwd.equals(repeatPwd)) {
-                Notification.show("Le password non coincidono");
-                return;
-            }
-
-            if (!utenteService.isEmailUnique(email)) {
-                Notification.show("L'email è già utilizzata");
-                return;
-            }
-
-            utenteService.saveUser(nome, cognome, numeroTelefono, email, pwd);
-            Notification.show("Utente salvato con successo");
-        });
-
         getContent().add(layoutColumn2);
-<<<<<<< Updated upstream
        
         buttonPrimary.addClickListener(event -> {
         	String nome = textField.getValue();
@@ -158,19 +130,22 @@ public class PersonFormView extends Composite<VerticalLayout> {
                 Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
                 return;
             }
+
+            // Creazione e salvataggio del nuovo utente
+            utenteService.saveUser(nome, cognome, telefono, email, passwordValue);
+
+            Notification.show("Utente salvato con successo", 3000, Notification.Position.MIDDLE);
+
             // Se tutte le validazioni passano, naviga a MyView
             UI.getCurrent().navigate(MyViewView.class);
+
+
         });
-        
-        buttonSecondary.addClickListener(event -> 
-        	UI.getCurrent().navigate(MyViewView.class)
-        );
+
     }
     
     // Metodo per validare la password
     private boolean isValidPassword(String password) {
         return password.length() >= 6 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*");
-=======
->>>>>>> Stashed changes
     }
 }

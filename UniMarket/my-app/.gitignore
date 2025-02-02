@@ -4,6 +4,7 @@
 .settings
 .project
 .classpath
+.idea/
 
 *.iml
 .DS_Store
