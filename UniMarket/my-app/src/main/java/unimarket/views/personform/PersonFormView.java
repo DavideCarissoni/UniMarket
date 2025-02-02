@@ -130,6 +130,10 @@ public class PersonFormView extends Composite<VerticalLayout> {
                 Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
                 return;
             }
+            if (!utenteService.isEmailUnique(email)) {
+                Notification.show("Email già in uso", 3000, Notification.Position.MIDDLE);
+                return;
+            }
 
             // Creazione e salvataggio del nuovo utente
             utenteService.saveUser(nome, cognome, telefono, email, passwordValue);
@@ -141,7 +145,6 @@ public class PersonFormView extends Composite<VerticalLayout> {
 
 
         });
-
     }
     
     // Metodo per validare la password

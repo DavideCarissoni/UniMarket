@@ -1,7 +1,6 @@
 package unimarket.services;
 
 import db.CreateDatabase;
-import jooq.generated.tables.records.UtenteRecord;
 import jooq.generated.tables.Utente;
 import org.jooq.DSLContext;
 import org.springframework.data.domain.Page;
@@ -30,10 +29,21 @@ public class UtenteService {
     }
 
     public boolean isEmailUnique(String email) {
-        return dsl.fetchCount(
-                dsl.selectFrom(Utente.UTENTE)
-                        .where(Utente.UTENTE.EMAIL.eq(email))
-        ) == 0;
+        String sql = "SELECT COUNT(*) FROM utente WHERE email = ?";
+
+        try (Connection conn = CreateDatabase.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log dell'errore
+        }
+        return false; // In caso di errore, meglio restituire false per evitare registrazioni duplicate
     }
 
 
@@ -82,13 +92,22 @@ public class UtenteService {
         return false;
     }
 
+    public boolean authenticate(String email, String password) {
+        String sql = "SELECT password FROM utente WHERE email = ?";
 
+        try (Connection conn = CreateDatabase.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
 
-    public Page<Utente> findAll(PageRequest pageRequest) {
-        List<Utente> utenti = dsl.selectFrom(Utente.UTENTE)
-                .limit(pageRequest.getPageSize())
-                .offset((int) pageRequest.getOffset())
-                .fetchInto(Utente.class);
-        return new PageImpl<>(utenti, pageRequest, dsl.fetchCount(dsl.selectFrom(Utente.UTENTE)));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String hashedPassword = rs.getString(1);
+                    return passwordEncoder.matches(password, hashedPassword);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
