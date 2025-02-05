@@ -1,11 +1,11 @@
 package db;
-import java.io.File;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-
 import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /*Classe per la generazione del database con connessione 
@@ -21,23 +21,20 @@ public class CreateDatabase {
 
     private static CreateDatabase instance;
     private Connection connection;
-    
+    private DSLContext dslContext;
+
     // Metodo per ottenere la connessione al database
     private CreateDatabase(){
-        // Controlla che la directory esista, altrimenti la crea
-        File dbDir = new File(DB_PATH);
-        if (!dbDir.exists()) {
-            boolean created = dbDir.mkdirs();
-            if (created) {
-            	LOGGER.info("Directory creata: " + DB_PATH);
-            } else {
-                LOGGER.warning("Errore nella creazione della directory " + DB_PATH);
-            }
+    	try {
+            this.connection = DriverManager.getConnection(URL);
+            this.dslContext = DSL.using(connection, SQLDialect.SQLITE);
+        } catch (SQLException e) {
+        	LOGGER.warning("Errore nella creazione della directory " + DB_PATH);
         }
     }
 
-    public static DSLContext getDSLContext() throws SQLException {
-        return DSL.using(getInstance().getConnection());
+    public DSLContext getDSLContext() {
+        return dslContext;
     }
 
     public static synchronized CreateDatabase getInstance() {
@@ -50,6 +47,7 @@ public class CreateDatabase {
     public synchronized Connection getConnection() throws SQLException {
         if(connection == null || connection.isClosed()) {
         	connection = DriverManager.getConnection(URL);
+            dslContext = DSL.using(connection, SQLDialect.SQLITE);
         }
 		return connection;	
     }

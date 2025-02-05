@@ -37,7 +37,7 @@ public class Cliente extends Utente {
 
 	public void salvaDati(){
 		try {
-			DSLContext create = CreateDatabase.getDSLContext();
+			DSLContext create = CreateDatabase.getInstance().getDSLContext();
 			create.insertInto(Tables.CLIENTE, Tables.CLIENTE.ID, Tables.CLIENTE.INDIRIZZO, Tables.CLIENTE.NUMERO_CARTA)
 			.values(this.id, this.indirizzo, this.carte.toString())
 			.execute();

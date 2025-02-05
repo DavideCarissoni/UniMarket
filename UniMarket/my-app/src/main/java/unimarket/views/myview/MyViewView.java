@@ -35,7 +35,7 @@ import unimarket.services.ProdottoService;
 @Menu(order = 0, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class MyViewView extends Composite<VerticalLayout> {
   
-    public MyViewView(ProdottoService prodottoService) {
+    public MyViewView(ProdottoService prodottoService) {        
         HorizontalLayout layoutRow = new HorizontalLayout();
         Tabs tabs = new Tabs();
         FormLayout formLayout3Col = new FormLayout();

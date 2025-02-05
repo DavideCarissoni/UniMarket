@@ -1,7 +1,5 @@
 package componenti;
 
-import java.sql.SQLException;
-
 import org.jooq.DSLContext;
 import jooq.generated.Tables;
 
@@ -23,15 +21,14 @@ public class CartaCredito {
 
     public void nuovaCarta(){
         try {
-            DSLContext create = CreateDatabase.getDSLContext();
-            create.insertInto(Tables.CARTA_CREDITO, Tables.CARTA_CREDITO.NUMERO_CARTA, Tables.CARTA_CREDITO.CODICE_SICUREZZA, 
+            DSLContext create = CreateDatabase.getInstance().getDSLContext();            create.insertInto(Tables.CARTA_CREDITO, Tables.CARTA_CREDITO.NUMERO_CARTA, Tables.CARTA_CREDITO.CODICE_SICUREZZA, 
             		Tables.CARTA_CREDITO.NOME_INTESTATARIO, Tables.CARTA_CREDITO.COGNOME_INTESTATARIO)
             .values(this.numeroCarta, this.codiceSicurezza, this.nomeIntestatario, this.cognomeIntestatario)
             .execute();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-}
+    }
 
     public String getNumeroCarta() {
         return numeroCarta;

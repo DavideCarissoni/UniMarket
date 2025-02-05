@@ -1,10 +1,6 @@
 package componenti;
 
-import java.sql.SQLException;
 import org.jooq.DSLContext;
-import org.jooq.Record1;
-import org.jooq.impl.DSL;
-
 import jooq.generated.Tables;
 import db.CreateDatabase;
 
@@ -27,35 +23,35 @@ public class Prodotto {
 
     public void nuovoProdotto(Prodotto prodotto){
         try {
-            DSLContext create = CreateDatabase.getDSLContext();
+            DSLContext create = CreateDatabase.getInstance().getDSLContext();
             create.insertInto(Tables.PRODOTTO, Tables.PRODOTTO.CODICE, Tables.PRODOTTO.NOME, Tables.PRODOTTO.DESCRIZIONE, 
             Tables.PRODOTTO.PREZZO, Tables.PRODOTTO.QUANTITÀ)
             .values(prodotto.getCodice(), prodotto.getNome(), prodotto.getDescrizione(), prodotto.getPrezzo(), prodotto.getQuantita())
             .execute();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
         public void modificaQuantita(int codice, int quantita){
         try {
-            DSLContext create = CreateDatabase.getDSLContext();
+            DSLContext create = CreateDatabase.getInstance().getDSLContext();
             create.update(Tables.PRODOTTO)
             .set(Tables.PRODOTTO.QUANTITÀ, quantita)
             .where(Tables.PRODOTTO.CODICE.eq(codice))
             .execute();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void rimuoviProdotto(int codice){
         try {
-            DSLContext create = CreateDatabase.getDSLContext();
+            DSLContext create = CreateDatabase.getInstance().getDSLContext();
             create.delete(Tables.PRODOTTO)
             .where(Tables.PRODOTTO.CODICE.eq(codice))
             .execute();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
