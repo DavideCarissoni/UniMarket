@@ -50,6 +50,17 @@ import unimarket.views.myview.MyViewView;
 @Menu(order = 2, icon = LineAwesomeIconUrl.CREDIT_CARD)
 public class CheckoutFormView extends Div {
 
+    // Dichiarazione delle variabili dei campi globalmente
+    private TextArea address;
+    private TextField postalCode;
+    private TextField city;
+    private Select<String> province;
+    private TextField cardHolder;
+    private TextField cardNumber;
+    private TextField securityCode;
+    private Select<String> expirationMonth;
+    private Select<String> expirationYear;
+
     public CheckoutFormView() {
         addClassNames("checkout-form-view");
         addClassNames(Display.FLEX, FlexDirection.COLUMN, Height.FULL);
@@ -73,7 +84,6 @@ public class CheckoutFormView extends Div {
         note.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
         checkoutForm.add(header, note);
 
-        checkoutForm.add(createPersonalDetailsSection());
         checkoutForm.add(createShippingAddressSection());
         checkoutForm.add(createPaymentInformationSection());
         checkoutForm.add(new Hr());
@@ -82,48 +92,11 @@ public class CheckoutFormView extends Div {
         return checkoutForm;
     }
 
-    private Section createPersonalDetailsSection() {
-        Section personalDetails = new Section();
-        personalDetails.addClassNames(Display.FLEX, FlexDirection.COLUMN, Margin.Bottom.XLARGE, Margin.Top.MEDIUM);
-
-        Paragraph stepOne = new Paragraph("Checkout 1/3");
-        stepOne.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
-
-        H3 header = new H3("Informazioni personali");
-        header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
-
-        TextField name = new TextField("Nome");
-        name.setRequiredIndicatorVisible(true);
-        name.setPattern("[\\p{L} \\-]+");
-        name.addClassNames(Margin.Bottom.SMALL);
-
-        TextField lastName = new TextField("Cognome");
-        lastName.setRequiredIndicatorVisible(true);
-        lastName.setPattern("[\\p{L} \\-]+");
-        lastName.addClassNames(Margin.Bottom.SMALL);
-        
-        EmailField email = new EmailField("Email");
-        email.setRequiredIndicatorVisible(false);
-        email.addClassNames(Margin.Bottom.SMALL);
-
-        TextField phone = new TextField("Numero di telefono");
-        phone.setRequiredIndicatorVisible(false);
-        phone.setPattern("[\\d \\-\\+]+");
-        phone.addClassNames(Margin.Bottom.SMALL);
-
-        Checkbox rememberDetails = new Checkbox("Ricoda i miei dati");
-        rememberDetails.addClassNames(Margin.Top.SMALL);
-
-        personalDetails.add(stepOne, header, name, lastName, email, phone, rememberDetails);
-        return personalDetails;
-        
-    }
-
-    private Section createShippingAddressSection() {
+    private Component createShippingAddressSection() {
         Section shippingDetails = new Section();
         shippingDetails.addClassNames(Display.FLEX, FlexDirection.COLUMN, Margin.Bottom.XLARGE, Margin.Top.MEDIUM);
 
-        Paragraph stepTwo = new Paragraph("Checkout 2/3");
+        Paragraph stepTwo = new Paragraph("Checkout 1/2");
         stepTwo.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
 
         H3 header = new H3("Indirizzo di spedizione");
@@ -139,7 +112,7 @@ public class CheckoutFormView extends Div {
 
         TextField postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
-        postalCode.setPattern("[\\d \\p{L}]*");
+        postalCode.setPattern("\\d{5}");
         postalCode.setErrorMessage("Il codice postale deve essere composto da 5 numeri");
         postalCode.addClassNames(Margin.Bottom.SMALL);
 
@@ -147,19 +120,33 @@ public class CheckoutFormView extends Div {
         city.setRequiredIndicatorVisible(true);
         city.addClassNames(Flex.GROW, Margin.Bottom.SMALL);
 
-        subSection.add(postalCode, city);
+        Select<String> province = new Select<>();
+        province.setLabel("Provincia");
+        province.setRequiredIndicatorVisible(true);
+        province.setItems("Agrigento", "Alessandria", "Ancona", "Aosta", "Arezzo", "Ascoli Piceno", "Asti", "Avellino", "Bari", "Barletta-Andria-Trani",
+            "Belluno", "Benevento", "Bergamo", "Biella", "Bologna", "Bolzano", "Brescia", "Brindisi", "Cagliari", "Campobasso",
+            "Caserta", "Catania", "Catanzaro", "Chieti", "Cremona", "Crotone", "Cuneo", "Enna", "Fermo", "Ferrara", "Firenze",
+            "Foggia", "Forlì-Cesena", "Genova", "Gorizia", "Grosseto", "Imperia", "Isernia", "La Spezia", "L'Aquila", "Latina",
+            "Lecce", "Lecco", "Livorno", "Lodi", "Lucca", "Macerata", "Mantova", "Massa-Carrara", "Matera", "Milano", "Modena",
+            "Napoli", "Novara", "Nuoro", "Olbia-Tempio", "Padova", "Palermo", "Parma", "Pavia", "Perugia", "Pesaro e Urbino",
+            "Pescara", "Piacenza", "Pisa", "Pistoia", "Potenza", "Prato", "Ragusa", "Ravenna", "Reggio Calabria", "Reggio Emilia",
+            "Rieti", "Rimini", "Roma", "Salerno", "Sassari", "Savona", "Siena", "Siracusa", "Sondrio", "Taranto", "Teramo", "Terni",
+            "Torino", "Trapani", "Trento", "Varese", "Venezia", "Verbania", "Verona", "Vibo Valentia", "Vicenza", "Viterbo");
+        province.addClassNames(Margin.Bottom.SMALL);
+
+        subSection.add(postalCode, province);
 
         Checkbox rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
         shippingDetails.add(stepTwo, header, address, subSection, rememberAddress);
-        return shippingDetails;
+        return shippingDetails; // Returns the correct type Component
     }
 
     private Component createPaymentInformationSection() {
         Section paymentInfo = new Section();
         paymentInfo.addClassNames(Display.FLEX, FlexDirection.COLUMN, Margin.Bottom.XLARGE, Margin.Top.MEDIUM);
 
-        Paragraph stepThree = new Paragraph("Checkout 3/3");
+        Paragraph stepThree = new Paragraph("Checkout 2/2");
         stepThree.addClassNames(Margin.NONE, FontSize.SMALL, TextColor.SECONDARY);
 
         H3 header = new H3("Informazioni pagamento");
@@ -217,7 +204,7 @@ public class CheckoutFormView extends Div {
         
         // Listener per il bottone "Conferma"
         pay.addClickListener(event -> {
-        	Notification.show("Ordine confermato! Graze per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
+        	Notification.show("Ordine confermato! Grazie per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
 
         	// Naviga alla homepage 
         	UI.getCurrent().navigate(MyViewView.class);
@@ -241,10 +228,8 @@ public class CheckoutFormView extends Div {
                 confirmationDialog.close();
             });
     
-            // Aggiungiamo i pulsanti nel dialogo
+            // Aggiungiamo i pulsanti
             confirmationDialog.add(confirmButton, cancelButton);
-    
-            // Mostriamo il dialogo
             confirmationDialog.open();
         });
         
@@ -297,4 +282,4 @@ public class CheckoutFormView extends Div {
         item.add(subSection, priceSpan);
         return item;
     }
-}
+} 
