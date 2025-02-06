@@ -1,9 +1,14 @@
 package componenti;
 
+import org.jooq.DSLContext;
+
 public class Amministratore extends Utente{
 
-	public Amministratore(String nome, String cognome, String numeroTelefono, String email, String password, String ruolo) {
-		super(nome, cognome, numeroTelefono, email, password);
+    private final DSLContext dsl;
+    
+	public Amministratore(String nome, String cognome, String numeroTelefono, String email, String password, String ruolo, DSLContext dsl) {
+		super(nome, cognome, numeroTelefono, email, password, dsl);
+		this.dsl = dsl;
 	}
 
 	private String ruolo;
@@ -13,9 +18,9 @@ public class Amministratore extends Utente{
 	}
 
 	private Prodotto prodotto;
-	
+	/*
 	public void aggiungiProdotto(Prodotto prodotto) {
-		prodotto.nuovoProdotto(prodotto);
+		prodottoService.nuovoProdotto(prodotto);
 	}
 
 	public void modificaQuantita(int codice, int quantita) {
@@ -26,4 +31,5 @@ public class Amministratore extends Utente{
 	public void rimuoviProdotto(int codice) {
 		prodotto.rimuoviProdotto(codice);
 	}
+	*/
 }

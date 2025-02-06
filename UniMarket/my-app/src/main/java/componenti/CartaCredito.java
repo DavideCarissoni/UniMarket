@@ -11,9 +11,11 @@ public class CartaCredito {
     private String codiceSicurezza;
     private String nomeIntestatario;
     private String cognomeIntestatario;
+    private final DSLContext dsl;
 
-    public CartaCredito(String numeroCarta, String codiceSicurezza, String nomeIntestatario, String cognomeIntestatario) {
-        this.numeroCarta = numeroCarta;
+    public CartaCredito(String numeroCarta, String codiceSicurezza, String nomeIntestatario, String cognomeIntestatario, DSLContext dsl) {
+        this.dsl = dsl;
+		this.numeroCarta = numeroCarta;
         this.codiceSicurezza = codiceSicurezza;
         this.nomeIntestatario = nomeIntestatario;
         this.cognomeIntestatario = cognomeIntestatario;
@@ -21,7 +23,7 @@ public class CartaCredito {
 
     public void nuovaCarta(){
         try {
-            DSLContext create = CreateDatabase.getInstance().getDSLContext();            create.insertInto(Tables.CARTA_CREDITO, Tables.CARTA_CREDITO.NUMERO_CARTA, Tables.CARTA_CREDITO.CODICE_SICUREZZA, 
+        	dsl.insertInto(Tables.CARTA_CREDITO, Tables.CARTA_CREDITO.NUMERO_CARTA, Tables.CARTA_CREDITO.CODICE_SICUREZZA, 
             		Tables.CARTA_CREDITO.NOME_INTESTATARIO, Tables.CARTA_CREDITO.COGNOME_INTESTATARIO)
             .values(this.numeroCarta, this.codiceSicurezza, this.nomeIntestatario, this.cognomeIntestatario)
             .execute();

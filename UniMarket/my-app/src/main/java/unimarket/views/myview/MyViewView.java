@@ -12,6 +12,7 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -104,13 +105,24 @@ public class MyViewView extends Composite<VerticalLayout> {
         
         List<Prodotto> prodotti = prodottoService.getAllProdotti();
         
+        FlexLayout layoutColumn4 = new FlexLayout();
+        layoutColumn4.setWidthFull();
+        layoutColumn4.getStyle()
+        .set("display", "flex")
+        .set("flexWrap", "wrap")       
+        .set("justifyContent", "flex-start") 
+        .set("align-items", "flex-start")
+        .set("gap", "10px");           
+        
         for(Prodotto prodotto : prodotti) {
 
             // Create a new VerticalLayout for the box
             VerticalLayout boxLayout = new VerticalLayout();
-            boxLayout.setWidth("220px");  
-            boxLayout.setHeight("320px");  
-            boxLayout.getStyle()
+            boxLayout.setHeight("330px");  
+            boxLayout.getStyle()            	
+            	.set("flex", "1 1 200px")
+            	.set("max-width", "250px") 
+            	.set("min-width", "200px") 
             	.set("border-radius", "15px")
             	.set("border", "1px solid #ccc")
             	.set("background-color", "#8ba6cc")
@@ -138,10 +150,10 @@ public class MyViewView extends Composite<VerticalLayout> {
             boxLayout.add(image, name, price, buttonPrimary);
 
             // Add the box layout to the right column
-            layoutColumn3.add(boxLayout);
+            layoutColumn4.add(boxLayout);
         }
         
-        layoutRow2.add(layoutColumn3);
+        layoutRow2.add(layoutColumn4);
 
     }
 

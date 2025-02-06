@@ -13,8 +13,9 @@ public abstract class Utente {
 	private String numeroTelefono;
 	private String email;
 	private String password;
+    private final DSLContext dsl;
 	
-	protected Utente(String nome, String cognome, String numero_telefono, String email, String password) {
+	protected Utente(String nome, String cognome, String numero_telefono, String email, String password, DSLContext dsl) {
 		super();
 		this.id = ID++;
 		this.nome = nome;
@@ -22,12 +23,12 @@ public abstract class Utente {
 		this.numeroTelefono = numero_telefono;
 		this.email = email;
 		this.password = password;
+		this.dsl = dsl;
 	}
 	
 	public void creaAccount(String nome, String cognome, String numetoTelefono, String email, String password){
 		try {
-			DSLContext create = CreateDatabase.getInstance().getDSLContext();
-			create.insertInto(Tables.UTENTE, Tables.UTENTE.ID, Tables.UTENTE.NOME, Tables.UTENTE.COGNOME, Tables.UTENTE.NUMERO_TELEFONO, Tables.UTENTE.EMAIL, Tables.UTENTE.PASSWORD)
+			dsl.insertInto(Tables.UTENTE, Tables.UTENTE.ID, Tables.UTENTE.NOME, Tables.UTENTE.COGNOME, Tables.UTENTE.NUMERO_TELEFONO, Tables.UTENTE.EMAIL, Tables.UTENTE.PASSWORD)
 			.values(this.id, nome, cognome, numeroTelefono, email, password)
 			.execute();
 		} catch (Exception e) {

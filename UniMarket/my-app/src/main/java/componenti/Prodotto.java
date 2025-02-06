@@ -1,6 +1,8 @@
 package componenti;
 
 import org.jooq.DSLContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import jooq.generated.Tables;
 import db.CreateDatabase;
 
@@ -10,51 +12,54 @@ public class Prodotto {
     private int codice;
     private String nome;
     private String descrizione;
-    private float prezzo;
+    private Float prezzo;
     private int quantita;
-
-    public Prodotto(String nome, String descrizione, float prezzo, int quantita) {
+        
+    public Prodotto() {}
+    
+    public Prodotto(String nome, String descrizione, Float prezzo, int quantita) {
         this.codice = contatore++;
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
-        this.quantita = quantita;
+        this.quantita = quantita; 
     }
-
+  
+    /*
     public void nuovoProdotto(Prodotto prodotto){
-        try {
-            DSLContext create = CreateDatabase.getInstance().getDSLContext();
-            create.insertInto(Tables.PRODOTTO, Tables.PRODOTTO.CODICE, Tables.PRODOTTO.NOME, Tables.PRODOTTO.DESCRIZIONE, 
-            Tables.PRODOTTO.PREZZO, Tables.PRODOTTO.QUANTITÀ)
-            .values(prodotto.getCodice(), prodotto.getNome(), prodotto.getDescrizione(), prodotto.getPrezzo(), prodotto.getQuantita())
+    	try {
+    		dsl.insertInto(Tables.PRODOTTO)
+            .set(Tables.PRODOTTO.NOME, prodotto.getNome())
+            .set(Tables.PRODOTTO.DESCRIZIONE, prodotto.getDescrizione())
+            .set(Tables.PRODOTTO.PREZZO, prodotto.getPrezzo())
+            .set(Tables.PRODOTTO.QUANTITÀ, prodotto.getQuantita())
             .execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-        public void modificaQuantita(int codice, int quantita){
-        try {
-            DSLContext create = CreateDatabase.getInstance().getDSLContext();
-            create.update(Tables.PRODOTTO)
-            .set(Tables.PRODOTTO.QUANTITÀ, quantita)
-            .where(Tables.PRODOTTO.CODICE.eq(codice))
-            .execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void modificaQuantita(int codice, int quantita){
+        	try {
+                dsl.update(Tables.PRODOTTO)
+                    .set(Tables.PRODOTTO.QUANTITÀ, quantita)
+                    .where(Tables.PRODOTTO.CODICE.eq(codice))
+                    .execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     public void rimuoviProdotto(int codice){
-        try {
-            DSLContext create = CreateDatabase.getInstance().getDSLContext();
-            create.delete(Tables.PRODOTTO)
-            .where(Tables.PRODOTTO.CODICE.eq(codice))
-            .execute();
+    	try {
+            dsl.delete(Tables.PRODOTTO)
+                .where(Tables.PRODOTTO.CODICE.eq(codice))
+                .execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    */
 
     public int getCodice() {
         return codice;
@@ -68,12 +73,16 @@ public class Prodotto {
         return descrizione;
     }
 
-    public float getPrezzo() {
+    public Float getPrezzo() {
         return prezzo;
     }
 
     public int getQuantita() {
         return quantita;
+    }
+    
+    public void setPrezzo(Float prezzo) {
+    	this.prezzo = prezzo;
     }
 
 }
