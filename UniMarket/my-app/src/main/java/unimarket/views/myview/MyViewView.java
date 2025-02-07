@@ -12,6 +12,8 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -77,7 +79,7 @@ public class MyViewView extends Composite<VerticalLayout> {
         layoutRow2.add(layoutColumn2);
         layoutRow2.add(layoutColumn3);
 
-        layoutColumn2.setWidth("150px");
+        layoutColumn2.setWidth("180px");
         layoutColumn2.getStyle().set("flex-grow", "1");  
         layoutColumn2.add(select);
         layoutColumn2.add(multiSelectComboBox);
@@ -98,8 +100,8 @@ public class MyViewView extends Composite<VerticalLayout> {
         avatarItems.setWidth("130px");
         setAvatarItemsSampleData(avatarItems);
         
-        layoutColumn3.addClassName(Padding.LARGE);
-        layoutColumn3.setWidth("100%");
+        layoutColumn3.addClassName(Padding.SMALL);
+        layoutColumn3.setWidth("3%");
         layoutColumn3.getStyle().set("flex-grow", "1");
         layoutColumn3.add(hr);
         
@@ -108,17 +110,16 @@ public class MyViewView extends Composite<VerticalLayout> {
         FlexLayout layoutColumn4 = new FlexLayout();
         layoutColumn4.setWidthFull();
         layoutColumn4.getStyle()
-        .set("display", "flex")
-        .set("flexWrap", "wrap")       
-        .set("justifyContent", "flex-start") 
-        .set("align-items", "flex-start")
-        .set("gap", "10px");           
+        	.set("flexWrap", "wrap")       
+        	.set("justifyContent", "space-evenly") 
+        	.set("gap", "10px");           
         
         for(Prodotto prodotto : prodotti) {
 
             // Create a new VerticalLayout for the box
             VerticalLayout boxLayout = new VerticalLayout();
-            boxLayout.setHeight("330px");  
+            boxLayout.setHeight("350px"); 
+            boxLayout.setWidth("100%");
             boxLayout.getStyle()            	
             	.set("flex", "1 1 200px")
             	.set("max-width", "250px") 
@@ -129,11 +130,21 @@ public class MyViewView extends Composite<VerticalLayout> {
             	.set("padding", "15px")
             	.set("box-shadow", "2px 2px 5px rgba(0,0,0,0.1");  
             
+            boxLayout.setAlignItems(Alignment.CENTER);
+            boxLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
+            
             Button buttonPrimary = new Button(); 
             buttonPrimary.setText("Aggiungi");
             buttonPrimary.setWidthFull();
             buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+            // Contenitore per i testi
+            VerticalLayout contentContainer = new VerticalLayout();
+            contentContainer.setWidthFull();
+            contentContainer.setPadding(false);
+            contentContainer.setSpacing(false);
+            contentContainer.getStyle().set("flex-grow", "1");
+            
             // Create an Image component
             Image image = new Image("media/icon.jpg", "Product Image");
             image.setWidth("100%"); 
@@ -141,18 +152,34 @@ public class MyViewView extends Composite<VerticalLayout> {
             // Create a Span for the name
             Span name = new Span(prodotto.getNome());
             name.getStyle().set("font-weight", "bold"); 
+            
+            Span description = new Span(prodotto.getDescrizione());
+            description.getStyle()
+            	.set("font-size", "12px") 
+            	.set("color", "#fff") 
+            	.set("text-align", "center")
+            	.set("max-height", "40px") // Limita l'altezza della descrizione
+            	.set("overflow", "hidden") // Nasconde il testo in eccesso
+            	.set("margin-bottom", "2px");
 
             // Create a Span for the price
             Span price = new Span(String.format("$%.2f", prodotto.getPrezzo()));
-            price.getStyle().set("color", "green"); 
+            price.getStyle().set("color", "green").set("font-size", "14px");
 
+            // Aggiunge i componenti nel contenitore di testo
+            contentContainer.add(name, description, price);
+            
+            // Imposta crescita degli elementi per mantenere il pulsante in fondo
+            boxLayout.setFlexGrow(1, contentContainer);
+            boxLayout.setFlexGrow(0, buttonPrimary);
+            
             // Add the components to the box layout
-            boxLayout.add(image, name, price, buttonPrimary);
+            boxLayout.add(image, contentContainer, buttonPrimary);
 
             // Add the box layout to the right column
             layoutColumn4.add(boxLayout);
         }
-        
+       
         layoutRow2.add(layoutColumn4);
 
     }
