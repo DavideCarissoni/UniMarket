@@ -30,7 +30,6 @@ public class ProdottoService {
 	        }
 	    }
 	    
-
 	    public void modificaQuantita(int codice, int quantita){
 	        	try {
 	                dsl.update(Tables.PRODOTTO)
