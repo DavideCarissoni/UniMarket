@@ -7,6 +7,8 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import db.CreateDatabase;
 
 import javax.sql.DataSource;
+
+import org.jooq.DSLContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer;
@@ -30,29 +32,14 @@ public class Application implements AppShellConfigurator {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
-    
+    private final DSLContext dsl;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-	public Application() {
-		Connection connection = null;
-        try {
-            connection = CreateDatabase.getInstance().getConnection();
-            LOGGER.info("Connessione al database stabilita con successo!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.severe("Errore durante la connessione al database");
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                    LOGGER.info("Connessione al database chiusa con successo.");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    LOGGER.severe("Errore durante la chiusura della connessione al database");
-                }
-            }
-        }
+	public Application(DSLContext dsl) throws SQLException {
+		this.dsl = dsl;
+		
 	}
     SqlDataSourceScriptDatabaseInitializer dataSourceScriptDatabaseInitializer(DataSource dataSource,
             SqlInitializationProperties properties, SamplePersonRepository repository) {
