@@ -109,6 +109,8 @@ public class MainLayout extends AppLayout {
 
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{ //
+                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
+
                 new MenuItemInfo("Home", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
 
                 new MenuItemInfo("Registrazione", LineAwesomeIcon.USER.create(), PersonFormView.class), //
@@ -119,7 +121,7 @@ public class MainLayout extends AppLayout {
 
                 new MenuItemInfo("Aggiungi prodotti", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class), //
 
-                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
+
 
         };
     }

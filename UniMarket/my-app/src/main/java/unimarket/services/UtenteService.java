@@ -107,4 +107,11 @@ public class UtenteService {
         		.from(Tables.UTENTE)
         		.fetchInto(Utente.class);
     }
+
+    public Integer getUserIdByEmail(String email) {
+        return dsl.select(Tables.UTENTE.ID)
+                .from(Tables.UTENTE)
+                .where(Tables.UTENTE.EMAIL.eq(email))
+                .fetchOneInto(Integer.class);
+    }
 }

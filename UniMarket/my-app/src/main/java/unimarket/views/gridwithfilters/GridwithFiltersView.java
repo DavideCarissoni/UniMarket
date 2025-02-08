@@ -1,6 +1,7 @@
 package unimarket.views.gridwithfilters;
 
 import com.vaadin.flow.data.provider.ListDataProvider;
+import componenti.Cliente;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
@@ -47,9 +48,9 @@ import unimarket.services.UtenteService;
 public class GridwithFiltersView extends Div {
 
     private final UtenteService utenteService;
-    private Grid<Utente> grid = new Grid<>(Utente.class);
-    private final DSLContext dsl;
+    private final Grid<Utente> grid = new Grid<>();
 
+    private final DSLContext dsl;
 
     private Filters filters;
 
@@ -187,9 +188,6 @@ public class GridwithFiltersView extends Div {
     }
 
     private void configureGrid() {
-        grid.setSizeFull();
-
-        List<Utente> utenti = utenteService.getAllUtenti();
 
     }
 

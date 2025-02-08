@@ -12,11 +12,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.services.UtenteService;
 
 @PageTitle("My View2")
-@Route("my-view")
+@Route("")
 @Menu(order = 5, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class Login extends Composite<VerticalLayout> {
 
@@ -26,7 +27,6 @@ public class Login extends Composite<VerticalLayout> {
         this.utenteService = utenteService;
 
         LoginForm loginForm = new LoginForm();
-        loginForm.setI18n(createItalianLoginI18n());
 
         getContent().setWidth("100%");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -39,22 +39,13 @@ public class Login extends Composite<VerticalLayout> {
 
             if (utenteService.login(email, password)) {
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
+                Integer userId = utenteService.getUserIdByEmail(email);
+                VaadinSession.getCurrent().setAttribute("userId", userId);
                 UI.getCurrent().navigate(MyViewView.class);
             } else {
                 Notification.show("Email o password errati", 3000, Notification.Position.MIDDLE);
                 loginForm.setError(true);
             }
         });
-    }
-
-    private LoginI18n createItalianLoginI18n() {
-        LoginI18n i18n = LoginI18n.createDefault();
-        i18n.getForm().setUsername("Email");
-        i18n.getForm().setPassword("Password");
-        i18n.getForm().setSubmit("Accedi");
-        i18n.getForm().setForgotPassword("Password dimenticata?");
-        i18n.getErrorMessage().setTitle("Errore di accesso");
-        i18n.getErrorMessage().setMessage("Controlla email e password e riprova.");
-        return i18n;
     }
 }

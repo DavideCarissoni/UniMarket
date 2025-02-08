@@ -1,6 +1,7 @@
 package unimarket.views.myview;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -10,6 +11,7 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.MultiSelectListBox;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -21,6 +23,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import componenti.Carrello;
@@ -39,12 +42,12 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 @PageTitle("Homepage")
-@Route("")
+@Route("Home")
 @Menu(order = 0, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class MyViewView extends Composite<VerticalLayout> {
   
 	
-    public MyViewView(ProdottoService prodottoService) {        
+    public MyViewView(ProdottoService prodottoService) {
         HorizontalLayout layoutRow = new HorizontalLayout();
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1();
@@ -126,11 +129,15 @@ public class MyViewView extends Composite<VerticalLayout> {
         layoutColumn3.setWidth("3%");
         layoutColumn3.getStyle().set("flex-grow", "1");
         layoutColumn3.add(hr);
-        	
-        // Creazione istanze utente e carrello, da  modificare con i parametri corretti
-        Utente c = new Cliente(0, null, null, null, null, null, null, null); 
-        Carrello cart = new Carrello(1, c.getID());
-        
+
+        //Creazione istanze utente e carrello, da  modificare con i parametri corretti
+        Integer userId = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+        if (userId == null) {
+            Notification.show("Errore: utente non autenticato!", 3000, Notification.Position.MIDDLE);
+            return;
+        }
+
+        Carrello cart = new Carrello(userId);//qui ho bisogno dell'id dell'utente loggato
         List<Prodotto> prodotti = prodottoService.getAllProdotti();
         
         FlexLayout layoutColumn4 = new FlexLayout();

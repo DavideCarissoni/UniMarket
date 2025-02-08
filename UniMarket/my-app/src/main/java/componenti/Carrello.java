@@ -9,12 +9,13 @@ public class Carrello {
     private static final Logger logger = Logger.getLogger(Carrello.class.getName());
 
     private int idCrrello;
+    private static int ID = 0;
     private int idUtente;
     private List<Prodotto> prodotti = new ArrayList<>();
     private float totale;
 
-    public Carrello(int id, int idUtente) {
-        this.idCrrello = id;
+    public Carrello(int idUtente) {
+        this.idCrrello = ID++;
         this.idUtente = idUtente;
         this.prodotti = new ArrayList<>();
         this.totale = 0;
