@@ -28,8 +28,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import jooq.generated.tables.Utente;
+import componenti.Utente;
+import jooq.generated.Tables;
 import jooq.generated.tables.records.UtenteRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -47,18 +47,19 @@ import unimarket.services.UtenteService;
 public class GridwithFiltersView extends Div {
 
     private final UtenteService utenteService;
-    private Grid<UtenteRecord> grid = new Grid<>(UtenteRecord.class);
+    private Grid<Utente> grid = new Grid<>(Utente.class);
+    private final DSLContext dsl;
 
 
     private Filters filters;
 
     @Autowired
-    public GridwithFiltersView(UtenteService utenteService) {
+    public GridwithFiltersView(UtenteService utenteService, DSLContext dsl) {
         this.utenteService = utenteService;
+		this.dsl = dsl;
         setSizeFull();
         configureGrid();
         add(grid);
-        updateList();
     }
 
     private HorizontalLayout createMobileFilters() {
@@ -187,22 +188,9 @@ public class GridwithFiltersView extends Div {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "nome", "cognome", "numeroTelefono", "email");
+
+        List<Utente> utenti = utenteService.getAllUtenti();
+
     }
 
-    private void updateList() {
-        grid.setDataProvider(new ListDataProvider<>(fetchUsersFromDatabase()));
-    }
-
-
-    private List<UtenteRecord> fetchUsersFromDatabase() {
-        try (Connection conn = CreateDatabase.getInstance().getConnection()) {
-            DSLContext dsl = DSL.using(conn);
-            Result<UtenteRecord> result = dsl.selectFrom(Utente.UTENTE).fetch();
-            return result.stream().collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return List.of();
-        }
-    }
 }

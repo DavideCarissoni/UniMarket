@@ -37,7 +37,7 @@ public class Login extends Composite<VerticalLayout> {
             String email = event.getUsername();
             String password = event.getPassword();
 
-            if (utenteService.authenticate(email, password)) {
+            if (utenteService.login(email, password)) {
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
                 UI.getCurrent().navigate(MyViewView.class);
             } else {

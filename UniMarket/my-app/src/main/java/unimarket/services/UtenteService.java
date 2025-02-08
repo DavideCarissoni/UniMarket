@@ -1,8 +1,12 @@
 package unimarket.services;
 
 import db.CreateDatabase;
-import jooq.generated.tables.Utente;
+import jooq.generated.Tables;
+import componenti.Utente;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -28,86 +32,79 @@ public class UtenteService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
+
     public boolean isEmailUnique(String email) {
-        String sql = "SELECT COUNT(*) FROM utente WHERE email = ?";
-
-        try (Connection conn = CreateDatabase.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, email);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) == 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Log dell'errore
-        }
-        return false; // In caso di errore, meglio restituire false per evitare registrazioni duplicate
+        return !dsl.fetchExists(
+            dsl.selectOne()
+               .from(Tables.UTENTE)
+               .where(Tables.UTENTE.EMAIL.eq(email))
+        );
     }
 
+    public void creaAccount(String nome, String cognome, String telefono, String email, String password) {
+        // Genera un ID univoco
+        int newId = generateUniqueId(Tables.UTENTE, Tables.UTENTE.ID);
+        
+        // Hash della password
+        String hashedPassword = passwordEncoder.encode(password);
 
-    public void saveUser(String nome, String cognome, String numeroTelefono, String email, String password) {
-        String checkIdSQL = "SELECT COUNT(*) FROM utente WHERE id = ?";
-        String insertSQL = "INSERT INTO utente (id, nome, cognome, numero_telefono, email, password) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = CreateDatabase.getInstance().getConnection()) {
-            int newId = generateUniqueId(conn, checkIdSQL);
-
-            try (PreparedStatement stmt = conn.prepareStatement(insertSQL)) {
-                stmt.setInt(1, newId);
-                stmt.setString(2, nome);
-                stmt.setString(3, cognome);
-                stmt.setString(4, numeroTelefono);
-                stmt.setString(5, email);
-                stmt.setString(6, passwordEncoder.encode(password)); // Codifica la password
-
-                stmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Log dell'errore
+        try {
+            dsl.insertInto(Tables.UTENTE, 
+                           Tables.UTENTE.ID, 
+                           Tables.UTENTE.NOME, 
+                           Tables.UTENTE.COGNOME, 
+                           Tables.UTENTE.NUMERO_TELEFONO, 
+                           Tables.UTENTE.EMAIL, 
+                           Tables.UTENTE.PASSWORD)
+               .values(newId, nome, cognome, telefono, email, hashedPassword)
+               .execute();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private int generateUniqueId(Connection conn, String checkIdSQL) throws SQLException {
+    public int generateUniqueId(Table<?> table, TableField<?, Integer> idColumn) {
         Random random = new Random();
         int id;
 
         do {
-            id = 1000 + random.nextInt(9000); // Genera un numero tra 1000 e 9999
-        } while (isIdExists(conn, checkIdSQL, id));
+            id = 1000 + random.nextInt(9000);
+        } while (isIdExists(table, idColumn, id));
 
         return id;
     }
 
-    private boolean isIdExists(Connection conn, String checkIdSQL, int id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(checkIdSQL)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0; // Se il conteggio è maggiore di 0, l'ID esiste già
-                }
-            }
-        }
-        return false;
+    private boolean isIdExists(Table<?> table, TableField<?, Integer> idColumn, int id) {
+        return dsl.fetchExists(
+            dsl.selectOne()
+               .from(table)
+               .where(idColumn.eq(id))
+        );
     }
+    
+    public boolean login(String email, String password) {
+        Record1<String> record = dsl.select(Tables.UTENTE.PASSWORD)
+                                    .from(Tables.UTENTE)
+                                    .where(Tables.UTENTE.EMAIL.eq(email))
+                                    .fetchOne();
 
-    public boolean authenticate(String email, String password) {
-        String sql = "SELECT password FROM utente WHERE email = ?";
-
-        try (Connection conn = CreateDatabase.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, email);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String hashedPassword = rs.getString(1);
-                    return passwordEncoder.matches(password, hashedPassword);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (record != null) {
+            String hashedPassword = record.value1();
+            return passwordEncoder.matches(password, hashedPassword);
         }
-        return false;
+
+        return false; // Email non trovata o errore
+    }
+    
+    public List<Utente> getAllUtenti() {
+        return dsl.select(Tables.UTENTE.ID,
+        		Tables.UTENTE.NOME,
+        		Tables.UTENTE.COGNOME,
+        		Tables.UTENTE.EMAIL,
+        		Tables.UTENTE.NUMERO_TELEFONO,
+        		Tables.UTENTE.PASSWORD
+        		)    
+        		.from(Tables.UTENTE)
+        		.fetchInto(Utente.class);
     }
 }

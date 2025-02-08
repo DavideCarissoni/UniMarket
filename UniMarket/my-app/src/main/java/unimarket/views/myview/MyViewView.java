@@ -31,12 +31,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.components.avataritem.AvatarItem;
 import unimarket.services.ProdottoService;
 import unimarket.views.checkoutform.CheckoutFormView;
-
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
@@ -144,6 +142,7 @@ public class MyViewView extends Composite<VerticalLayout> {
         
         Map<Button, Integer> quantityMap = new HashMap<>();
         
+        // Crea un box per ogni prodotto presente
         for(Prodotto prodotto : prodotti) {
 
             // Create a new VerticalLayout for the box

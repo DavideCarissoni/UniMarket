@@ -15,35 +15,15 @@ public abstract class Utente {
 	private String password;
     private final DSLContext dsl;
 	
-	protected Utente(String nome, String cognome, String numero_telefono, String email, String password, DSLContext dsl) {
+	protected Utente(String nome, String cognome, String telefono, String email, String password, DSLContext dsl) {
 		super();
 		this.id = ID++;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.numeroTelefono = numero_telefono;
+		this.numeroTelefono = telefono;
 		this.email = email;
 		this.password = password;
 		this.dsl = dsl;
-	}
-	
-	public void creaAccount(String nome, String cognome, String numetoTelefono, String email, String password){
-		try {
-			dsl.insertInto(Tables.UTENTE, Tables.UTENTE.ID, Tables.UTENTE.NOME, Tables.UTENTE.COGNOME, Tables.UTENTE.NUMERO_TELEFONO, Tables.UTENTE.EMAIL, Tables.UTENTE.PASSWORD)
-			.values(this.id, nome, cognome, numeroTelefono, email, password)
-			.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	// da correggere con la query giusta
-	public boolean login(String email, String password) {
-		try {
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 	
 	public int getID() {

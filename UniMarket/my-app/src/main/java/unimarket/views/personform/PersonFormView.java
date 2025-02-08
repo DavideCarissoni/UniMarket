@@ -136,7 +136,7 @@ public class PersonFormView extends Composite<VerticalLayout> {
             }
 
             // Creazione e salvataggio del nuovo utente
-            utenteService.saveUser(nome, cognome, telefono, email, passwordValue);
+            utenteService.creaAccount(nome, cognome, telefono, email, passwordValue);
 
             Notification.show("Utente salvato con successo", 3000, Notification.Position.MIDDLE);
 
