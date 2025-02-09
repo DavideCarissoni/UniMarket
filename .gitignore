@@ -12,3 +12,5 @@ Documentazione/*.blg
 Documentazione/*.nav
 Documentazione/*.snm
 Documentazione/*.vrb
+.idea/
+.idea/*
