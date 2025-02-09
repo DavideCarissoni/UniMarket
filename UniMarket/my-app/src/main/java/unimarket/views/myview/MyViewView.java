@@ -228,7 +228,14 @@ public class MyViewView extends Composite<VerticalLayout> {
             // Se cliccato il pulsante 🛒 aggiunge al carrello i prodotti selezionati
             buttonPrimary.addClickListener(event -> {
                 int selectedQuantity = quantityMap.get(buttonPrimary);
-            	cart.aggiungiProdotto(prodotto, selectedQuantity);
+                if (selectedQuantity < prodotto.getQuantita()) {
+                	cart.aggiungiProdotto(prodotto, selectedQuantity);
+                	prodottoService.modificaQuantita(prodotto.getCodice(), selectedQuantity);
+                }else {
+                    // Mostra un messaggio di errore se la quantità è maggiore di quella disponibile
+                    Notification.show("Errore: La quantità selezionata (" + selectedQuantity + ") è maggiore di quella disponibile (" 
+                    		+ prodotto.getQuantita() + ").", 5000, Notification.Position.MIDDLE);
+                }
             }
             );
         }
