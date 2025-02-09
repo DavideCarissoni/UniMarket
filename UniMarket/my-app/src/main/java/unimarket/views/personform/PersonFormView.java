@@ -19,6 +19,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.data.SamplePerson;
+import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
@@ -130,6 +131,10 @@ public class PersonFormView extends Composite<VerticalLayout> {
                 Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
                 return;
             }
+            if(!utenteService.isNumeroTelefonoUnique(telefono)) {
+                Notification.show("Numero di telefono già in uso", 3000, Notification.Position.MIDDLE);
+                return;
+            }
             if (!utenteService.isEmailUnique(email)) {
                 Notification.show("Email già in uso", 3000, Notification.Position.MIDDLE);
                 return;
@@ -138,12 +143,10 @@ public class PersonFormView extends Composite<VerticalLayout> {
             // Creazione e salvataggio del nuovo utente
             utenteService.creaAccount(nome, cognome, telefono, email, passwordValue);
 
-            Notification.show("Utente salvato con successo", 3000, Notification.Position.MIDDLE);
+            Notification.show("Utente creato con successo", 3000, Notification.Position.MIDDLE);
 
             // Se tutte le validazioni passano, naviga a MyView
-            UI.getCurrent().navigate(MyViewView.class);
-
-
+            UI.getCurrent().navigate(Login.class);
         });
     }
     

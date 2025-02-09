@@ -48,8 +48,7 @@ import unimarket.services.UtenteService;
 public class GridwithFiltersView extends Div {
 
     private final UtenteService utenteService;
-    private final Grid<Utente> grid = new Grid<>();
-
+    private Grid<Utente> grid;
     private final DSLContext dsl;
 
     private Filters filters;
@@ -167,6 +166,7 @@ public class GridwithFiltersView extends Div {
         }
 
 
+
         private String ignoreCharacters(String characters, String in) {
             String result = in;
             for (int i = 0; i < characters.length(); i++) {
@@ -188,7 +188,20 @@ public class GridwithFiltersView extends Div {
     }
 
     private void configureGrid() {
+        grid = new Grid<>(Utente.class, false); // Usa la classe astratta Utente
+        grid.setSizeFull();
 
+        grid.addColumn(Utente::getID).setHeader("ID");
+        grid.addColumn(Utente::getNome).setHeader("Nome");
+        grid.addColumn(Utente::getCognome).setHeader("Cognome");
+        grid.addColumn(Utente::getEmail).setHeader("Email");
+        grid.addColumn(Utente::getNumeroTelefono).setHeader("Numero di Telefono");
+
+        // Ottieni i dati dal servizio e impostali nella griglia
+        List<Utente> utenti = utenteService.gridUtenti();
+
+        grid.setItems(utenti);
     }
+
 
 }

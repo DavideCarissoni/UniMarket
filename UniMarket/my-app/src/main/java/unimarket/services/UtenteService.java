@@ -8,7 +8,6 @@ import org.jooq.Record1;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +16,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UtenteService {
@@ -61,6 +62,14 @@ public class UtenteService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isNumeroTelefonoUnique(String numeroTelefono) {
+        return !dsl.fetchExists(
+            dsl.selectOne()
+               .from(Tables.UTENTE)
+               .where(Tables.UTENTE.NUMERO_TELEFONO.eq(numeroTelefono))
+        );
     }
 
     public int generateUniqueId(Table<?> table, TableField<?, Integer> idColumn) {
@@ -113,5 +122,33 @@ public class UtenteService {
                 .from(Tables.UTENTE)
                 .where(Tables.UTENTE.EMAIL.eq(email))
                 .fetchOneInto(Integer.class);
+    }
+
+    public boolean isAdmin(String email) {
+        return email.endsWith("@unimarket.it");
+    }
+
+    public List<Utente> gridUtenti() {
+        return dsl.select(
+                        Tables.UTENTE.ID,
+                        Tables.UTENTE.NOME,
+                        Tables.UTENTE.COGNOME,
+                        Tables.UTENTE.EMAIL,
+                        Tables.UTENTE.NUMERO_TELEFONO
+                )
+                .from(Tables.UTENTE)
+                .fetch()
+                .stream()
+                .map(record -> new Utente(
+                        record.get(Tables.UTENTE.NOME),
+                        record.get(Tables.UTENTE.COGNOME),
+                        record.get(Tables.UTENTE.NUMERO_TELEFONO),
+                        record.get(Tables.UTENTE.EMAIL),
+                        null, // Password non selezionata
+                        dsl
+                ) {
+                    // Implementazione vuota per la classe astratta
+                })
+                .collect(Collectors.toList());
     }
 }

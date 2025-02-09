@@ -50,11 +50,17 @@ public class Login extends Composite<VerticalLayout> {
             String password = passwordField.getValue();
 
             if (utenteService.login(email, password)) {
-                Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
                 Integer userId = utenteService.getUserIdByEmail(email);
+
+                if(utenteService.isAdmin(email)){
+                    VaadinSession.getCurrent().setAttribute("admin", true);
+                    VaadinSession.getCurrent().setAttribute("userId", userId);
+                    Notification.show("Benvenuto Admin!", 3500, Notification.Position.MIDDLE);
+                }
+
+                Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
                 VaadinSession.getCurrent().setAttribute("userId", userId);
                 UI.getCurrent().navigate(MyViewView.class);
-                
             } else {
                 Notification.show("Email o password errati", 3000, Notification.Position.MIDDLE);
                 errorMessage.setText("Email o password errati");
@@ -74,7 +80,8 @@ public class Login extends Composite<VerticalLayout> {
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         getContent().setAlignItems(FlexComponent.Alignment.CENTER);
         getContent().add(loginBox);
-    
+
+
     }
 
        /*
