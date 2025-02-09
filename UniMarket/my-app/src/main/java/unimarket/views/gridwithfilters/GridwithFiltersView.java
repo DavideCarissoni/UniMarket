@@ -202,6 +202,4 @@ public class GridwithFiltersView extends Div {
 
         grid.setItems(utenti);
     }
-
-
 }

@@ -57,14 +57,23 @@ public class Login extends Composite<VerticalLayout> {
                     VaadinSession.getCurrent().setAttribute("userId", userId);
                     Notification.show("Benvenuto Admin!", 3500, Notification.Position.MIDDLE);
                 }
+                else {
+                    VaadinSession.getCurrent().setAttribute("admin", false);
+                    VaadinSession.getCurrent().setAttribute("userId", userId);
+                }
 
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
-                VaadinSession.getCurrent().setAttribute("userId", userId);
+
+                VaadinSession.getCurrent().setAttribute("updateLayout", true);
                 UI.getCurrent().navigate(MyViewView.class);
+                UI.getCurrent().getPage().reload();
+
             } else {
                 Notification.show("Email o password errati", 3000, Notification.Position.MIDDLE);
                 errorMessage.setText("Email o password errati");
-                errorMessage.setVisible(true);            }
+                errorMessage.setVisible(true);
+            }
+
         });
         
         // Messaggio di registrazione

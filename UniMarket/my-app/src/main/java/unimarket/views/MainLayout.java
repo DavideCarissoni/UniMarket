@@ -1,6 +1,7 @@
 package unimarket.views;
 
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.Div;
@@ -10,8 +11,10 @@ import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Nav;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
 import com.vaadin.flow.theme.lumo.LumoUtility.BoxSizing;
@@ -36,6 +39,9 @@ import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
 import unimarket.views.personform.PersonFormView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The main view is a top-level placeholder for other views.
  */
@@ -43,12 +49,14 @@ import unimarket.views.personform.PersonFormView;
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
 
+
     /**
      * A simple navigation item component, based on ListItem element.
      */
     public static class MenuItemInfo extends ListItem {
 
         private final Class<? extends Component> view;
+
 
         public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
             this.view = view;
@@ -75,8 +83,30 @@ public class MainLayout extends AppLayout {
 
     }
 
+    private Component header;
     public MainLayout() {
-        addToNavbar(createHeaderContent());
+        header = createHeaderContent();
+        addToNavbar(header);
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+
+        Boolean updateLayout = (Boolean) VaadinSession.getCurrent().getAttribute("updateLayout");
+        if (Boolean.TRUE.equals(updateLayout)) {
+            VaadinSession.getCurrent().setAttribute("updateLayout", false); // Reset flag
+            remove(header); // Rimuove solo la navbar esistente
+            header = createHeaderContent(); // Ricrea la navbar aggiornata
+            addToNavbar(header); // Aggiungi la nuova navbar aggiornata
+        }
+    }
+
+
+    private void updateNavbar() {
+        remove(header); // Rimuove la navbar vecchia
+        header = createHeaderContent(); // Ricrea la navbar aggiornata
+        addToNavbar(header); // Aggiunge la nuova navbar
     }
 
     private Component createHeaderContent() {
@@ -108,22 +138,23 @@ public class MainLayout extends AppLayout {
     }
 
     private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[]{ //
-                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
+        // Controllo se la sessione ha un valore valido per "admin"
+        Object isAdminObj = VaadinSession.getCurrent().getAttribute("admin");
+        boolean admin = isAdminObj instanceof Boolean && (Boolean) isAdminObj;
 
-                new MenuItemInfo("Home", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
+        System.out.println("DEBUG - Valore admin: " + admin); // Debug console
 
-                new MenuItemInfo("Registrazione", LineAwesomeIcon.USER.create(), PersonFormView.class), //
+        List<MenuItemInfo> menuItems = new ArrayList<>();
+        menuItems.add(new MenuItemInfo("Home", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class));
+        menuItems.add(new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class));
 
-                new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class), //
+        if (admin) {
+            menuItems.add(new MenuItemInfo("Utenti", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class));
+            menuItems.add(new MenuItemInfo("Aggiungi prodotti", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class));
+        }
 
-                new MenuItemInfo("Utenti", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class), //
-
-                new MenuItemInfo("Aggiungi prodotti", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class), //
-
-
-
-        };
+        return menuItems.toArray(new MenuItemInfo[0]);
     }
-
 }
+
+

@@ -46,8 +46,9 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 @Menu(order = 0, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class MyViewView extends Composite<VerticalLayout> {
   
-	
+
     public MyViewView(ProdottoService prodottoService) {
+
         HorizontalLayout layoutRow = new HorizontalLayout();
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1();
