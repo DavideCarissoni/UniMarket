@@ -35,6 +35,8 @@ import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import componenti.Carrello;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.UI;
@@ -43,13 +45,15 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.server.VaadinSession;
+import unimarket.services.CarrelloService;
 import unimarket.views.myview.MyViewView;
 
 @PageTitle("Checkout Form")
 @Route("checkout-form")
 @Menu(order = 2, icon = LineAwesomeIconUrl.CREDIT_CARD)
-public class CheckoutFormView extends Div {
 
+public class CheckoutFormView extends Div {
+  
     // Dichiarazione delle variabili dei campi globalmente
     private TextArea address;
     private TextField postalCode;
@@ -61,10 +65,10 @@ public class CheckoutFormView extends Div {
     private Select<String> expirationMonth;
     private Select<String> expirationYear;
 
-    public CheckoutFormView() {
+    public CheckoutFormView(CarrelloService carrelloService) {
+
         addClassNames("checkout-form-view");
         addClassNames(Display.FLEX, FlexDirection.COLUMN, Height.FULL);
-
         Main content = new Main();
         content.addClassNames(Display.GRID, Gap.XLARGE, AlignItems.START, JustifyContent.CENTER, MaxWidth.SCREEN_MEDIUM,
                 Margin.Horizontal.AUTO, Padding.Bottom.LARGE, Padding.Horizontal.LARGE);
@@ -74,11 +78,19 @@ public class CheckoutFormView extends Div {
         add(content);
     }
 
+
     private Component createCheckoutForm() {
         Section checkoutForm = new Section();
         checkoutForm.addClassNames(Display.FLEX, FlexDirection.COLUMN, Flex.GROW);
 
         H2 header = new H2("Checkout");
+
+        Integer userId = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+        Carrello cart = new Carrello(userId);
+
+        Span headerIDCarrello = new Span("ID Carrello: " + cart.getIdCarrello());;
+        Span headerIDUtente = new Span("id utente: " + userId);
+
         header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
         Paragraph note = new Paragraph("Compila tutti i campi richiesti");
         note.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
@@ -88,6 +100,7 @@ public class CheckoutFormView extends Div {
         checkoutForm.add(createPaymentInformationSection());
         checkoutForm.add(new Hr());
         checkoutForm.add(createFooter());
+        checkoutForm.add(headerIDCarrello, headerIDUtente);
 
         return checkoutForm;
     }
