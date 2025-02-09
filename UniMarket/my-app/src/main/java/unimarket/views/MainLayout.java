@@ -109,17 +109,19 @@ public class MainLayout extends AppLayout {
 
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{ //
-                new MenuItemInfo("My View", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
+                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
+
+                new MenuItemInfo("Home", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class), //
 
                 new MenuItemInfo("Registrazione", LineAwesomeIcon.USER.create(), PersonFormView.class), //
 
                 new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class), //
 
-                new MenuItemInfo("Grid with Filters", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class), //
+                new MenuItemInfo("Utenti", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class), //
 
-                new MenuItemInfo("Master-Detail", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class), //
+                new MenuItemInfo("Aggiungi prodotti", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class), //
 
-                new MenuItemInfo("Login", LineAwesomeIcon.USER.create(), Login.class), //
+
 
         };
     }

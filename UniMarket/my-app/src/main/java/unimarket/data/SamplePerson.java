@@ -12,6 +12,7 @@ public class SamplePerson extends AbstractEntity {
     @Email
     private String email;
     private String phone;
+    private String password;
     private LocalDate dateOfBirth;
     private String occupation;
     private String role;
@@ -41,6 +42,8 @@ public class SamplePerson extends AbstractEntity {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    public void setPassword(String password) { this.password = password; }
+    public String getPassword() { return password;}
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }

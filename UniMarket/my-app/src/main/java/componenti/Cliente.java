@@ -10,11 +10,13 @@ public class Cliente extends Utente {
 	
 	private int id;
 	private String indirizzo;
+    private final DSLContext dsl;
 	
-	public Cliente(int ID, String nome, String cognome, String numeroTelefono, String email, String password, String indirizzo) {
-		super(nome, cognome, numeroTelefono, email, password);
+	public Cliente(int ID, String nome, String cognome, String numeroTelefono, String email, String password, String indirizzo, DSLContext dsl) {	
+		super(nome, cognome, numeroTelefono, email, password, dsl);
 		this.indirizzo = indirizzo;
 		this.id = ID;
+		this.dsl = dsl;
 	}
 
 	public String getIndirizzo() {
@@ -37,8 +39,7 @@ public class Cliente extends Utente {
 
 	public void salvaDati(){
 		try {
-			DSLContext create = CreateDatabase.getDSLContext();
-			create.insertInto(Tables.CLIENTE, Tables.CLIENTE.ID, Tables.CLIENTE.INDIRIZZO, Tables.CLIENTE.NUMERO_CARTA)
+			dsl.insertInto(Tables.CLIENTE, Tables.CLIENTE.ID, Tables.CLIENTE.INDIRIZZO, Tables.CLIENTE.NUMERO_CARTA)
 			.values(this.id, this.indirizzo, this.carte.toString())
 			.execute();
 		} catch (Exception e) {

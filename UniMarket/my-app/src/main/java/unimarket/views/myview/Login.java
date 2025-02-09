@@ -1,6 +1,5 @@
 package unimarket.views.myview;
 
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
@@ -11,10 +10,14 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Login")
-@Route("my-view")
+@Route("")
 public class Login extends Composite<VerticalLayout> {
 
-    public Login() {
+    private final UtenteService utenteService;
+
+    public Login(UtenteService utenteService) {
+        this.utenteService = utenteService;
+      // login 
         // Imposta il layout principale
         VerticalLayout mainLayout = getContent();
         mainLayout.setSizeFull(); // Rende il layout a tutta altezza
@@ -68,5 +71,33 @@ public class Login extends Composite<VerticalLayout> {
      */
     private boolean validateCredentials(String username, String password) {
         return "admin@example.com".equals(username) && "password123".equals(password);
+// backend
+import com.vaadin.flow.server.VaadinSession;
+import org.vaadin.lineawesome.LineAwesomeIconUrl;
+import unimarket.services.UtenteService;
+
+@
+        LoginForm loginForm = new LoginForm();
+
+        getContent().setWidth("100%");
+        getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
+        getContent().add(loginForm);
+
+        loginForm.addLoginListener(event -> {
+            String email = event.getUsername();
+            String password = event.getPassword();
+
+            if (utenteService.login(email, password)) {
+                Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
+                Integer userId = utenteService.getUserIdByEmail(email);
+                VaadinSession.getCurrent().setAttribute("userId", userId);
+                UI.getCurrent().navigate(MyViewView.class);
+            } else {
+                Notification.show("Email o password errati", 3000, Notification.Position.MIDDLE);
+                loginForm.setError(true);
+            }
+        });
+
     }
 }

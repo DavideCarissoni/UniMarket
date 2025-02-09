@@ -18,34 +18,40 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
-import unimarket.views.myview.MyViewView;  
+import unimarket.data.SamplePerson;
+import unimarket.views.myview.MyViewView;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
+import unimarket.services.UtenteService;
+import unimarket.data.SamplePersonRepository;
 
 @PageTitle("Registrazione")
 @Route("login")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
 
-    public PersonFormView() {
+    private final UtenteService utenteService;
+    public PersonFormView(UtenteService utenteService) {
+        this.utenteService = utenteService;
+
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();
-        TextField textField = new TextField();
-        TextField textField2 = new TextField();
-        TextField textField3 = new TextField();
-        EmailField emailField = new EmailField();
+        TextField textField = new TextField(); //nome
+        TextField textField2 = new TextField(); //cognome
+        TextField textField3 = new TextField(); //telefono
+        EmailField emailField = new EmailField(); //email
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
         Button buttonSecondary = new Button();
         PasswordField password = new PasswordField();
         PasswordField repeatPassword = new PasswordField();
-          
+
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
         getContent().setAlignItems(Alignment.CENTER);
-        
+
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
@@ -53,10 +59,10 @@ public class PersonFormView extends Composite<VerticalLayout> {
         layoutColumn2.setAlignItems(Alignment.CENTER);
         layoutColumn2.add(formLayout2Col);
         layoutColumn2.add(layoutRow);
-        
+
         h3.setText("Informazioni personali");
         h3.setWidth("100%");
-        
+
         formLayout2Col.setWidth("100%");
         formLayout2Col.add(textField);
         formLayout2Col.add(textField2);
@@ -65,31 +71,31 @@ public class PersonFormView extends Composite<VerticalLayout> {
         formLayout2Col.add(password);
         formLayout2Col.add(repeatPassword);
         formLayout2Col.getElement().appendChild(ElementFactory.createBr());
-        
+
         textField.setLabel("Nome");
         textField2.setLabel("Cognome");
         textField3.setLabel("Numero di telefono");
         emailField.setLabel("Email");
         password.setLabel("Password");
         repeatPassword.setLabel("Ripeti password");
-        
+
         password.setWidth("100%");
-        
+
         repeatPassword.setWidth("100%");
-        
+
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
-        
+
         buttonPrimary.setText("Salva");
         buttonPrimary.setWidth("fill");
         buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        
+
         buttonSecondary.setText("Annulla");
         buttonSecondary.setWidth("fill");
-        
+
         getContent().add(layoutColumn2);
        
         buttonPrimary.addClickListener(event -> {
@@ -124,13 +130,21 @@ public class PersonFormView extends Composite<VerticalLayout> {
                 Notification.show("Le password non coincidono", 3000, Notification.Position.MIDDLE);
                 return;
             }
+            if (!utenteService.isEmailUnique(email)) {
+                Notification.show("Email già in uso", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+
+            // Creazione e salvataggio del nuovo utente
+            utenteService.creaAccount(nome, cognome, telefono, email, passwordValue);
+
+            Notification.show("Utente salvato con successo", 3000, Notification.Position.MIDDLE);
+
             // Se tutte le validazioni passano, naviga a MyView
             UI.getCurrent().navigate(MyViewView.class);
+
+
         });
-        
-        buttonSecondary.addClickListener(event -> 
-        	UI.getCurrent().navigate(MyViewView.class)
-        );
     }
     
     // Metodo per validare la password
