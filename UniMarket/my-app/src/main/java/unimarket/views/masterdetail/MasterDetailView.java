@@ -47,7 +47,7 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
 
     private final Grid<Prodotto> grid = new Grid<>(Prodotto.class, false);
 
-    private TextField codice;
+    private IntegerField codice;
     private TextField nome;
     private TextArea descrizione;
     private NumberField prezzo;
@@ -117,9 +117,13 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
 
         binder.forField(quantita)
         .bind(Prodotto::getQuantita, Prodotto::setQuantita);
-        
-        binder.bindInstanceFields(this);
 
+        binder.forField(nome)
+        .bind(Prodotto::getNome, Prodotto::setNome);
+        
+        binder.forField(descrizione)
+        .bind(Prodotto::getDescrizione, Prodotto::setDescrizione);
+        
         cancel.addClickListener(e -> {
             clearForm();
             refreshGrid();
@@ -187,7 +191,7 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
         editorLayoutDiv.add(editorDiv);
 
         FormLayout formLayout = new FormLayout();
-        codice = new TextField("Codice");
+        codice = new IntegerField("Codice");
         codice.setReadOnly(true);
         nome = new TextField("Nome");
         descrizione = new TextArea("Descrizione");
@@ -201,7 +205,6 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
 
         splitLayout.addToSecondary(editorLayoutDiv);
     }
-
 
     private void createButtonLayout(Div editorLayoutDiv) {
         HorizontalLayout buttonLayout = new HorizontalLayout();
@@ -230,7 +233,7 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
     private void populateForm(Prodotto value) {
         this.prodotto = value;
         if (value != null) {
-            codice.setValue(value.getCodice() != 0 ? String.valueOf(value.getCodice()) : "");
+            codice.setValue(value.getCodice());
             nome.setValue(Objects.toString(value.getNome(), ""));
             descrizione.setValue(Objects.toString(value.getDescrizione(), ""));
             prezzo.setValue(value.getPrezzo() != null ? value.getPrezzo() : 0.0);
