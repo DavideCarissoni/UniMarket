@@ -447,9 +447,52 @@ Alcuni dei pattern utilizzati sono:
 \end{itemize}
 
 \section{Testing}
+Durante il ciclo di vita del progetto, oltre allo sviluppo del codice e della documentazione, il team si è occupato anche della fase di testing per verificare che il sistema rispettasse gli standard di correttezza e affidabilità. È noto che molti errori vengono commessi nelle prime fasi dello sviluppo software, ma spesso vengono scoperti in ritardo, rendendo più costoso e complesso correggerli. Per evitare tali problematiche, il team ha deciso di implementare il testing fin dalle prime fasi dello sviluppo.
+
+Il testing del software è stato eseguito in parallelo con la scrittura del codice, per garantire che gli elementi integrati progressivamente nel sistema funzionassero correttamente in conformità con le specifiche funzionali. Questo approccio ha permesso di individuare e correggere eventuali problemi in tempo utile, riducendo i costi e i rischi associati a errori scoperti in fasi successive.
+
+Il team ha effettuato il testing manualmente, verificando la correttezza del codice e testando ogni funzionalità implementata. Ogni programma è stato eseguito per assicurarsi che producesse l'output corretto in risposta a specifici input, garantendo così che il sistema fosse conforme alle aspettative e che non ci fossero malfunzionamenti.
 
 \section{Maintenance}
 
+La manutenzione del software non si limita alla correzione dei guasti, ma include anche l'adattamento continuo alle esigenze degli utenti e ai cambiamenti dell'ambiente circostante. È fondamentale per garantire che il software continui a funzionare correttamente nel tempo e risponda alle necessità in evoluzione degli utenti. Questo processo si suddivide in quattro categorie principali: correttiva, preventiva, perfettiva e adattiva, ciascuna delle quali contribuisce a mantenere il sistema efficiente, sicuro e allineato con le aspettative degli utenti.
+
+\begin{enumerate}
+    \item \textbf{Manutenzione correttiva}: il team si è focalizzato sulla correzione di bug e malfunzionamenti emersi durante la fase di sviluppo.
+
+\item \textbf{Manutenzione adattiva}: questa tipologia riguarda l'aggiornamento del sistema in risposta a cambiamenti nell'ambiente circostante. In una futura manutenzione del software, si prevede un miglioramento dell'efficienza complessiva del codice, insieme all'adattamento a nuove evoluzioni hardware e software, per garantire la compatibilità con le tecnologie più moderne.
+
+\item \textbf{Manutenzione perfettiva}: il team si è concentrato sull'ottimizzazione dell'esperienza utente, aggiungendo nuove funzionalità che favoriscano un'interazione più fluida con il sistema, pur mantenendo il software semplice, efficiente e intuitivo. Le nuove funzionalità sono state pensate per aumentare l'interazione tra l'utente e il software, migliorando l'accessibilità e la comodità d'uso senza compromettere la sua semplicità.
+
+\item \textbf{Manutenzione preventiva}: per evitare potenziali problemi futuri, è possibile pianificare controlli regolari del sistema, eseguendo test per garantire il corretto funzionamento delle funzionalità. Inoltre, si è lavorato per migliorare la manutenibilità futura del sistema, adottando soluzioni che ne semplifichino l'aggiornamento e la gestione nel tempo. 
+\end{enumerate}
+Si è inoltre prevenuto il rischio di problemi di manutenzione derivanti da codice non strutturato e documentazione mancante o insufficiente, mantenendo il codice ben organizzato e documentato in modo completo e chiaro, facilitando gli interventi futuri.
+
+Le \textbf{\textit{Linee guida per la manutenzione futura}} sono le seguenti : 
+\begin{itemize}
+    \item  Adottare le convenzioni Java per mantenere un codice chiaro, leggibile e uniforme.
+\end{itemize}
+\begin{itemize}
+    \item Accompagnare ogni commit con un messaggio chiaro e comprensibile, in grado di spiegare le funzionalità implementate.
+\end{itemize}
+\begin{itemize}
+    \item  Sottoporre ogni modifica significativa alla revisione degli altri membri del team, per garantire qualità e coerenza nel codice.
+\end{itemize}
+\begin{itemize}
+    \item Utilizzare un sistema di controllo versione (GIT) per tracciare in modo accurato tutte le modifiche effettuate.
+\end{itemize}
+\begin{itemize}
+    \item Aggiornare la documentazione e i commenti nel codice ogni volta che vengono apportate modifiche, assicurando che il codice rimanga sempre comprensibile e ben documentato per interventi futuri.
+\end{itemize}
+
+\textbf{Attività di refactoring:}
+
+Le principali attività di refactoring su cui il team si è concentrato riguardano una serie di modifiche mirate e graduali, che hanno preservato la stabilità del sistema. Ogni intervento è stato di piccole dimensioni, riducendo il rischio di errori e garantendo che il sistema rimanesse sempre funzionante dopo ogni modifica. In particolare, sono stati risolti problemi di visualizzazione nell'interfaccia grafica relativa al login e al checkout, migliorando l'usabilità e l'aspetto generale. È stata anche aggiunta un'immagine per ogni prodotto. Inoltre, è stata implementata la possibilità per il gestore di modificare e aggiungere prodotti, nonché di aggiornare le relative quantità, accedendo al sistema tramite il login come gestore.
+
+Il codice generato da Vaadin è stato ristrutturato per renderlo più leggibile e facilmente gestibile. Il codice originale risultava disordinato e difficile da comprendere e mantenere. Questo intervento di refactoring è stato effettuato utilizzando una tecnica disciplinata, che ha permesso di riorganizzare la struttura interna del codice senza alterarne il comportamento esterno, migliorandone la manutenibilità e la chiarezza.
+
+Ci sono alcune attività che non sono state affrontate, ma che potrebbero essere richieste da un cliente in futuro. Tra queste, vi sono la possibilità per l'utente di eliminare il proprio profilo quando decide di non utilizzare più l'app, la gestione di sconti e promozioni, l'implementazione di un programma fedeltà, la possibilità di salvare nei preferiti i prodotti e la gestione dei resi e dei reclami da parte degli utenti. 
+Queste funzionalità potrebbero arricchire ulteriormente l'esperienza dell'utente e soddisfare esigenze future.
 
 \newpage
 \begin{center}
