@@ -6,11 +6,14 @@ package jooq.generated;
 
 import java.util.Arrays;
 import java.util.List;
-
 import jooq.generated.tables.Carrello;
+import jooq.generated.tables.CarrelloProdotto;
 import jooq.generated.tables.CartaCredito;
 import jooq.generated.tables.Cliente;
+import jooq.generated.tables.HteSamplePerson;
+import jooq.generated.tables.Idgenerator;
 import jooq.generated.tables.Prodotto;
+import jooq.generated.tables.SamplePerson;
 import jooq.generated.tables.Utente;
 
 import org.jooq.Catalog;
@@ -37,6 +40,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Carrello CARRELLO = Carrello.CARRELLO;
 
     /**
+     * The table <code>carrello_prodotto</code>.
+     */
+    public final CarrelloProdotto CARRELLO_PRODOTTO = CarrelloProdotto.CARRELLO_PRODOTTO;
+
+    /**
      * The table <code>carta_credito</code>.
      */
     public final CartaCredito CARTA_CREDITO = CartaCredito.CARTA_CREDITO;
@@ -47,9 +55,24 @@ public class DefaultSchema extends SchemaImpl {
     public final Cliente CLIENTE = Cliente.CLIENTE;
 
     /**
+     * The table <code>HTE_sample_person</code>.
+     */
+    public final HteSamplePerson HTE_SAMPLE_PERSON = HteSamplePerson.HTE_SAMPLE_PERSON;
+
+    /**
+     * The table <code>idgenerator</code>.
+     */
+    public final Idgenerator IDGENERATOR = Idgenerator.IDGENERATOR;
+
+    /**
      * The table <code>prodotto</code>.
      */
     public final Prodotto PRODOTTO = Prodotto.PRODOTTO;
+
+    /**
+     * The table <code>sample_person</code>.
+     */
+    public final SamplePerson SAMPLE_PERSON = SamplePerson.SAMPLE_PERSON;
 
     /**
      * The table <code>utente</code>.
@@ -73,9 +96,13 @@ public class DefaultSchema extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Carrello.CARRELLO,
+            CarrelloProdotto.CARRELLO_PRODOTTO,
             CartaCredito.CARTA_CREDITO,
             Cliente.CLIENTE,
+            HteSamplePerson.HTE_SAMPLE_PERSON,
+            Idgenerator.IDGENERATOR,
             Prodotto.PRODOTTO,
+            SamplePerson.SAMPLE_PERSON,
             Utente.UTENTE
         );
     }

@@ -11,6 +11,8 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -34,9 +36,12 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Position;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import componenti.Carrello;
+import componenti.Prodotto;
+
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.UI;
@@ -46,29 +51,36 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.server.VaadinSession;
 import unimarket.services.CarrelloService;
+import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
 
 @PageTitle("Checkout Form")
 @Route("checkout-form")
 @Menu(order = 2, icon = LineAwesomeIconUrl.CREDIT_CARD)
 
-public class CheckoutFormView extends Div {
-  
-    // Dichiarazione delle variabili dei campi globalmente
-    private TextArea address;
-    private TextField postalCode;
-    private TextField city;
-    private Select<String> province;
-    private TextField cardHolder;
-    private TextField cardNumber;
-    private TextField securityCode;
-    private Select<String> expirationMonth;
-    private Select<String> expirationYear;
+public class CheckoutFormView extends Div implements BeforeEnterObserver {
+
+    CarrelloService carrelloService;
+    private Carrello cart;
 
     public CheckoutFormView(CarrelloService carrelloService) {
+        this.carrelloService = carrelloService;
+        addClassNames("checkout-form-view", Display.FLEX, FlexDirection.COLUMN, Height.FULL);
+    }
 
-        addClassNames("checkout-form-view");
-        addClassNames(Display.FLEX, FlexDirection.COLUMN, Height.FULL);
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        Integer userId = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+        if (userId == null) {
+            event.rerouteTo(Login.class);
+            return;
+        }
+
+        cart = carrelloService.getOrCreateCarrello(userId);
+        initializeCheckoutForm();
+    }
+
+    private void initializeCheckoutForm() {
         Main content = new Main();
         content.addClassNames(Display.GRID, Gap.XLARGE, AlignItems.START, JustifyContent.CENTER, MaxWidth.SCREEN_MEDIUM,
                 Margin.Horizontal.AUTO, Padding.Bottom.LARGE, Padding.Horizontal.LARGE);
@@ -77,7 +89,6 @@ public class CheckoutFormView extends Div {
         content.add(createAside());
         add(content);
     }
-
 
     private Component createCheckoutForm() {
         Section checkoutForm = new Section();
@@ -120,38 +131,15 @@ public class CheckoutFormView extends Div {
         address.setRequiredIndicatorVisible(true);
         address.addClassNames(Margin.Bottom.SMALL);
 
-        Div subSection = new Div();
-        subSection.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
-
         TextField postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
         postalCode.setPattern("\\d{5}");
         postalCode.setErrorMessage("Il codice postale deve essere composto da 5 numeri");
         postalCode.addClassNames(Margin.Bottom.SMALL);
 
-        TextField city = new TextField("Provincia");
-        city.setRequiredIndicatorVisible(true);
-        city.addClassNames(Flex.GROW, Margin.Bottom.SMALL);
-
-        Select<String> province = new Select<>();
-        province.setLabel("Provincia");
-        province.setRequiredIndicatorVisible(true);
-        province.setItems("Agrigento", "Alessandria", "Ancona", "Aosta", "Arezzo", "Ascoli Piceno", "Asti", "Avellino", "Bari", "Barletta-Andria-Trani",
-            "Belluno", "Benevento", "Bergamo", "Biella", "Bologna", "Bolzano", "Brescia", "Brindisi", "Cagliari", "Campobasso",
-            "Caserta", "Catania", "Catanzaro", "Chieti", "Cremona", "Crotone", "Cuneo", "Enna", "Fermo", "Ferrara", "Firenze",
-            "Foggia", "Forlì-Cesena", "Genova", "Gorizia", "Grosseto", "Imperia", "Isernia", "La Spezia", "L'Aquila", "Latina",
-            "Lecce", "Lecco", "Livorno", "Lodi", "Lucca", "Macerata", "Mantova", "Massa-Carrara", "Matera", "Milano", "Modena",
-            "Napoli", "Novara", "Nuoro", "Olbia-Tempio", "Padova", "Palermo", "Parma", "Pavia", "Perugia", "Pesaro e Urbino",
-            "Pescara", "Piacenza", "Pisa", "Pistoia", "Potenza", "Prato", "Ragusa", "Ravenna", "Reggio Calabria", "Reggio Emilia",
-            "Rieti", "Rimini", "Roma", "Salerno", "Sassari", "Savona", "Siena", "Siracusa", "Sondrio", "Taranto", "Teramo", "Terni",
-            "Torino", "Trapani", "Trento", "Varese", "Venezia", "Verbania", "Verona", "Vibo Valentia", "Vicenza", "Viterbo");
-        province.addClassNames(Margin.Bottom.SMALL);
-
-        subSection.add(postalCode, province);
-
         Checkbox rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
-        shippingDetails.add(stepTwo, header, address, subSection, rememberAddress);
+        shippingDetails.add(stepTwo, header, address, postalCode, rememberAddress);
         return shippingDetails; // Returns the correct type Component
     }
 
@@ -191,13 +179,15 @@ public class CheckoutFormView extends Div {
 
         Select<String> expirationMonth = new Select<>();
         expirationMonth.setLabel("Mese scadenza");
-        expirationMonth.setRequiredIndicatorVisible(true);
+        expirationMonth.setRequiredIndicatorVisible(false);
         expirationMonth.setItems("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
+        expirationMonth.setReadOnly(true);
 
         Select<String> expirationYear = new Select<>();
         expirationYear.setLabel("Anno scadenza");
-        expirationYear.setRequiredIndicatorVisible(true);
+        expirationYear.setRequiredIndicatorVisible(false);
         expirationYear.setItems("25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35");
+        expirationYear.setReadOnly(true);
 
         subSectionTwo.add(expirationMonth, expirationYear);
 
@@ -266,15 +256,26 @@ public class CheckoutFormView extends Div {
         edit.addThemeVariants(ButtonVariant.LUMO_SMALL);
         
         headerSection.add(header, edit);
-
+        
+        //Creazione istanze utente e carrello, da  modificare con i parametri corretti
+        Integer idUtente = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+        
+		Carrello carrello = carrelloService.getCarrello(idUtente);
+        List<Prodotto> prodotti = carrello.getProdotti();
+        
         UnorderedList ul = new UnorderedList();
         ul.addClassNames(ListStyleType.NONE, Margin.NONE, Padding.NONE, Display.FLEX, FlexDirection.COLUMN, Gap.MEDIUM);
 
-        ul.add(createListItem("da correggere", "With poca voglia di farlo io", "420.69"));
-        ul.add(createListItem("Vanilla blueberry cake", "With blueberry jam", "$8.00"));
-        ul.add(createListItem("Vanilla pastry", "With wholemeal flour", "$5.00"));
-
+        for (Prodotto prodotto : prodotti) {
+        	ul.add(createListItem(
+        			prodotto.getNome() + "", 
+        			prodotto.getDescrizione() + "", 
+        			prodotto.getPrezzo() + ""));
+        	
+        }        
+        
         aside.add(headerSection, ul);
+        
         return aside;
     }
 

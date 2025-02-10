@@ -15,7 +15,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
+import unimarket.views.checkoutform.CheckoutFormView;
+import componenti.Carrello;
+import componenti.CarrelloUIObserver;
+
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
+
+import unimarket.services.CarrelloService;
 import unimarket.services.UtenteService;
 import unimarket.views.personform.PersonFormView;
 
@@ -25,7 +31,7 @@ public class Login extends Composite<VerticalLayout> {
 
     private final UtenteService utenteService;
 
-    public Login(UtenteService utenteService) {
+    public Login(UtenteService utenteService, CarrelloService carrelloService) {
         this.utenteService = utenteService;
     
         // Layout principale
@@ -64,6 +70,9 @@ public class Login extends Composite<VerticalLayout> {
 
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
 
+                Carrello cart = carrelloService.getOrCreateCarrello(userId);
+                carrelloService.aggiungiObserver(userId, new CarrelloUIObserver(new CheckoutFormView(carrelloService)));
+
                 VaadinSession.getCurrent().setAttribute("updateLayout", true);
                 UI.getCurrent().navigate(MyViewView.class);
                 UI.getCurrent().getPage().reload();
@@ -90,34 +99,6 @@ public class Login extends Composite<VerticalLayout> {
         getContent().setAlignItems(FlexComponent.Alignment.CENTER);
         getContent().add(loginBox);
 
-
     }
 
-       /*
-        // backend
-
-        LoginForm loginForm = new LoginForm();
-
-        getContent().setWidth("100%");
-        getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
-        getContent().add(loginForm);
-
-        loginForm.addLoginListener(event -> {
-            String email = event.getUsername();
-            String password = event.getPassword();
-
-            if (utenteService.login(email, password)) {
-                Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
-                Integer userId = utenteService.getUserIdByEmail(email);
-                VaadinSession.getCurrent().setAttribute("userId", userId);
-                UI.getCurrent().navigate(MyViewView.class);
-            } else {
-                Notification.show("Email o password errati", 3000, Notification.Position.MIDDLE);
-                loginForm.setError(true);
-            }
-        });
-
-    }
-    */
 }

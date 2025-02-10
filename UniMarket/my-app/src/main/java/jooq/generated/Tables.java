@@ -5,9 +5,13 @@ package jooq.generated;
 
 
 import jooq.generated.tables.Carrello;
+import jooq.generated.tables.CarrelloProdotto;
 import jooq.generated.tables.CartaCredito;
 import jooq.generated.tables.Cliente;
+import jooq.generated.tables.HteSamplePerson;
+import jooq.generated.tables.Idgenerator;
 import jooq.generated.tables.Prodotto;
+import jooq.generated.tables.SamplePerson;
 import jooq.generated.tables.Utente;
 
 
@@ -23,6 +27,11 @@ public class Tables {
     public static final Carrello CARRELLO = Carrello.CARRELLO;
 
     /**
+     * The table <code>carrello_prodotto</code>.
+     */
+    public static final CarrelloProdotto CARRELLO_PRODOTTO = CarrelloProdotto.CARRELLO_PRODOTTO;
+
+    /**
      * The table <code>carta_credito</code>.
      */
     public static final CartaCredito CARTA_CREDITO = CartaCredito.CARTA_CREDITO;
@@ -33,9 +42,24 @@ public class Tables {
     public static final Cliente CLIENTE = Cliente.CLIENTE;
 
     /**
+     * The table <code>HTE_sample_person</code>.
+     */
+    public static final HteSamplePerson HTE_SAMPLE_PERSON = HteSamplePerson.HTE_SAMPLE_PERSON;
+
+    /**
+     * The table <code>idgenerator</code>.
+     */
+    public static final Idgenerator IDGENERATOR = Idgenerator.IDGENERATOR;
+
+    /**
      * The table <code>prodotto</code>.
      */
     public static final Prodotto PRODOTTO = Prodotto.PRODOTTO;
+
+    /**
+     * The table <code>sample_person</code>.
+     */
+    public static final SamplePerson SAMPLE_PERSON = SamplePerson.SAMPLE_PERSON;
 
     /**
      * The table <code>utente</code>.

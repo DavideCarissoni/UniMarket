@@ -146,8 +146,7 @@ public class MainLayout extends AppLayout {
 
         List<MenuItemInfo> menuItems = new ArrayList<>();
         menuItems.add(new MenuItemInfo("Home", LineAwesomeIcon.PENCIL_RULER_SOLID.create(), MyViewView.class));
-        menuItems.add(new MenuItemInfo("Checkout", LineAwesomeIcon.CREDIT_CARD.create(), CheckoutFormView.class));
-
+        
         if (admin) {
             menuItems.add(new MenuItemInfo("Utenti", LineAwesomeIcon.FILTER_SOLID.create(), GridwithFiltersView.class));
             menuItems.add(new MenuItemInfo("Aggiungi prodotti", LineAwesomeIcon.COLUMNS_SOLID.create(), MasterDetailView.class));

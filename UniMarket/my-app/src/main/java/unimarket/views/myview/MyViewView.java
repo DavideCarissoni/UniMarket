@@ -1,8 +1,6 @@
 package unimarket.views.myview;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -18,7 +16,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -27,15 +24,14 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import componenti.Carrello;
-import componenti.Cliente;
+import componenti.CarrelloFactory;
 import componenti.Prodotto;
-import componenti.Utente;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
-import unimarket.components.avataritem.AvatarItem;
+import unimarket.services.CarrelloService;
 import unimarket.services.ProdottoService;
 import unimarket.views.checkoutform.CheckoutFormView;
 import com.vaadin.flow.component.icon.Icon;
@@ -47,7 +43,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 public class MyViewView extends Composite<VerticalLayout> {
   
 
-    public MyViewView(ProdottoService prodottoService) {
+    public MyViewView(ProdottoService prodottoService, CarrelloService carrelloService) {
 
         HorizontalLayout layoutRow = new HorizontalLayout();
         HorizontalLayout headerLayout = new HorizontalLayout();
@@ -55,10 +51,9 @@ public class MyViewView extends Composite<VerticalLayout> {
         RouterLink routerLink = new RouterLink();
         HorizontalLayout layoutRow2 = new HorizontalLayout();
         VerticalLayout layoutColumn2 = new VerticalLayout();
-        Select select = new Select();
-        MultiSelectComboBox multiSelectComboBox = new MultiSelectComboBox();
-        MultiSelectListBox textItems = new MultiSelectListBox();
-        MultiSelectListBox avatarItems = new MultiSelectListBox();
+        Select<SampleItem> select = new Select<SampleItem>();
+        MultiSelectComboBox<SampleItem> multiSelectComboBox = new MultiSelectComboBox<SampleItem>();
+        MultiSelectListBox<SampleItem> textItems = new MultiSelectListBox<SampleItem>();
         VerticalLayout layoutColumn3 = new VerticalLayout();
         Hr hr = new Hr();
         
@@ -110,7 +105,6 @@ public class MyViewView extends Composite<VerticalLayout> {
         layoutColumn2.add(select);
         layoutColumn2.add(multiSelectComboBox);
         layoutColumn2.add(textItems);
-        layoutColumn2.add(avatarItems);
         
         select.setLabel("Select");
         select.setWidth("130px");
@@ -122,9 +116,6 @@ public class MyViewView extends Composite<VerticalLayout> {
         
         textItems.setWidth("130px");
         setMultiSelectListBoxSampleData(textItems);
-        
-        avatarItems.setWidth("130px");
-        setAvatarItemsSampleData(avatarItems);
         
         layoutColumn3.addClassName(Padding.SMALL);
         layoutColumn3.setWidth("3%");
@@ -138,7 +129,8 @@ public class MyViewView extends Composite<VerticalLayout> {
             return;
         }
 
-        Carrello cart = new Carrello(userId);//qui ho bisogno dell'id dell'utente loggato
+        Carrello cart = CarrelloFactory.creaCarrello(userId, carrelloService);
+
         List<Prodotto> prodotti = prodottoService.getAllProdotti();
         
         FlexLayout layoutColumn4 = new FlexLayout();
@@ -229,7 +221,7 @@ public class MyViewView extends Composite<VerticalLayout> {
             buttonPrimary.addClickListener(event -> {
                 int selectedQuantity = quantityMap.get(buttonPrimary);
                 if (selectedQuantity < prodotto.getQuantita()) {
-                	cart.aggiungiProdotto(prodotto, selectedQuantity);
+                	carrelloService.aggiungiProdotto(cart, prodotto, selectedQuantity);
                 	prodottoService.modificaQuantita(prodotto.getCodice(), selectedQuantity);
                 }else {
                     // Mostra un messaggio di errore se la quantità è maggiore di quella disponibile
@@ -287,50 +279,36 @@ public class MyViewView extends Composite<VerticalLayout> {
         return quantityLayout;
     }
     
-    private void setSelectSampleData(Select select) {
+    private void setSelectSampleData(Select<SampleItem> select) {
         List<SampleItem> sampleItems = new ArrayList<>();
-        sampleItems.add(new SampleItem("first", "First", null));
-        sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-        sampleItems.add(new SampleItem("fourth", "Fourth", null));
+        sampleItems.add(new SampleItem("first", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("second", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("third", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("fourth", "In arrivo...", Boolean.TRUE));
         select.setItems(sampleItems);
         select.setItemLabelGenerator(item -> ((SampleItem) item).label());
         select.setItemEnabledProvider(item -> !Boolean.TRUE.equals(((SampleItem) item).disabled()));
     }
 
-    private void setMultiSelectComboBoxSampleData(MultiSelectComboBox multiSelectComboBox) {
+    private void setMultiSelectComboBoxSampleData(MultiSelectComboBox<SampleItem> multiSelectComboBox) {
         List<SampleItem> sampleItems = new ArrayList<>();
-        sampleItems.add(new SampleItem("first", "First", null));
-        sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-        sampleItems.add(new SampleItem("fourth", "Fourth", null));
+        sampleItems.add(new SampleItem("first", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("second", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("third", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("fourth", "In arrivo...", Boolean.TRUE));
         multiSelectComboBox.setItems(sampleItems);
         multiSelectComboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
     }
 
-    private void setMultiSelectListBoxSampleData(MultiSelectListBox multiSelectListBox) {
+    private void setMultiSelectListBoxSampleData(MultiSelectListBox<SampleItem> multiSelectListBox) {
         List<SampleItem> sampleItems = new ArrayList<>();
-        sampleItems.add(new SampleItem("first", "First", null));
-        sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-        sampleItems.add(new SampleItem("fourth", "Fourth", null));
+        sampleItems.add(new SampleItem("first", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("second", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("third", "In arrivo...", Boolean.TRUE));
+        sampleItems.add(new SampleItem("fourth", "In arrivo...", Boolean.TRUE));
         multiSelectListBox.setItems(sampleItems);
         multiSelectListBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
         multiSelectListBox.setItemEnabledProvider(item -> !Boolean.TRUE.equals(((SampleItem) item).disabled()));
     }
 
-    private void setAvatarItemsSampleData(MultiSelectListBox multiSelectListBox) {
-        record Person(String name, String profession) {
-        }
-        ;
-        List<Person> data = List.of(new Person("Aria Bailey", "Endocrinologist"), new Person("Aaliyah Butler", "Nephrologist"), new Person("Eleanor Price", "Ophthalmologist"), new Person("Allison Torres", "Allergist"), new Person("Madeline Lewis", "Gastroenterologist"));
-        multiSelectListBox.setItems(data);
-        multiSelectListBox.setRenderer(new ComponentRenderer(item -> {
-            AvatarItem avatarItem = new AvatarItem();
-            avatarItem.setHeading(((Person) item).name);
-            avatarItem.setDescription(((Person) item).profession);
-            avatarItem.setAvatar(new Avatar(((Person) item).name));
-            return avatarItem;
-        }));
-    }
 }
