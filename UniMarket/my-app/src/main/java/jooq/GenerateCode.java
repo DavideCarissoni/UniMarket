@@ -1,4 +1,5 @@
 package jooq;
+
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
 import org.slf4j.Logger;

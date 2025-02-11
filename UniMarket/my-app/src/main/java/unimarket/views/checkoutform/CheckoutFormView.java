@@ -1,6 +1,7 @@
 package unimarket.views.checkoutform;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasOrderedComponents;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -8,7 +9,6 @@ import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -35,24 +35,18 @@ import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.Position;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-
 import componenti.Carrello;
 import componenti.CartaCredito;
 import componenti.Cliente;
 import componenti.Prodotto;
-
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.server.VaadinSession;
+
+import unimarket.observer.CarrelloObserver;
 import unimarket.services.CarrelloService;
 import unimarket.services.ClienteService;
 import unimarket.views.myview.Login;
@@ -62,7 +56,7 @@ import unimarket.views.myview.MyViewView;
 @Route("checkout-form")
 @Menu(order = 2, icon = LineAwesomeIconUrl.CREDIT_CARD)
 
-public class CheckoutFormView extends Div implements BeforeEnterObserver {
+public class CheckoutFormView extends Div implements BeforeEnterObserver, CarrelloObserver {
 
 	// Servizi
     private final CarrelloService carrelloService;
@@ -90,6 +84,8 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
     
     private Button confirm;
     
+    private Aside aside;
+    
     //Creazione istanze utente e carrello, da  modificare con i parametri corretti
     Integer idUtente = (Integer) VaadinSession.getCurrent().getAttribute("userId");
     
@@ -114,6 +110,9 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
             event.rerouteTo(Login.class);
             return;
         }
+        
+        // Registra questa vista come observer
+        carrelloService.aggiungiObserver(userId, this);
 
         cart = carrelloService.getOrCreateCarrello(userId);
         initializeCheckoutForm();
@@ -132,7 +131,39 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
             securityCode.setValue(cartaSalvata.getCodiceSicurezza());
         }
     }
+    
+    @Override
+    public void onProdottoAggiunto(Prodotto prodotto, int quantita) {
+        // Aggiorna la UI per riflettere l'aggiunta del prodotto
+        UI.getCurrent().access(() -> {
+            Notification.show("Prodotto aggiunto: " + prodotto.getNome() + " (Quantità: " + quantita + ")", 3000, Notification.Position.MIDDLE);
 
+            Aside nuovoAside = createAside();
+            
+            if (aside != null && aside.getParent().isPresent()) {
+                ((HasOrderedComponents) aside.getParent().get()).replace(aside, nuovoAside);
+            }
+            
+            aside = nuovoAside;
+        });
+    }
+
+    @Override
+    public void onProdottoRimosso(Prodotto prodotto, int quantita) {
+        // Aggiorna la UI per riflettere la rimozione del prodotto
+        UI.getCurrent().access(() -> {
+            Notification.show("Prodotto rimosso: " + prodotto.getNome() + " (Quantità: " + quantita + ")", 3000, Notification.Position.MIDDLE);
+
+            Aside nuovoAside = createAside();
+            
+            if (aside != null && aside.getParent().isPresent()) {
+                ((HasOrderedComponents) aside.getParent().get()).replace(aside, nuovoAside);
+            }
+            
+            aside = nuovoAside; 
+        });
+    }
+    
     private void initializeCheckoutForm() {
         Main content = new Main();
         content.addClassNames(Display.GRID, Gap.XLARGE, AlignItems.START, JustifyContent.CENTER, MaxWidth.SCREEN_MEDIUM,
@@ -194,7 +225,7 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
         shippingDetails.add(stepTwo, header, address, postalCode, rememberAddress);
-        return shippingDetails; // Returns the correct type Component
+        return shippingDetails; 
     }
 
     private Component createPaymentInformationSection() {
@@ -328,7 +359,7 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
     }
 
     private Aside createAside() {
-        Aside aside = new Aside();
+        aside = new Aside();
         aside.addClassNames(Background.CONTRAST_5, BoxSizing.BORDER, Padding.LARGE, BorderRadius.LARGE, Position.STICKY);
         
         Header headerSection = new Header();
@@ -354,7 +385,6 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         }        
         
         aside.add(headerSection, ul);
-        
         return aside;
     }
 
@@ -408,5 +438,11 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         // Abilita/disabilita il pulsante "Conferma" in base alla validità del form
         binder.addStatusChangeListener(event -> confirm.setEnabled(binder.isValid()));
     }
+
+	@Override
+	public void onAggiornamento() {
+		// TODO Auto-generated method stub
+		
+	}
 
 } 
