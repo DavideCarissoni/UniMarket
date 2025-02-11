@@ -85,14 +85,20 @@ public class MyViewView extends Composite<VerticalLayout> {
         title.getStyle().set("flex-grow", "1");
         title.getStyle().set("text-align", "center");
 
+        // crea il pulsante carrello
         Button cartButton = new Button(new Icon(VaadinIcon.CART));
         cartButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cartButton.getStyle().set("margin-left", "auto");
         cartButton.getStyle().set("width", "60px");
         cartButton.getStyle().set("height", "60px");
-
-        cartButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate(CheckoutFormView.class)));
-
+        cartButton.getStyle().set("padding", "0");
+        cartButton.getStyle().set("min-width", "unset");
+        
+        // Manda all'interfaccia di checkout se cliccato
+        cartButton.addClickListener(event -> {
+        	getUI().ifPresent(ui -> ui.navigate(CheckoutFormView.class));
+        });
+        
         headerLayout.setWidth("100%");
         headerLayout.setAlignItems(Alignment.CENTER);
         headerLayout.getStyle().set("display", "flex");
@@ -140,6 +146,9 @@ public class MyViewView extends Composite<VerticalLayout> {
                 .set("justifyContent", "space-evenly")
                 .set("gap", "10px");
 
+        Map<Button, Integer> quantityMap = new HashMap<>();
+        
+        // Crea un box per ogni prodotto presente
         for (Prodotto prodotto : prodotti) {
             VerticalLayout boxLayout = new VerticalLayout();
             boxLayout.setHeight("350px");
@@ -151,7 +160,8 @@ public class MyViewView extends Composite<VerticalLayout> {
                     .set("border-radius", "15px")
                     .set("border", "1px solid #ccc")
                     .set("background-color", "#8ba6cc")
-                    .set("padding", "15px");
+                    .set("padding", "15px")
+            		.set("box-shadow", "2px 2px 5px rgba(0,0,0,0.1");
 
             boxLayout.setAlignItems(Alignment.CENTER);
             boxLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
@@ -160,15 +170,69 @@ public class MyViewView extends Composite<VerticalLayout> {
             buttonPrimary.getStyle().set("min-width", "65px");
             buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+            HorizontalLayout quantitySelector = createQuantitySelector(quantityMap, buttonPrimary);
+            
+            // Contenitore per i testi
+            VerticalLayout contentContainer = new VerticalLayout();
+            contentContainer.setWidthFull();
+            contentContainer.setPadding(false);
+            contentContainer.setSpacing(false);
+            contentContainer.getStyle().set("flex-grow", "1");
+            
+            // Crea componente immagine
+            Image image = new Image("media/icon.jpg", "Product Image");
+            image.setWidth("100%");
+            
+            // Crea span per il nome
             Span name = new Span(prodotto.getNome());
             name.getStyle().set("font-weight", "bold");
+            
+            name.getStyle().set("font-weight", "bold"); 
+            
+            Span description = new Span(prodotto.getDescrizione());
+            description.getStyle()
+            	.set("font-size", "12px") 
+            	.set("color", "#fff") 
+            	.set("text-align", "center")
+            	.set("max-height", "40px") 
+            	.set("overflow", "hidden") // Nasconde il testo in eccesso
+            	.set("margin-bottom", "2px");
 
             Span price = new Span(String.format("$%.2f", prodotto.getPrezzo()));
             price.getStyle().set("color", "green").set("font-size", "14px");
 
-            boxLayout.add(name, price, buttonPrimary);
-
+            // Aggiunge i componenti nel contenitore di testo
+            contentContainer.add(name, description, price);
+            
+            // Aggiungi il selettore di quantità            
+            HorizontalLayout actionLayout = new HorizontalLayout(quantitySelector, buttonPrimary);
+            
+            actionLayout.setWidthFull();
+            actionLayout.setSpacing(true);
+            actionLayout.setAlignItems(Alignment.CENTER);
+            actionLayout.getStyle().set("margin-top", "5px");
+            
+            // Imposta crescita degli elementi per mantenere il pulsante in fondo
+            boxLayout.setFlexGrow(1, contentContainer);
+            boxLayout.setFlexGrow(0, buttonPrimary);
+            
+            // Add the components to the box layout
+            boxLayout.add(image, contentContainer, actionLayout);
             layoutColumn4.add(boxLayout);
+            
+            // Se cliccato il pulsante 🛒 aggiunge al carrello i prodotti selezionati
+            buttonPrimary.addClickListener(event -> {
+                int selectedQuantity = quantityMap.get(buttonPrimary);
+                if (selectedQuantity < prodotto.getQuantita()) {
+                	carrelloService.aggiungiProdotto(cart, prodotto, selectedQuantity);
+                	prodottoService.modificaQuantita(prodotto.getCodice(), selectedQuantity);
+                }else {
+                    // Mostra un messaggio di errore se la quantità è maggiore di quella disponibile
+                    Notification.show("Errore: La quantità selezionata (" + selectedQuantity + ") è maggiore di quella disponibile (" 
+                    		+ prodotto.getQuantita() + ").", 5000, Notification.Position.MIDDLE);
+                }
+            }
+            );
         }
 
         layoutRow2.add(layoutColumn4);

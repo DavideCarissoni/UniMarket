@@ -79,6 +79,8 @@ public class CarrelloService implements ICarrelloService {
             notificaProdottoRimosso(carrello.getIdUtente(), prodottoRimosso, quantita);
         }
     }
+    
+    // ------------------ GESTIONE OBSERVER ------------------
 
     @Override
     public void aggiungiObserver(int idUtente, CarrelloObserver observer) {
