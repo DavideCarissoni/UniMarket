@@ -81,7 +81,9 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
         grid.addColumn(Prodotto::getNome).setHeader("Nome").setAutoWidth(true);
         grid.addColumn(Prodotto::getDescrizione).setHeader("Descrizione").setAutoWidth(true);
         grid.addColumn(Prodotto::getPrezzo).setHeader("Prezzo").setAutoWidth(true);
-        grid.addColumn(Prodotto::getQuantita).setHeader("Quantità").setAutoWidth(true);
+        grid.addColumn(prodotto -> prodottoService.getQuantitaById(prodotto.getCodice()))
+                .setHeader("Quantità")
+                .setAutoWidth(true);
 
         grid.setItems(DataProvider.fromCallbacks(
         	    query -> prodottoService.getProdottiPaginati(query.getOffset(), query.getLimit()).stream(),

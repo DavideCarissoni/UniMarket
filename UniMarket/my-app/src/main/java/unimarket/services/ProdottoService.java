@@ -115,4 +115,16 @@ public class ProdottoService {
 	        return dsl.fetchCount(Tables.PRODOTTO);
 	    }
 
+	public int getQuantitaById(int id) {
+		try {
+			return dsl.select(Tables.PRODOTTO.QUANTITÀ)
+					.from(Tables.PRODOTTO)
+					.where(Tables.PRODOTTO.CODICE.eq(id))
+					.fetchOneInto(Integer.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore durante il recupero della quantità del prodotto: " + e.getMessage(), e);
+		}
+	}
+
 }
