@@ -11,6 +11,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Menu;
@@ -40,6 +41,8 @@ import java.util.List;
 import java.util.Set;
 
 import componenti.Carrello;
+import componenti.CartaCredito;
+import componenti.Cliente;
 import componenti.Prodotto;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -51,6 +54,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.server.VaadinSession;
 import unimarket.services.CarrelloService;
+import unimarket.services.ClienteService;
 import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
 
@@ -60,11 +64,38 @@ import unimarket.views.myview.MyViewView;
 
 public class CheckoutFormView extends Div implements BeforeEnterObserver {
 
-    CarrelloService carrelloService;
+	// Servizi
+    private final CarrelloService carrelloService;
+    private final ClienteService clienteService;
+     
     private Carrello cart;
-
-    public CheckoutFormView(CarrelloService carrelloService) {
+    private Cliente cliente;
+    
+    // Variabili per l'indirizzo di spedizione
+    private TextArea address;
+    private TextField postalCode;
+    private Checkbox rememberAddress;
+    
+    // Variabili per il pagamento
+    private TextField cardHolderName;
+    private TextField cardHolderSurname;
+    private TextField cardNumber;
+    private TextField securityCode;
+    private Select<String> expirationMonth;
+    private Select<String> expirationYear;
+    private Checkbox rememberCard;
+  
+    // binder --> per controllare il riempimento dei campi
+    private final Binder<CheckoutFormView> binder = new Binder<>(CheckoutFormView.class);
+    
+    private Button confirm;
+    
+    //Creazione istanze utente e carrello, da  modificare con i parametri corretti
+    Integer idUtente = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+    
+    public CheckoutFormView(CarrelloService carrelloService, ClienteService clienteService) {
         this.carrelloService = carrelloService;
+        this.clienteService = clienteService;
         addClassNames("checkout-form-view", Display.FLEX, FlexDirection.COLUMN, Height.FULL);
     }
 
@@ -75,9 +106,31 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
             event.rerouteTo(Login.class);
             return;
         }
+        
+        // Recupera il Cliente 
+        cliente = clienteService.getClienteById(userId);
+        if (cliente == null) {
+            Notification.show("Errore: cliente non trovato.", 3000, Notification.Position.MIDDLE);
+            event.rerouteTo(Login.class);
+            return;
+        }
 
         cart = carrelloService.getOrCreateCarrello(userId);
         initializeCheckoutForm();
+        
+        // Inserisce i dati assocciati al cliente esistono già
+        if (cliente.getIndirizzo() != null) {
+            address.setValue(cliente.getIndirizzo());
+        }
+        
+        // Inserisce la carta associata al cliente se esiste già
+        CartaCredito cartaSalvata = clienteService.getCartaCredito(cliente.getId());
+        if (cartaSalvata != null) {
+            cardHolderName.setValue(cartaSalvata.getNomeIntestatario());
+            cardHolderSurname.setValue(cartaSalvata.getCognomeIntestatario());
+            cardNumber.setValue(cartaSalvata.getNumeroCarta());
+            securityCode.setValue(cartaSalvata.getCodiceSicurezza());
+        }
     }
 
     private void initializeCheckoutForm() {
@@ -126,18 +179,19 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         H3 header = new H3("Indirizzo di spedizione");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
-        TextArea address = new TextArea("Indirizzo");
+        address = new TextArea("Indirizzo");
         address.setMaxLength(200);
         address.setRequiredIndicatorVisible(true);
         address.addClassNames(Margin.Bottom.SMALL);
 
-        TextField postalCode = new TextField("Codice postale");
+        postalCode = new TextField("Codice postale");
         postalCode.setRequiredIndicatorVisible(true);
         postalCode.setPattern("\\d{5}");
         postalCode.setErrorMessage("Il codice postale deve essere composto da 5 numeri");
         postalCode.addClassNames(Margin.Bottom.SMALL);
-
-        Checkbox rememberAddress = new Checkbox("Ricorda il mio indirizzo");
+        postalCode.setReadOnly(true);
+        
+        rememberAddress = new Checkbox("Ricorda il mio indirizzo");
 
         shippingDetails.add(stepTwo, header, address, postalCode, rememberAddress);
         return shippingDetails; // Returns the correct type Component
@@ -153,20 +207,25 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         H3 header = new H3("Informazioni pagamento");
         header.addClassNames(Margin.Bottom.MEDIUM, Margin.Top.SMALL, FontSize.XXLARGE);
 
-        TextField cardHolder = new TextField("Intestatario");
-        cardHolder.setRequiredIndicatorVisible(true);
-        cardHolder.setPattern("[\\p{L} \\-]+");
-        cardHolder.addClassNames(Margin.Bottom.SMALL);
+        cardHolderName = new TextField("Nome intestatario");
+        cardHolderName.setRequiredIndicatorVisible(true);
+        cardHolderName.setPattern("[\\p{L} \\-]+");
+        cardHolderName.addClassNames(Margin.Bottom.SMALL);
 
+        cardHolderSurname = new TextField("Cognome intestatario");
+        cardHolderSurname.setRequiredIndicatorVisible(true);
+        cardHolderSurname.setPattern("[\\p{L} \\-]+");
+        cardHolderSurname.addClassNames(Margin.Bottom.SMALL);
+        
         Div subSectionOne = new Div();
         subSectionOne.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
 
-        TextField cardNumber = new TextField("Numero carta");
+        cardNumber = new TextField("Numero carta");
         cardNumber.setRequiredIndicatorVisible(true);
         cardNumber.setPattern("[\\d ]{12,23}");
         cardNumber.addClassNames(Margin.Bottom.SMALL);
 
-        TextField securityCode = new TextField("Security Code");
+        securityCode = new TextField("Security Code");
         securityCode.setRequiredIndicatorVisible(true);
         securityCode.setPattern("[0-9]{3,4}");
         securityCode.addClassNames(Flex.GROW, Margin.Bottom.SMALL);
@@ -177,21 +236,23 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         Div subSectionTwo = new Div();
         subSectionTwo.addClassNames(Display.FLEX, FlexWrap.WRAP, Gap.MEDIUM);
 
-        Select<String> expirationMonth = new Select<>();
+        expirationMonth = new Select<>();
         expirationMonth.setLabel("Mese scadenza");
         expirationMonth.setRequiredIndicatorVisible(false);
         expirationMonth.setItems("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
         expirationMonth.setReadOnly(true);
 
-        Select<String> expirationYear = new Select<>();
+        expirationYear = new Select<>();
         expirationYear.setLabel("Anno scadenza");
         expirationYear.setRequiredIndicatorVisible(false);
         expirationYear.setItems("25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35");
         expirationYear.setReadOnly(true);
 
         subSectionTwo.add(expirationMonth, expirationYear);
+        
+        rememberCard = new Checkbox("Ricorda la mia carta di credito");
 
-        paymentInfo.add(stepThree, header, cardHolder, cardNumber, subSectionTwo);
+        paymentInfo.add(stepThree, header, cardHolderName, cardHolderSurname, cardNumber, subSectionTwo, rememberCard);
         return paymentInfo;
     }
 
@@ -202,15 +263,40 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         Button cancel = new Button("Annulla ordine");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        Button pay = new Button("Conferma", new Icon(VaadinIcon.LOCK));
-        pay.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+        confirm = new Button("Conferma", new Icon(VaadinIcon.LOCK));
+        confirm.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+        confirm.setEnabled(false);
         
         // Listener per il bottone "Conferma"
-        pay.addClickListener(event -> {
-        	Notification.show("Ordine confermato! Grazie per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
+        confirm.addClickListener(event -> {
+        	if (binder.validate().isOk()) {
+        		boolean rememberSelectedAddress = rememberAddress.getValue();
+        		boolean rememberSelectedCard = rememberCard.getValue();     	
+        	   
+        		String indirizzoInserito = address.getValue();
+        		String nomeIntestatario = cardHolderName.getValue();
+        		String cognomeIntestatario = cardHolderSurname.getValue();
+        		String numeroCarta = cardNumber.getValue();
+        		String codiceSicurezza = securityCode.getValue();
+            
+        		if (rememberSelectedAddress) {
+        			cliente.setIndirizzo(indirizzoInserito);
+        			clienteService.salvaCliente(cliente);
+        		}
+        	
+        		if (rememberSelectedCard) {
+        			CartaCredito nuovaCarta = new CartaCredito(numeroCarta, codiceSicurezza, nomeIntestatario, cognomeIntestatario);
+        			clienteService.aggiungiCartaCredito(cliente, nuovaCarta, true);
+        		}
+        	
+        		Notification.show("Ordine confermato! Grazie per il tuo acquisto.", 3000, Notification.Position.MIDDLE);
 
-        	// Naviga alla homepage 
-        	UI.getCurrent().navigate(MyViewView.class);
+        		// Naviga alla homepage 
+        		UI.getCurrent().navigate(MyViewView.class);
+        		
+        	} else {
+        		Notification.show("Compila tutti i campi obbligatori prima di confermare.");
+        	}
         });
         
         // Aggiungi il listener di clic per il pulsante "Annulla ordine"
@@ -236,7 +322,7 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
             confirmationDialog.open();
         });
         
-        footer.add(cancel, pay);
+        footer.add(cancel, confirm);
         return footer;
         
         
@@ -252,13 +338,7 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         H3 header = new H3("Riepilogo ordine");
         header.addClassNames(Margin.NONE);
         
-        Button edit = new Button("Modifica");
-        edit.addThemeVariants(ButtonVariant.LUMO_SMALL);
-        
-        headerSection.add(header, edit);
-        
-        //Creazione istanze utente e carrello, da  modificare con i parametri corretti
-        Integer idUtente = (Integer) VaadinSession.getCurrent().getAttribute("userId");
+        headerSection.add(header);
         
 		Carrello carrello = carrelloService.getCarrello(idUtente);
         List<Prodotto> prodotti = carrello.getProdotti();
@@ -296,4 +376,38 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
         item.add(subSection, priceSpan);
         return item;
     }
+    
+    // abilita il pulsante conferma se sono validi i campi
+    private void configureBinder() {
+        binder.forField(address)
+            .asRequired("L'indirizzo è obbligatorio")
+            .bind(instance -> instance.address.getValue(), (instance, value) -> instance.address.setValue(value));
+
+        binder.forField(postalCode)
+            .asRequired("Il codice postale è obbligatorio")
+            .withValidator(value -> value.matches("\\d{5}"), "Il codice postale deve essere di 5 cifre")
+            .bind(instance -> instance.postalCode.getValue(), (instance, value) -> instance.postalCode.setValue(value));
+
+        binder.forField(cardHolderName)
+            .asRequired("Il nome dell'intestatario è obbligatorio")
+            .bind(instance -> instance.cardHolderName.getValue(), (instance, value) -> instance.cardHolderName.setValue(value));
+
+        binder.forField(cardHolderSurname)
+            .asRequired("Il cognome dell'intestatario è obbligatorio")
+            .bind(instance -> instance.cardHolderSurname.getValue(), (instance, value) -> instance.cardHolderSurname.setValue(value));
+
+        binder.forField(cardNumber)
+            .asRequired("Il numero della carta è obbligatorio")
+            .withValidator(value -> value.replaceAll(" ", "").matches("\\d{12,23}"), "Numero carta non valido")
+            .bind(instance -> instance.cardNumber.getValue(), (instance, value) -> instance.cardNumber.setValue(value));
+
+        binder.forField(securityCode)
+            .asRequired("Il codice di sicurezza è obbligatorio")
+            .withValidator(value -> value.matches("\\d{3,4}"), "Il codice di sicurezza deve avere 3 o 4 cifre")
+            .bind(instance -> instance.securityCode.getValue(), (instance, value) -> instance.securityCode.setValue(value));
+
+        // Abilita/disabilita il pulsante "Conferma" in base alla validità del form
+        binder.addStatusChangeListener(event -> confirm.setEnabled(binder.isValid()));
+    }
+
 } 

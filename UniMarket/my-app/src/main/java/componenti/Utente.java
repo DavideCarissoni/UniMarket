@@ -13,9 +13,8 @@ public abstract class Utente {
 	private String numeroTelefono;
 	private String email;
 	private String password;
-    private final DSLContext dsl;
 	
-	protected Utente(String nome, String cognome, String telefono, String email, String password, DSLContext dsl) {
+	protected Utente(String nome, String cognome, String telefono, String email, String password) {
 		super();
 		this.id = ID++;
 		this.nome = nome;
@@ -23,7 +22,6 @@ public abstract class Utente {
 		this.numeroTelefono = telefono;
 		this.email = email;
 		this.password = password;
-		this.dsl = dsl;
 	}
 	
 	public int getID() {

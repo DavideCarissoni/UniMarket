@@ -22,6 +22,7 @@ import componenti.CarrelloUIObserver;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 import unimarket.services.CarrelloService;
+import unimarket.services.ClienteService;
 import unimarket.services.UtenteService;
 import unimarket.views.personform.PersonFormView;
 
@@ -29,12 +30,9 @@ import unimarket.views.personform.PersonFormView;
 @Route("")
 public class Login extends Composite<VerticalLayout> {
 
-    private final UtenteService utenteService;
-
-    public Login(UtenteService utenteService, CarrelloService carrelloService) {
-        this.utenteService = utenteService;
-    
-        // Layout principale
+    public Login(UtenteService utenteService, CarrelloService carrelloService, ClienteService clienteService) {
+        
+    	// Layout principale
         VerticalLayout loginBox = new VerticalLayout();
         loginBox.getStyle().set("border", "1px solid #ccc"); // Stile del box
         loginBox.getStyle().set("padding", "20px");
@@ -71,7 +69,7 @@ public class Login extends Composite<VerticalLayout> {
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
 
                 Carrello cart = carrelloService.getOrCreateCarrello(userId);
-                carrelloService.aggiungiObserver(userId, new CarrelloUIObserver(new CheckoutFormView(carrelloService)));
+                carrelloService.aggiungiObserver(userId, new CarrelloUIObserver(new CheckoutFormView(carrelloService, clienteService)));
 
                 VaadinSession.getCurrent().setAttribute("updateLayout", true);
                 UI.getCurrent().navigate(MyViewView.class);

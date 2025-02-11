@@ -144,8 +144,7 @@ public class UtenteService {
                         record.get(Tables.UTENTE.COGNOME),
                         record.get(Tables.UTENTE.NUMERO_TELEFONO),
                         record.get(Tables.UTENTE.EMAIL),
-                        null, // Password non selezionata
-                        dsl
+                        null // Password non selezionata
                 ) {
                     // Implementazione vuota per la classe astratta
                 })
