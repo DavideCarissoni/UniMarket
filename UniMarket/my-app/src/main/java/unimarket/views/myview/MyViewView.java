@@ -24,13 +24,16 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import componenti.Carrello;
-import componenti.CarrelloFactory;
 import componenti.Prodotto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
+
+import unimarket.factories.CarrelloFactory;
 import unimarket.services.CarrelloService;
 import unimarket.services.ProdottoService;
 import unimarket.views.checkoutform.CheckoutFormView;
@@ -41,202 +44,138 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 @Route("Home")
 @Menu(order = 0, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class MyViewView extends Composite<VerticalLayout> {
-  
 
-    public MyViewView(ProdottoService prodottoService, CarrelloService carrelloService) {
+    private final CarrelloFactory carrelloFactory;
+    private final ProdottoService prodottoService;
+    private final CarrelloService carrelloService;
 
+    @Autowired
+    public MyViewView(CarrelloFactory carrelloFactory, ProdottoService prodottoService, CarrelloService carrelloService) {
+        this.carrelloFactory = carrelloFactory;
+        this.prodottoService = prodottoService;
+        this.carrelloService = carrelloService;
+
+        setupUI();
+    }
+
+    private void setupUI() {
         HorizontalLayout layoutRow = new HorizontalLayout();
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1();
         RouterLink routerLink = new RouterLink();
         HorizontalLayout layoutRow2 = new HorizontalLayout();
         VerticalLayout layoutColumn2 = new VerticalLayout();
-        Select<SampleItem> select = new Select<SampleItem>();
-        MultiSelectComboBox<SampleItem> multiSelectComboBox = new MultiSelectComboBox<SampleItem>();
-        MultiSelectListBox<SampleItem> textItems = new MultiSelectListBox<SampleItem>();
+        Select<SampleItem> select = new Select<>();
+        MultiSelectComboBox<SampleItem> multiSelectComboBox = new MultiSelectComboBox<>();
+        MultiSelectListBox<SampleItem> textItems = new MultiSelectListBox<>();
         VerticalLayout layoutColumn3 = new VerticalLayout();
         Hr hr = new Hr();
-        
+
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
-        getContent().add(layoutRow);
-        getContent().add(layoutRow2);
+        getContent().add(layoutRow, layoutRow2);
 
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.setHeight("100px");
         layoutRow.add(headerLayout);
-        
-        // Crea e ordina il titolo 
+
         title.setText("UniMarket");
         title.getStyle().set("margin", "0");
         title.getStyle().set("flex-grow", "1");
         title.getStyle().set("text-align", "center");
-        
-        // Crea il pulsante del carrello
+
         Button cartButton = new Button(new Icon(VaadinIcon.CART));
         cartButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cartButton.getStyle().set("margin-left", "auto");
-        cartButton.getStyle().set("width", "60px"); 
+        cartButton.getStyle().set("width", "60px");
         cartButton.getStyle().set("height", "60px");
-        cartButton.getStyle().set("padding", "0");
-        cartButton.getStyle().set("min-width", "unset");
-        
-        // Manda all'interfaccia di checkout se cliccato
-        cartButton.addClickListener(event -> {
-        	getUI().ifPresent(ui -> ui.navigate(CheckoutFormView.class));        }
-        );
-   
+
+        cartButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate(CheckoutFormView.class)));
+
         headerLayout.setWidth("100%");
         headerLayout.setAlignItems(Alignment.CENTER);
         headerLayout.getStyle().set("display", "flex");
         headerLayout.getStyle().set("justify-content", "center");
-        headerLayout.add(title, cartButton);
-        headerLayout.add(routerLink);
- 
+        headerLayout.add(title, cartButton, routerLink);
+
         layoutRow2.addClassName(Gap.MEDIUM);
         layoutRow2.setWidth("100%");
         layoutRow2.getStyle().set("flex-grow", "1");
-        layoutRow2.add(layoutColumn2);
-        layoutRow2.add(layoutColumn3);
+        layoutRow2.add(layoutColumn2, layoutColumn3);
 
         layoutColumn2.setWidth("200px");
-        layoutColumn2.getStyle().set("flex-grow", "1");  
-        layoutColumn2.add(select);
-        layoutColumn2.add(multiSelectComboBox);
-        layoutColumn2.add(textItems);
-        
+        layoutColumn2.getStyle().set("flex-grow", "1");
+        layoutColumn2.add(select, multiSelectComboBox, textItems);
+
         select.setLabel("Select");
         select.setWidth("130px");
         setSelectSampleData(select);
-        
+
         multiSelectComboBox.setLabel("Multi-Select Combo Box");
         multiSelectComboBox.setWidth("130px");
         setMultiSelectComboBoxSampleData(multiSelectComboBox);
-        
+
         textItems.setWidth("130px");
         setMultiSelectListBoxSampleData(textItems);
-        
+
         layoutColumn3.addClassName(Padding.SMALL);
         layoutColumn3.setWidth("3%");
         layoutColumn3.getStyle().set("flex-grow", "1");
         layoutColumn3.add(hr);
 
-        //Creazione istanze utente e carrello, da  modificare con i parametri corretti
         Integer userId = (Integer) VaadinSession.getCurrent().getAttribute("userId");
         if (userId == null) {
             Notification.show("Errore: utente non autenticato!", 3000, Notification.Position.MIDDLE);
             return;
         }
 
-        Carrello cart = CarrelloFactory.creaCarrello(userId, carrelloService);
+        Carrello cart = carrelloFactory.creaCarrello(userId);
 
         List<Prodotto> prodotti = prodottoService.getAllProdotti();
-        
         FlexLayout layoutColumn4 = new FlexLayout();
         layoutColumn4.setWidthFull();
         layoutColumn4.getStyle()
-        	.set("flexWrap", "wrap")       
-        	.set("justifyContent", "space-evenly") 
-        	.set("gap", "10px");           
-        
-        Map<Button, Integer> quantityMap = new HashMap<>();
-        
-        // Crea un box per ogni prodotto presente
-        for(Prodotto prodotto : prodotti) {
+                .set("flexWrap", "wrap")
+                .set("justifyContent", "space-evenly")
+                .set("gap", "10px");
 
-            // Create a new VerticalLayout for the box
+        for (Prodotto prodotto : prodotti) {
             VerticalLayout boxLayout = new VerticalLayout();
-            boxLayout.setHeight("350px"); 
+            boxLayout.setHeight("350px");
             boxLayout.setWidth("100%");
-            boxLayout.getStyle()            	
-            	.set("flex", "1 1 200px")
-            	.set("max-width", "250px") 
-            	.set("min-width", "200px") 
-            	.set("border-radius", "15px")
-            	.set("border", "1px solid #ccc")
-            	.set("background-color", "#8ba6cc")
-            	.set("padding", "15px")
-            	.set("box-shadow", "2px 2px 5px rgba(0,0,0,0.1");  
-            
+            boxLayout.getStyle()
+                    .set("flex", "1 1 200px")
+                    .set("max-width", "250px")
+                    .set("min-width", "200px")
+                    .set("border-radius", "15px")
+                    .set("border", "1px solid #ccc")
+                    .set("background-color", "#8ba6cc")
+                    .set("padding", "15px");
+
             boxLayout.setAlignItems(Alignment.CENTER);
             boxLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
-            
-            Button buttonPrimary = new Button(new Icon(VaadinIcon.CART)); 
+
+            Button buttonPrimary = new Button(new Icon(VaadinIcon.CART));
             buttonPrimary.getStyle().set("min-width", "65px");
             buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        	
-            HorizontalLayout quantitySelector = createQuantitySelector(quantityMap, buttonPrimary);
 
-            // Contenitore per i testi
-            VerticalLayout contentContainer = new VerticalLayout();
-            contentContainer.setWidthFull();
-            contentContainer.setPadding(false);
-            contentContainer.setSpacing(false);
-            contentContainer.getStyle().set("flex-grow", "1");
-            
-            // Create an Image component
-            Image image = new Image("media/icon.jpg", "Product Image");
-            image.setWidth("100%"); 
-            
-            // Create a Span for the name
             Span name = new Span(prodotto.getNome());
-            name.getStyle().set("font-weight", "bold"); 
-            
-            Span description = new Span(prodotto.getDescrizione());
-            description.getStyle()
-            	.set("font-size", "12px") 
-            	.set("color", "#fff") 
-            	.set("text-align", "center")
-            	.set("max-height", "40px") 
-            	.set("overflow", "hidden") // Nasconde il testo in eccesso
-            	.set("margin-bottom", "2px");
+            name.getStyle().set("font-weight", "bold");
 
-            // Create a Span for the price
             Span price = new Span(String.format("$%.2f", prodotto.getPrezzo()));
             price.getStyle().set("color", "green").set("font-size", "14px");
 
-            // Aggiunge i componenti nel contenitore di testo
-            contentContainer.add(name, description, price);
-            
-            // Aggiungi il selettore di quantità            
-            HorizontalLayout actionLayout = new HorizontalLayout(quantitySelector, buttonPrimary);
-            
-            actionLayout.setWidthFull();
-            actionLayout.setSpacing(true);
-            actionLayout.setAlignItems(Alignment.CENTER);
-            actionLayout.getStyle().set("margin-top", "5px");
-            
-            // Imposta crescita degli elementi per mantenere il pulsante in fondo
-            boxLayout.setFlexGrow(1, contentContainer);
-            boxLayout.setFlexGrow(0, buttonPrimary);
-            
-            // Add the components to the box layout
-            boxLayout.add(image, contentContainer, actionLayout);
+            boxLayout.add(name, price, buttonPrimary);
 
-            // Add the box layout to the right column
             layoutColumn4.add(boxLayout);
-            
-            // Se cliccato il pulsante 🛒 aggiunge al carrello i prodotti selezionati
-            buttonPrimary.addClickListener(event -> {
-                int selectedQuantity = quantityMap.get(buttonPrimary);
-                if (selectedQuantity < prodotto.getQuantita()) {
-                	carrelloService.aggiungiProdotto(cart, prodotto, selectedQuantity);
-                	prodottoService.modificaQuantita(prodotto.getCodice(), selectedQuantity);
-                }else {
-                    // Mostra un messaggio di errore se la quantità è maggiore di quella disponibile
-                    Notification.show("Errore: La quantità selezionata (" + selectedQuantity + ") è maggiore di quella disponibile (" 
-                    		+ prodotto.getQuantita() + ").", 5000, Notification.Position.MIDDLE);
-                }
-            }
-            );
         }
-       
-        layoutRow2.add(layoutColumn4);
 
+        layoutRow2.add(layoutColumn4);
     }
 
     record SampleItem(String value, String label, Boolean disabled) {
+    
     }
 
     private HorizontalLayout createQuantitySelector(Map<Button, Integer> quantityMap, Button buttonPrimary) {

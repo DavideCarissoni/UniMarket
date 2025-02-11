@@ -1,5 +1,6 @@
-package componenti;
+package unimarket.observer;
 
+import componenti.Prodotto;
 import unimarket.views.checkoutform.CheckoutFormView;
 
 public class CarrelloUIObserver implements CarrelloObserver {
@@ -21,4 +22,10 @@ public class CarrelloUIObserver implements CarrelloObserver {
         // Implementa la logica per aggiornare la UI
         System.out.println("Prodotto rimosso dalla UI: " + prodotto.getNome());
     }
+
+	@Override
+	public void onAggiornamento() {
+		// TODO Auto-generated method stub
+		
+	}
 }
