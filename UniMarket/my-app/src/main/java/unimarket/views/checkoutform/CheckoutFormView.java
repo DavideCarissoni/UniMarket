@@ -320,12 +320,11 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver {
             // Aggiungiamo i pulsanti
             confirmationDialog.add(confirmButton, cancelButton);
             confirmationDialog.open();
+
         });
         
         footer.add(cancel, confirm);
         return footer;
-        
-        
     }
 
     private Aside createAside() {
