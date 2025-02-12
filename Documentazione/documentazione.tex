@@ -413,7 +413,14 @@ Il diagramma delle componenti ha lo scopo di mostrare le relazioni tra le divers
     \label{fig:Component Diagram}
 \end{figure}
 \subsubsection{Package Diagram}
+Il diagramma dei pacchetti mostra la struttura del programma e le interazioni tra i vari package.
 
+Nel digramma riportato, a sinistra è il diagramma concettuale, mostra l'architettura ideata all'inizio dello sviluppo; a destra la rappresentazione effettiva delle interazioni, fornita da un'analisi effettuata con STAN.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/PackageDiagram.png}
+    \label{fig:Package Diagram}
+\end{figure}
 \subsection{Architettura del software}
 \subsubsection{Viste architettoniche}
 Le viste architettoniche e i punti di vista utilizzati sono:
@@ -448,7 +455,34 @@ Il progetto utilizza diverse librerie per gestire l’interfaccia utente, il dat
 \end{itemize}
 \subsection{Software Design}
 \subsubsection{Complessità e misurazioni}
-Da calcolare alla fine del progetto. 
+\paragraph{Analisi strutturale}\leavevmode\par
+
+L'analisi strutturale del codice ha lo scopo di valutare la complessità e la qualità del codice sorgente, identificando eventuali punti deboli e aree di miglioramento. Questo processo include la misurazione di metriche chiave come la complessità ciclomatica, la coesione e il grado di accoppiamento tra i moduli. 
+
+Nel progetto è stata svolta un'analisi strutturale tramite \textbf{STAN}, che permette di valutare le interazioni e dipendenze tra classi e pacchetti.
+Tramite STAN è stato possibile individuare cicli interni al sistema e risolverli. 
+
+Ad esempio:
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Media/STAN/cicloPacchetti.png}
+        \caption{Implementazione scorretta dei pattern}
+        \label{fig:cicloPacchetti}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Media/STAN/pacchetti.png}
+        \caption{Pacchetti corretti}
+        \label{fig:pacchetti}
+    \end{minipage}
+\end{figure}
+
+L'analisi ha permesso di identificare un ciclo tra i pacchetti \textit{unimarket}, il livello di presentazione, e \textit{componenti}. 
+Questo errore era causato dalla scorretta implementazione dei pattern. Una volta individuato è stato possibile correggerlo per ottenere un'interazione senza cicli:
+
 \subsubsection{Design Patterns}
 
 I pattern utilizzati nel progetto sono:
