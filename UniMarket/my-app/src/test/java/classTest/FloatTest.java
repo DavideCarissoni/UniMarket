@@ -1,3 +1,4 @@
+package classTest;
 
 
 import org.jooq.DSLContext;

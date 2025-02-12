@@ -155,8 +155,8 @@ public class MyViewView extends Composite<VerticalLayout> {
             boxLayout.setWidth("100%");
             boxLayout.getStyle()
                     .set("flex", "1 1 200px")
-                    .set("max-width", "260px")
-                    .set("min-width", "250px")
+                    .set("max-width", "250px")
+                    .set("min-width", "230px")
                     .set("border-radius", "15px")
                     .set("border", "1px solid #ccc")
                     .set("background-color", "#8ba6cc")
