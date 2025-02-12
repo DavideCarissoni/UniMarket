@@ -1,12 +1,8 @@
 package unimarket.observer;
 
 import componenti.Prodotto;
-import unimarket.views.checkoutform.CheckoutFormView;
 
 public class CarrelloUIObserver implements CarrelloObserver {
-
-    public CarrelloUIObserver(CheckoutFormView checkoutFormView) {
-    }
 
     @Override
     public void onProdottoAggiunto(Prodotto prodotto, int quantita) {

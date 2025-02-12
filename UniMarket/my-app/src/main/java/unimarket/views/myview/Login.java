@@ -64,7 +64,7 @@ public class Login extends Composite<VerticalLayout> {
                 Notification.show("Login riuscito!", 3000, Notification.Position.MIDDLE);
 
                 Carrello cart = carrelloService.getOrCreateCarrello(userId);
-                carrelloService.aggiungiObserver(userId, new CarrelloUIObserver(new CheckoutFormView(carrelloService, clienteService)));
+                carrelloService.aggiungiObserver(userId, new CarrelloUIObserver());
 
                 VaadinSession.getCurrent().setAttribute("updateLayout", true);
                 UI.getCurrent().navigate(MyViewView.class);
