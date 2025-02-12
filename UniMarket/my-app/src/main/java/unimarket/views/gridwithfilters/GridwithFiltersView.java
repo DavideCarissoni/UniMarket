@@ -1,10 +1,6 @@
 package unimarket.views.gridwithfilters;
 
-import com.vaadin.flow.data.provider.ListDataProvider;
-import componenti.Cliente;
 import org.jooq.DSLContext;
-import org.jooq.Result;
-import org.jooq.impl.DSL;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
@@ -18,26 +14,18 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import db.CreateDatabase;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import componenti.Utente;
-import jooq.generated.Tables;
-import jooq.generated.tables.records.UtenteRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.data.SamplePerson;
-import unimarket.data.SamplePersonRepository;
 import unimarket.services.UtenteService;
 
 @PageTitle("Lista Utenti")
@@ -49,15 +37,12 @@ public class GridwithFiltersView extends Div {
 
     private final UtenteService utenteService;
     private Grid<Utente> grid;
-    private final DSLContext dsl;
-
     private Filters filters;
 
     @Autowired
     public GridwithFiltersView(UtenteService utenteService, DSLContext dsl) {
         this.utenteService = utenteService;
-		this.dsl = dsl;
-        setSizeFull();
+		setSizeFull();
         configureGrid();
         add(grid);
     }

@@ -1,6 +1,5 @@
 package unimarket.views;
 
-
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -11,7 +10,6 @@ import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Nav;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
@@ -32,13 +30,9 @@ import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import com.vaadin.flow.theme.lumo.LumoUtility.Whitespace;
 import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 import org.vaadin.lineawesome.LineAwesomeIcon;
-import unimarket.views.checkoutform.CheckoutFormView;
 import unimarket.views.gridwithfilters.GridwithFiltersView;
 import unimarket.views.masterdetail.MasterDetailView;
-import unimarket.views.myview.Login;
 import unimarket.views.myview.MyViewView;
-import unimarket.views.personform.PersonFormView;
-
 import java.util.ArrayList;
 import java.util.List;
 

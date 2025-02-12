@@ -1,10 +1,5 @@
 package componenti;
 
-import org.jooq.DSLContext;
-import jooq.generated.Tables;
-
-import db.CreateDatabase;
-
 public class CartaCredito {
 
     private String numeroCarta;

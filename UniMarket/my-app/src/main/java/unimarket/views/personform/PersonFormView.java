@@ -18,23 +18,17 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
-import unimarket.data.SamplePerson;
 import unimarket.views.myview.Login;
-import unimarket.views.myview.MyViewView;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.UI;
 import unimarket.services.UtenteService;
-import unimarket.data.SamplePersonRepository;
 
 @PageTitle("Registrazione")
 @Route("login")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
 
-    private final UtenteService utenteService;
     public PersonFormView(UtenteService utenteService) {
-        this.utenteService = utenteService;
-
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();

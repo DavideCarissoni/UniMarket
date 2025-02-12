@@ -2,8 +2,6 @@ package componenti;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import unimarket.observer.CarrelloObserver;
 
 public class Carrello {
     private int idCarrello;

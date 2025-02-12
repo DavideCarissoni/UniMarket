@@ -1,11 +1,5 @@
 package componenti;
 
-import org.jooq.DSLContext;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import jooq.generated.Tables;
-import db.CreateDatabase;
-
 public class Prodotto {
 
     private int codice;

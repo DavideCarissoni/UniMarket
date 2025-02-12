@@ -1,9 +1,5 @@
 package componenti;
 
-import org.jooq.DSLContext;
-import db.CreateDatabase;
-import jooq.generated.Tables;
-
 public abstract class Utente {
 
 	private static int ID=0;

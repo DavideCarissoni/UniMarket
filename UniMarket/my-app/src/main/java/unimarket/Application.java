@@ -3,22 +3,14 @@ package unimarket;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-
-import db.CreateDatabase;
-
 import javax.sql.DataSource;
-
 import org.jooq.DSLContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer;
 import org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties;
-import org.springframework.context.annotation.Bean;
 import unimarket.data.SamplePersonRepository;
-
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 /**
  * The entry point of the Spring Boot application.
  *
@@ -31,14 +23,10 @@ import java.util.logging.Logger;
 public class Application implements AppShellConfigurator {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
-    private final DSLContext dsl;
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 	public Application(DSLContext dsl) throws SQLException {
-		this.dsl = dsl;
 		
 	}
     SqlDataSourceScriptDatabaseInitializer dataSourceScriptDatabaseInitializer(DataSource dataSource,

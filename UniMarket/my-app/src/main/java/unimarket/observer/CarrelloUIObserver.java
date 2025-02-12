@@ -5,10 +5,7 @@ import unimarket.views.checkoutform.CheckoutFormView;
 
 public class CarrelloUIObserver implements CarrelloObserver {
 
-    private CheckoutFormView checkoutFormView;
-
     public CarrelloUIObserver(CheckoutFormView checkoutFormView) {
-        this.checkoutFormView = checkoutFormView;
     }
 
     @Override

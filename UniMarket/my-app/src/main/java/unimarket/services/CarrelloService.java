@@ -98,7 +98,8 @@ public class CarrelloService implements ICarrelloService {
         }
     }
 
-    private void notificaAggiornamentoGenerico(int idUtente) {
+    @SuppressWarnings("unused")
+	private void notificaAggiornamentoGenerico(int idUtente) {
         List<CarrelloObserver> observers = observersMap.get(idUtente);
         if (observers != null) {
             for (CarrelloObserver observer : observers) {

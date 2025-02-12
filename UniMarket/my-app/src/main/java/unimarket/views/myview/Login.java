@@ -4,8 +4,6 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -17,9 +15,6 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
 import unimarket.views.checkoutform.CheckoutFormView;
 import componenti.Carrello;
-
-import org.vaadin.lineawesome.LineAwesomeIconUrl;
-
 import unimarket.observer.CarrelloUIObserver;
 import unimarket.services.CarrelloService;
 import unimarket.services.ClienteService;

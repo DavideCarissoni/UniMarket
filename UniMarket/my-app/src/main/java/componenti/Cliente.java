@@ -1,11 +1,6 @@
 package componenti;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
-import java.util.List;
-import org.jooq.DSLContext;
-import jooq.generated.Tables;
-import db.CreateDatabase;
 
 public class Cliente extends Utente {
 	

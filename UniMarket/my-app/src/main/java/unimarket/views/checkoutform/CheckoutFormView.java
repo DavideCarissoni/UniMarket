@@ -62,7 +62,6 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver, Carrel
     private final CarrelloService carrelloService;
     private final ClienteService clienteService;
      
-    private Carrello cart;
     private Cliente cliente;
     
     // Variabili per l'indirizzo di spedizione
@@ -114,7 +113,7 @@ public class CheckoutFormView extends Div implements BeforeEnterObserver, Carrel
         // Registra questa vista come observer
         carrelloService.aggiungiObserver(userId, this);
 
-        cart = carrelloService.getOrCreateCarrello(userId);
+        carrelloService.getOrCreateCarrello(userId);
         initializeCheckoutForm();
         
         // Inserisce i dati assocciati al cliente esistono già
