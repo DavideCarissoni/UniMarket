@@ -1,30 +1,20 @@
 package unimarket.services;
 
-import db.CreateDatabase;
 import jooq.generated.Tables;
 import componenti.Utente;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Random;
-import org.springframework.data.domain.PageImpl;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UtenteService {
 
-    private int counter = 0;
     private final DSLContext dsl;
     private final BCryptPasswordEncoder passwordEncoder;
 

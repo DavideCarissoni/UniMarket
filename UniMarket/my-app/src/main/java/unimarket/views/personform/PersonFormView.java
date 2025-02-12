@@ -24,7 +24,7 @@ import com.vaadin.flow.component.UI;
 import unimarket.services.UtenteService;
 
 @PageTitle("Registrazione")
-@Route("login")
+@Route("registrazione")
 @Menu(order = 1, icon = LineAwesomeIconUrl.USER)
 public class PersonFormView extends Composite<VerticalLayout> {
 
