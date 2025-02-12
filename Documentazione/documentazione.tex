@@ -502,8 +502,11 @@ Durante il ciclo di vita del progetto, oltre allo sviluppo del codice e alla scr
 La prima fase del testing è avvenuta in parallelo con la scrittura del codice. Per verificare il corretto funzionamento delle funzionalità integrate, sono stati adottati strumenti di logging e controlli temporanei, facilitando il debugging e l’individuazione tempestiva di errori. Il controllo è stato eseguito manualmente, testando direttamente le funzionalità con valori di input specifici e verificando il comportamento del sistema tramite i log di esecuzione.
 
 \subsection{Testing automatizzato}
-In una seconda fase, è prevista l'implementazione di test automatici per garantire una copertura più ampia del sistema e validare il corretto funzionamento delle diverse componenti. L'obiettivo è scrivere test unitari e di integrazione che verifichino il comportamento del codice in modo sistematico. Tuttavia, per ragioni di tempistiche, questa fase è stata parzialmente posticipata e non è ancora completamente integrata nel processo di sviluppo.
+Per garantire una maggiore copertura del sistema e validare il corretto funzionamento delle diverse componenti, è prevista l'implementazione di test automatici. L'obiettivo è scrivere test unitari e di integrazione che verifichino il comportamento del codice in modo sistematico. Tuttavia, per ragioni di tempistiche, questa fase è stata parzialmente posticipata e non è ancora completamente integrata nel processo di sviluppo.
 
+L'implementazione dei test automatici avviene all'interno della directory \textit{src/test/java} utilizzando JUnit, un framework per il testing unitario in Java. I test vengono scritti per verificare il corretto funzionamento dei metodi e delle classi, simulando l'input e confrontando l'output con quello atteso.
+
+Un esempio di test automatico implementato è la classe di test \textit{CartaServiceTest}, che verifica il metodo \textit{salvaCarta}. Questo metodo si occupa di inserire nel database un nuovo oggetto \textit{CartaCredito}, salvando i dati del numero di carta, codice di sicurezza e intestatario. Il test controlla che l'inserimento avvenga correttamente e gestisce eventuali errori di persistenza.
 
 \newpage
 \section{Maintenance}
@@ -568,7 +571,7 @@ L'integrazione di queste funzionalità potrà migliorare ulteriormente l'esperie
 \hline
 27/1/2025 - 2/2/2025 & Interfaccia & 2 \\
 \hline
-3/2/2025 - 11/2/2025 & Interfaccia, manutenzione, documentazione & 5 \\
+3/2/2025 - 11/2/2025 & Interfaccia, manutenzione, documentazione & 6 \\
 \hline
 
 
