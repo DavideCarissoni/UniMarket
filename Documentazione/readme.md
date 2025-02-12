@@ -1,1 +1,1 @@
-In questa cartella sarà presenta la documentazione del nostro progetto UniMarket
+In questa cartella è presente la documentazione del nostro progetto UniMarket
