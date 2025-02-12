@@ -1,8 +1,12 @@
 \documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
 
 % caricamento dei diversi pacchetti
 \usepackage{fancyhdr}
 \usepackage{graphicx}  % Per inserire le immagini
+\usepackage{float}     % Per l'opzione H nei float
 \usepackage{geometry}
 \usepackage{lipsum}
 \usepackage{hyperref}  % Per rendere l'indice cliccabile
@@ -228,9 +232,10 @@ La gestione degli \emph{issues} e l’utilizzo di \textbf{branch} dedicati per l
 L’implementazione e la revisione del codice saranno effettuate mediante la creazione di \emph{pull request} da parte dei membri del team, prima di procedere al \emph{merge} sul \emph{branch} di destinazione.\\
 La repository del progetto è stata organizzata nel seguente modo:
 \begin{itemize}
-    \item \textbf{Documentazione:} 
-    \item \textbf{Media:} 
-    \item \dots
+    \item \textbf{Documentazione}: contenente la documentazione del progetto. 
+    \item \textbf{Media}: contiene il logo del progetto.
+    \item \textbf{UML}: contiene i diagrammi UML del progetto.
+    \item \textbf{UniMarket}: contiene il codice sorgente dell'applicazione.
 \end{itemize}
 
 \subsection{People Management}
@@ -287,9 +292,9 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
    \item\textbf{Funzionalità Utente}
    
        \begin{enumerate}[label=\arabic*.]
-       \item  \textbf{Registrazione}: Permettere agli utenti di creare un account con e-mail e password o tramite social login.
+       \item \textbf{Registrazione}: Permettere agli utenti di creare un account con e-mail e password o tramite social login.
        \item \textbf{Login}: Accesso all’account personale per gestire ordini e informazioni.
-       \item Selezione prodotti: Possibilità di navigare e cercare tra categorie o direttamente tramite barra di ricerca.
+       \item \textbf{Selezione prodotti}: Possibilità di navigare e cercare tra categorie o direttamente tramite barra di ricerca.
        \item \textbf{Aggiunta al carrello}: Funzione per aggiungere prodotti al carrello con possibilità di specificare quantità.
        \item \textbf{Controllo carrello e modifica}: Revisione degli articoli selezionati con opzioni per rimuovere o modificare quantità.
        \item \textbf{Opzioni di consegna}: Selezione di modalità e tempi di consegna (consegna a domicilio, ritiro in negozio, fascia oraria).
@@ -340,22 +345,173 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
     \begin{tabular}{|l|l|}
     \hline
     \textbf{TIPOLOGIA}         & \textbf{REQUISITI}                                                 \\ \hline
-    \textbf{MUST BE}           & \begin{tabular}[c]{@{}l@{}}1, 2, 3, 4, 7\\ 12, 14, 15\end{tabular} \\ \hline
-    \textbf{ATTRACTIVE}        & 11, 16, 18                                                         \\ \hline
-    \textbf{ONE DIMENSIONAL}   & \begin{tabular}[c]{@{}l@{}}5, 6, 8, 9, 10\\ 13, 22\end{tabular}    \\ \hline
+    \textbf{MUST BE}           & \begin{tabular}[c]{@{}l@{}}1, 2, 4, 7\\ 12\end{tabular} \\ \hline
+    \textbf{ATTRACTIVE}        & 3, 11, 14, 16, 18                                                         \\ \hline
+    \textbf{ONE DIMENSIONAL}   & \begin{tabular}[c]{@{}l@{}}5, 6, 8, 9, 10\\ 13, 15, 22\end{tabular}    \\ \hline
     \textbf{INDIFFERENT}       & 20, 23                                                             \\ \hline
     \textbf{REVERSE}           &                                                                    \\ \hline
     \textbf{QUESTIONABLE}      & 17, 29, 21                                                         \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \section{Design}
+\subsection{UML}
+Di seguito i diagrammi UML; per una visione migliore, fare riferimento alle immagini contenute nel repository UML.
+\subsubsection{Use Case Diagram}
+Il diagramma dei casi d'uso modella l'interazione tra gli attori (Utenti e gestori) e il sistema, mostrando le funzionalità supportate.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/UseCaseDiagram.png}
+    \label{fig:Use Case Diagram}
+\end{figure}
+\subsubsection{Class Diagram}
+Il diagramma delle classi modella le classi contenute nel sitema, con i relativi metodi e attributi.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/ClassDiagram.png}
+    \label{fig:Class Diagram}
+\end{figure}
+\subsubsection{State Machinne}
+Il diagramma degli stati modella il comportamento di un oggetto in base allo stato in cui si trova.
+Nello specifico, il seguente diagramma modella gli stati attivi durante l'utilizzo del sistema da un utente.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/StateMachine.png}
+    \label{fig:State Machine}
+\end{figure}
+\newpage
+\subsubsection{Sequence Diagram}
+Il diagramma delle sequenze modella l'interazione tra gli oggetti del sistema, mostrando l'ordine in cui i messaggi vengono scambiati. Nel diagramma viene mostrata l'interazione tra l'utente e il sistema nelle operazioni di login e agiunta di prodotti al carrello.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/Sequence_Diagram.png}
+    \label{fig:Sequence Diagram}
+\end{figure}
+\newpage
+\subsubsection{Communication Diagram}
+Il diagramma di comunicazione modella lo scambio di messaggi tra le componenti del sistema durante l'aggiunta, da parte dell'utente, di prodotti al carrello.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/CommunicationDiagram.png}
+    \label{fig:Communication Diagram}
+\end{figure}
+\subsubsection{Activity Diagram}
+Il diagramma delle attività modella il flusso di lavoro all'interno del sistema, mostrando le attività e le decisioni che vengono prese durante l'interazione con l'applicazione.   
+Il diagramma seguente mostra il flusso di lavoro per l'aggiunta di un prodotto al carrello.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/ActivityDiagram.png}
+    \label{fig:Activity Diagram}
+\end{figure}
+\textit{Nota: i connettori(A,B,C,D) sono stati rappresentati usando blocchi azione per l'assenza di un blocco dedicato da parte di Papyrus.}
 
+\subsubsection{Component Diagram}
+Il diagramma delle componenti ha lo scopo di mostrare le relazioni tra le diverse componenti di un sistema. Nel diagramma seguente vengono mostrate le relazioni tra i tre livelli del sistema.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../UML/UML png/diagramma dei Componenti.png}
+    \label{fig:Component Diagram}
+\end{figure}
+\subsubsection{Package Diagram}
+
+\subsection{Architettura del software}
+\subsubsection{Viste architettoniche}
+Le viste architettoniche e i punti di vista utilizzati sono:
+\begin{itemize}
+    \item \textbf{Modulo:} È stato utilizzato il punto di vista \textbf{a strati}, che permette di visualizzare il sistema su livelli, i cui elementi possono utilizzare elementi di un livello inferiore.  
+    \item \textbf{Componenti e connettori:} È stato utilizzato il punto di vista \textbf{client-server}, che descrive un sistema costituito da client e server cooperanti. In questo progetto, il client rappresenta l'interfaccia utente dell'applicazione e il server gestisce la logica di business e l'accesso ai dati.
+    \item \textbf{Realizzativa:} È stato utilizzato il punto di vista dell'\textbf{implementazione}, che descrive come i componenti logici e le funzionalità di alto livello vengono tradotti in strutture fisiche e tecniche. 
+    \begin{itemize}
+        \item Il progetto è organizzato seguendo un approccio \textbf{maven}, con una struttura standard: \textbf{src/main/java} per il codice sorgente, \textbf{src/main/resources} per le risorse, \textbf{src/test/java} per i test.
+        \item I framework utilizzati sono: \textbf{Vaadin} per l'interfaccia utente, \textbf{JOOQ} per l'accesso ai dati, \textbf{SQLite} per il database.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Stile architettonico}
+Il progetto è basato sullo stile architettonico a \textbf{tre livelli}, che prevede la suddivisione del sistema in tre strati distinti: livello database, livello di persistenza e livello di presentazione. Questo approccio consente di separare le funzionalità e i compiti del sistema, semplificando la gestione e la manutenzione del codice.
+\begin{itemize}
+    \item \textbf{Livello Database:} 
+    Il livello database gestisce la memorizzazione e l'accesso ai dati, garantendo la persistenza delle informazioni. In questo progetto, è implementato un \textit{database embedded} utilizzando \textit{SQLite}.
+    \item \textbf{Livello di Persistenza:} 
+    Il livello di persistenza si occupa di gestire la comunicazione tra il livello database e il livello di presentazione, fornendo un'interfaccia per l'accesso ai dati. In questo progetto, il livello di persistenza è implementato utilizzando \textit{JOOQ}, un framework Java per la creazione di query SQL.   
+    \item \textbf{Livello di Presentazione:} 
+    Il livello di presentazione gestisce l'interfaccia utente e l'interazione con l'utente. In questo progetto, il livello di presentazione è implementato utilizzando \textit{Vaadin}, un framework Java per lo sviluppo di applicazioni web.
+\end{itemize}
+\subsubsection{Librerie esterne}
+Il progetto utilizza diverse librerie per gestire l’interfaccia utente, il database, la persistenza dei dati e il logging. Di seguito sono descritte alcune delle più rilevanti.
+\begin{itemize}
+    \item \textbf{Vaadin:} Framework Java per lo sviluppo di applicazioni web, utilizzato per la creazione dell'interfaccia utente. Fornisce componenti UI reattivi e un’integrazione fluida con Spring Boot.Fornisce componenti UI reattivi e un’integrazione fluida con Spring Boot.
+    \item \textbf{JOOQ:} Framework Java per la creazione di query SQL, utilizzato per la gestione della persistenza dei dati.
+    \item \textbf{SQLite:} Database embedded utilizzato per la memorizzazione dei dati.
+    \item \textbf{log4j e slf4j:} Framework per la gestione dei log, utilizzati per il debugging e per registrare eventi e informazioni sul funzionamento dell'applicazione.
+    \item \textbf{hibernate} \textit{Object-Relational Mapping} (ORM) framework, utilizzato per la gestione della persistenza dei dati. Permette l'integrazione con Spring Data JPA per un accesso semplificato ai dati.
+\end{itemize}
+\subsection{Software Design}
+\subsubsection{Complessità e misurazioni}
+Da calcolare alla fine del progetto. 
+\subsubsection{Design Patterns}
+
+I pattern utilizzati nel progetto sono:
+\begin{itemize}
+    \item \textbf{Factory pattern}: Implementato tramite il servizio \textit{CarrelloService}, permette di garantire l'associazione di un carrello ad ogni utente al momento del login; se un utente ha già un carrello,  questo viene recuperato dal database, altrimenti ne viene creato uno. Permette di evitare duplicazioni, migliora la manutenibilità e separa la logica dalla gestione.
+    \item \textbf{Observer pattern}: Implementato tramite due interfacce \textit{Observer}: una per la gestione e una per l'interfaccia. L'oggetto osservato è il \textit{Carrello}, tramite la gestione e notifica degli observer in \textit{CarrelloService}, permette di aggiornare in tempo reale le classi e interfacce che ne mostrano il contenuto. 
+\end{itemize}
+
+\newpage
 \section{Testing}
+\subsection{Testing e Verifica del Sistema}
+Durante il ciclo di vita del progetto, oltre allo sviluppo del codice e alla scrittura della documentazione, un ruolo fondamentale è stato svolto dalla fase di testing. L'obiettivo principale è stato garantire la correttezza e l'affidabilità del sistema, prevenendo errori e malfunzionamenti che avrebbero potuto comprometterne l’utilizzo.
 
+È noto che molti problemi emergono nelle prime fasi dello sviluppo software, ma se individuati in ritardo possono risultare più complessi e costosi da correggere. Per questo motivo, il testing è stato integrato sin dalle prime fasi del progetto, adottando un approccio progressivo e iterativo.
+
+\subsection{Testing in fase di sviluppo}
+La prima fase del testing è avvenuta in parallelo con la scrittura del codice. Per verificare il corretto funzionamento delle funzionalità integrate, sono stati adottati strumenti di logging e controlli temporanei, facilitando il debugging e l’individuazione tempestiva di errori. Il controllo è stato eseguito manualmente, testando direttamente le funzionalità con valori di input specifici e verificando il comportamento del sistema tramite i log di esecuzione.
+
+\subsection{Testing automatizzato}
+In una seconda fase, è prevista l'implementazione di test automatici per garantire una copertura più ampia del sistema e validare il corretto funzionamento delle diverse componenti. L'obiettivo è scrivere test unitari e di integrazione che verifichino il comportamento del codice in modo sistematico. Tuttavia, per ragioni di tempistiche, questa fase è stata parzialmente posticipata e non è ancora completamente integrata nel processo di sviluppo.
+
+
+\newpage
 \section{Maintenance}
+\subsection{Manutenzione del Software}
 
+La manutenzione del software comprende diverse attività mirate a garantire il corretto funzionamento del sistema nel tempo, migliorandone stabilità, efficienza e adattabilità. Si suddivide in quattro categorie principali:
 
+\begin{enumerate}
+    \item \textbf{Manutenzione correttiva}:  riguarda la risoluzione di bug e malfunzionamenti emersi durante lo sviluppo, come incompatibilità tra i tipi di dati gestiti da Java e quelli supportati dal database.
+    
+    \item \textbf{Manutenzione adattiva}: consiste nell'aggiornamento del software per adeguarlo a cambiamenti tecnologici o nuove esigenze operative. Pur non essendo ancora necessaria in questa fase, potenziali interventi futuri potrebbero includere l'ottimizzazione delle prestazioni, l'aggiornamento delle librerie o l'adattamento a nuove piattaforme.
+    
+    \item \textbf{Manutenzione perfettiva}: si concentra sul miglioramento delle funzionalità esistenti e sull'introduzione di nuove feature per ottimizzare l'interazione con il sistema.
+    
+    \item \textbf{Manutenzione preventiva}: ha l'obiettivo di ridurre il rischio di problemi futuri attraverso verifiche periodiche, mantenendo test e log aggiornati per semplificare la gestione del software senza complicarne inutilmente la struttura.
+    
+\end{enumerate}
+\subsection{Best Practices}
+Per garantire una manutenzione efficace e prevenire problemi derivanti da codice disorganizzato o documentazione insufficiente, sono state seguite le seguenti linee guida:
+\begin{itemize}
+    \item \textbf{Commenti e documentazione}:Commentare il codice per facilitarne la comprensione e la futura modificabilità.
+    \item \textbf{Versionamento}: Utilizzare un sistema di versionamento per tenere traccia delle modifiche e facilitare il rollback in caso di errori.
+    \item \textbf{Revisione}: Sottoporre le modifiche alla revisione del team per migliorare la qualità del codice e ridurre il rischio di errori.
+    \item \textbf{Layering}: Strutturare il codice in moduli e servizi distinti, favorendo la separazione delle responsabilità e semplificando eventuali interventi futuri.
+\end{itemize}
+Queste attività permettono di mantenere un software facilmente gestibile e modificabile, riducendo il rischio di errori e semplificando la manutenzione nel tempo.
+
+\subsection{Refactoring}
+Il refactoring non è stato concentrato in una singola fase, ma è stato integrato durante tutto il processo di sviluppo con modifiche graduali per garantire un codice più leggibile e manutenibile. Ogni intervento ha interessato sezioni specifiche del sistema, riducendo il rischio di conflitti e garantendo il funzionamento complessivo.
+
+Un'area chiave di intervento è stata l'ottimizzazione del codice autogenerato da Vaadin, inizialmente disordinato e poco comprensibile. È stata migliorata la struttura delle classi, separando le responsabilità e rendendo il codice più chiaro e facile da mantenere.
+
+Altri interventi hanno riguardato la gestione dell’interfaccia utente, con particolare attenzione al flusso di navigazione, al sistema di login e alle interfacce riservate agli amministratori per il controllo dei dati salvati.
+\subsection{migliorameti futuri}
+Alcune funzionalità non sono ancora state implementate, ma potrebbero rappresentare possibili sviluppi futuri per arricchire il sistema. Tra queste:
+
+\begin{itemize}
+    \item \textbf{Gestione dei prodotti}: migliorare la gestione dei prodotti da parte degli amministratori, con la possibilitià di modificarne i dettagli.
+    \item \textbf{Logout}: fornire l'opzione di logout per poter cambiare account.
+    \item \textbf{Modificabilità account}: permettere agli utenti di eliminare il proprio account o modificare i dati salvati.
+\end{itemize}
+L'integrazione di queste funzionalità potrà migliorare ulteriormente l'esperienza d'uso del sistema.
 \newpage
 \begin{center}
 \Huge \textbf{Calendario Timebox}
@@ -372,8 +528,16 @@ Durante la fase di ingegneria dei requisiti l’obiettivo è quello di ottenere 
 \hline
 25/11/2024 - 29/11/2024 & Documentazione, Specifica dei requisiti  & 3 \\
 \hline
-2/12/2024 - x/12/2024 & UML &  \\
+2/12/2024 - 5/2/2025 & UML & 2 \\
 \hline
+6/1/2025 - 26/1/2025 & Database, documentazione & 1 \\
+\hline
+27/1/2025 - 2/2/2025 & Interfaccia & 2 \\
+\hline
+3/2/2025 - 11/2/2025 & Interfaccia, manutenzione, documentazione & 5 \\
+\hline
+
+
 \end{tabular}
 \end{center}
 
