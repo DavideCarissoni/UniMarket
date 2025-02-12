@@ -46,31 +46,17 @@ public class CarrelloRecord extends TableRecordImpl<CarrelloRecord> {
     }
 
     /**
-     * Setter for <code>carrello.prodotto_selezionato</code>.
-     */
-    public void setProdottoSelezionato(Integer value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>carrello.prodotto_selezionato</code>.
-     */
-    public Integer getProdottoSelezionato() {
-        return (Integer) get(2);
-    }
-
-    /**
      * Setter for <code>carrello.id_cliente</code>.
      */
     public void setIdCliente(Integer value) {
-        set(3, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>carrello.id_cliente</code>.
      */
     public Integer getIdCliente() {
-        return (Integer) get(3);
+        return (Integer) get(2);
     }
 
     // -------------------------------------------------------------------------
@@ -87,12 +73,11 @@ public class CarrelloRecord extends TableRecordImpl<CarrelloRecord> {
     /**
      * Create a detached, initialised CarrelloRecord
      */
-    public CarrelloRecord(Integer idCarrello, Float totale, Integer prodottoSelezionato, Integer idCliente) {
+    public CarrelloRecord(Integer idCarrello, Float totale, Integer idCliente) {
         super(Carrello.CARRELLO);
 
         setIdCarrello(idCarrello);
         setTotale(totale);
-        setProdottoSelezionato(prodottoSelezionato);
         setIdCliente(idCliente);
         resetChangedOnNotNull();
     }

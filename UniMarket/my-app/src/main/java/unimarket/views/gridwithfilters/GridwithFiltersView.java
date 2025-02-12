@@ -1,27 +1,18 @@
 package unimarket.views.gridwithfilters;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
+import org.jooq.DSLContext;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -30,33 +21,30 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import componenti.Utente;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import unimarket.data.SamplePerson;
-import unimarket.services.SamplePersonService;
+import unimarket.services.UtenteService;
 
-@PageTitle("Grid with Filters")
+@PageTitle("Lista Utenti")
 @Route("grid-with-filters")
 @Menu(order = 3, icon = LineAwesomeIconUrl.FILTER_SOLID)
 @Uses(Icon.class)
+
 public class GridwithFiltersView extends Div {
 
-    private Grid<SamplePerson> grid;
-
+    private final UtenteService utenteService;
+    private Grid<Utente> grid;
     private Filters filters;
-    private final SamplePersonService samplePersonService;
 
-    public GridwithFiltersView(SamplePersonService SamplePersonService) {
-        this.samplePersonService = SamplePersonService;
-        setSizeFull();
-        addClassNames("gridwith-filters-view");
-
-        filters = new Filters(() -> refreshGrid());
-        VerticalLayout layout = new VerticalLayout(createMobileFilters(), filters, createGrid());
-        layout.setSizeFull();
-        layout.setPadding(false);
-        layout.setSpacing(false);
-        add(layout);
+    @Autowired
+    public GridwithFiltersView(UtenteService utenteService, DSLContext dsl) {
+        this.utenteService = utenteService;
+		setSizeFull();
+        configureGrid();
+        add(grid);
     }
 
     private HorizontalLayout createMobileFilters() {
@@ -86,11 +74,10 @@ public class GridwithFiltersView extends Div {
     public static class Filters extends Div implements Specification<SamplePerson> {
 
         private final TextField name = new TextField("Name");
-        private final TextField phone = new TextField("Phone");
-        private final DatePicker startDate = new DatePicker("Date of Birth");
-        private final DatePicker endDate = new DatePicker();
-        private final MultiSelectComboBox<String> occupations = new MultiSelectComboBox<>("Occupation");
-        private final CheckboxGroup<String> roles = new CheckboxGroup<>("Role");
+        private final TextField surname = new TextField("Surname");  // Aggiungi il campo per il cognome
+        private final TextField email = new TextField("Email");  // Aggiungi il campo per l'email
+        private final TextField phone = new TextField("Phone");  // Mantieni il campo per il telefono
+
 
         public Filters(Runnable onSearch) {
 
@@ -98,23 +85,19 @@ public class GridwithFiltersView extends Div {
             addClassName("filter-layout");
             addClassNames(LumoUtility.Padding.Horizontal.LARGE, LumoUtility.Padding.Vertical.MEDIUM,
                     LumoUtility.BoxSizing.BORDER);
-            name.setPlaceholder("First or last name");
-
-            occupations.setItems("Insurance Clerk", "Mortarman", "Beer Coil Cleaner", "Scale Attendant");
-
-            roles.setItems("Worker", "Supervisor", "Manager", "External");
-            roles.addClassName("double-width");
+            name.setPlaceholder("First name");
+            surname.setPlaceholder("Last name");
+            email.setPlaceholder("Email");
+            phone.setPlaceholder("Phone number");
 
             // Action buttons
             Button resetBtn = new Button("Reset");
             resetBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             resetBtn.addClickListener(e -> {
                 name.clear();
+                surname.clear();
+                email.clear();
                 phone.clear();
-                startDate.clear();
-                endDate.clear();
-                occupations.clear();
-                roles.clear();
                 onSearch.run();
             });
             Button searchBtn = new Button("Search");
@@ -125,77 +108,49 @@ public class GridwithFiltersView extends Div {
             actions.addClassName(LumoUtility.Gap.SMALL);
             actions.addClassName("actions");
 
-            add(name, phone, createDateRangeFilter(), occupations, roles, actions);
-        }
-
-        private Component createDateRangeFilter() {
-            startDate.setPlaceholder("From");
-
-            endDate.setPlaceholder("To");
-
-            // For screen readers
-            startDate.setAriaLabel("From date");
-            endDate.setAriaLabel("To date");
-
-            FlexLayout dateRangeComponent = new FlexLayout(startDate, new Text(" – "), endDate);
-            dateRangeComponent.setAlignItems(FlexComponent.Alignment.BASELINE);
-            dateRangeComponent.addClassName(LumoUtility.Gap.XSMALL);
-
-            return dateRangeComponent;
+            add(name, surname, email, phone, actions);
         }
 
         @Override
         public Predicate toPredicate(Root<SamplePerson> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
             List<Predicate> predicates = new ArrayList<>();
 
+            // Filtra per nome
             if (!name.isEmpty()) {
                 String lowerCaseFilter = name.getValue().toLowerCase();
                 Predicate firstNameMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
                         lowerCaseFilter + "%");
+                predicates.add(firstNameMatch);
+            }
+
+            // Filtra per cognome
+            if (!surname.isEmpty()) {
+                String lowerCaseFilter = surname.getValue().toLowerCase();
                 Predicate lastNameMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")),
                         lowerCaseFilter + "%");
-                predicates.add(criteriaBuilder.or(firstNameMatch, lastNameMatch));
+                predicates.add(lastNameMatch);
             }
-            if (!phone.isEmpty()) {
-                String databaseColumn = "phone";
-                String ignore = "- ()";
 
-                String lowerCaseFilter = ignoreCharacters(ignore, phone.getValue().toLowerCase());
-                Predicate phoneMatch = criteriaBuilder.like(
-                        ignoreCharacters(ignore, criteriaBuilder, criteriaBuilder.lower(root.get(databaseColumn))),
+            // Filtra per email
+            if (!email.isEmpty()) {
+                String lowerCaseFilter = email.getValue().toLowerCase();
+                Predicate emailMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("email")),
+                        "%" + lowerCaseFilter + "%");
+                predicates.add(emailMatch);
+            }
+
+            // Filtra per telefono
+            if (!phone.isEmpty()) {
+                String lowerCaseFilter = phone.getValue().toLowerCase();
+                Predicate phoneMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("phone")),
                         "%" + lowerCaseFilter + "%");
                 predicates.add(phoneMatch);
+            }
 
-            }
-            if (startDate.getValue() != null) {
-                String databaseColumn = "dateOfBirth";
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(databaseColumn),
-                        criteriaBuilder.literal(startDate.getValue())));
-            }
-            if (endDate.getValue() != null) {
-                String databaseColumn = "dateOfBirth";
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.literal(endDate.getValue()),
-                        root.get(databaseColumn)));
-            }
-            if (!occupations.isEmpty()) {
-                String databaseColumn = "occupation";
-                List<Predicate> occupationPredicates = new ArrayList<>();
-                for (String occupation : occupations.getValue()) {
-                    occupationPredicates
-                            .add(criteriaBuilder.equal(criteriaBuilder.literal(occupation), root.get(databaseColumn)));
-                }
-                predicates.add(criteriaBuilder.or(occupationPredicates.toArray(Predicate[]::new)));
-            }
-            if (!roles.isEmpty()) {
-                String databaseColumn = "role";
-                List<Predicate> rolePredicates = new ArrayList<>();
-                for (String role : roles.getValue()) {
-                    rolePredicates.add(criteriaBuilder.equal(criteriaBuilder.literal(role), root.get(databaseColumn)));
-                }
-                predicates.add(criteriaBuilder.or(rolePredicates.toArray(Predicate[]::new)));
-            }
             return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
         }
+
+
 
         private String ignoreCharacters(String characters, String in) {
             String result = in;
@@ -206,7 +161,7 @@ public class GridwithFiltersView extends Div {
         }
 
         private Expression<String> ignoreCharacters(String characters, CriteriaBuilder criteriaBuilder,
-                Expression<String> inExpression) {
+                                                    Expression<String> inExpression) {
             Expression<String> expression = inExpression;
             for (int i = 0; i < characters.length(); i++) {
                 expression = criteriaBuilder.function("replace", String.class, expression,
@@ -217,26 +172,19 @@ public class GridwithFiltersView extends Div {
 
     }
 
-    private Component createGrid() {
-        grid = new Grid<>(SamplePerson.class, false);
-        grid.addColumn("firstName").setAutoWidth(true);
-        grid.addColumn("lastName").setAutoWidth(true);
-        grid.addColumn("email").setAutoWidth(true);
-        grid.addColumn("phone").setAutoWidth(true);
-        grid.addColumn("dateOfBirth").setAutoWidth(true);
-        grid.addColumn("occupation").setAutoWidth(true);
-        grid.addColumn("role").setAutoWidth(true);
+    private void configureGrid() {
+        grid = new Grid<>(Utente.class, false); // Usa la classe astratta Utente
+        grid.setSizeFull();
 
-        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query), filters)
-                .stream());
-        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        grid.addClassNames(LumoUtility.Border.TOP, LumoUtility.BorderColor.CONTRAST_10);
+        grid.addColumn(Utente::getID).setHeader("ID");
+        grid.addColumn(Utente::getNome).setHeader("Nome");
+        grid.addColumn(Utente::getCognome).setHeader("Cognome");
+        grid.addColumn(Utente::getEmail).setHeader("Email");
+        grid.addColumn(Utente::getNumeroTelefono).setHeader("Numero di Telefono");
 
-        return grid;
+        // Ottieni i dati dal servizio e impostali nella griglia
+        List<Utente> utenti = utenteService.gridUtenti();
+
+        grid.setItems(utenti);
     }
-
-    private void refreshGrid() {
-        grid.getDataProvider().refreshAll();
-    }
-
 }

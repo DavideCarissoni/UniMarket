@@ -20,15 +20,15 @@ public class CartaCreditoRecord extends TableRecordImpl<CartaCreditoRecord> {
     /**
      * Setter for <code>carta_credito.numero_carta</code>.
      */
-    public void setNumeroCarta(Integer value) {
+    public void setNumeroCarta(String value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>carta_credito.numero_carta</code>.
      */
-    public Integer getNumeroCarta() {
-        return (Integer) get(0);
+    public String getNumeroCarta() {
+        return (String) get(0);
     }
 
     /**
@@ -87,7 +87,7 @@ public class CartaCreditoRecord extends TableRecordImpl<CartaCreditoRecord> {
     /**
      * Create a detached, initialised CartaCreditoRecord
      */
-    public CartaCreditoRecord(Integer numeroCarta, String codiceSicurezza, String nomeIntestatario, String cognomeIntestatario) {
+    public CartaCreditoRecord(String numeroCarta, String codiceSicurezza, String nomeIntestatario, String cognomeIntestatario) {
         super(CartaCredito.CARTA_CREDITO);
 
         setNumeroCarta(numeroCarta);

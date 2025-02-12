@@ -1,11 +1,13 @@
 package db;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+import org.springframework.context.annotation.Bean;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 /*Classe per la generazione del database con connessione 
  * + creazione tabelle
@@ -13,32 +15,66 @@ import java.util.logging.Logger;
 */
 
 public class CreateDatabase {
+	
+	@Bean
+	public DataSource dataSource() {
+	    HikariDataSource dataSource = new HikariDataSource();
+	    dataSource.setJdbcUrl("jdbc:sqlite:src/main/java/db/database.db");
+	    return dataSource;
+	}
+
+	@Bean
+	public DSLContext dslContext(DataSource dataSource) {
+	    return DSL.using(dataSource, SQLDialect.SQLITE);
+	}
+
+	/*
     private static final String DB_PATH = "src/main/java/db/";
     private static final String DB_FILE = DB_PATH + "database.db";
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
     private static final Logger LOGGER = Logger.getLogger(CreateDatabase.class.getName());
 
-    // Metodo per ottenere la connessione al database
-    public static Connection getConnection() throws SQLException {
-        // Controlla che la directory esista, altrimenti la crea
-        File dbDir = new File(DB_PATH);
-        if (!dbDir.exists()) {
-            boolean created = dbDir.mkdirs();
-            if (created) {
-            	LOGGER.info("Directory creata: " + DB_PATH);
-            } else {
-                LOGGER.warning("Errore nella creazione della directory " + DB_PATH);
+    private static volatile CreateDatabase instance;
+    private Connection connection;
+    private DSLContext dslContext;
+
+    private CreateDatabase() {
+    	 try {
+    	        Files.createDirectories(Paths.get(DB_PATH)); // Assicura che il percorso esista
+    	    } catch (IOException e) {
+    	        LOGGER.warning("Errore nella creazione della directory: " + e.getMessage());
+    	    }
+
+    	    try {
+    	        this.connection = DriverManager.getConnection(URL);
+    	        this.dslContext = DSL.using(connection, SQLDialect.SQLITE);
+    	    } catch (SQLException e) {
+    	        LOGGER.warning("Errore nella connessione al database: " + e.getMessage());
+    	    }
+    }
+    
+    public static CreateDatabase getInstance() {
+        if (instance == null) {
+            synchronized (CreateDatabase.class) {
+                if (instance == null) {
+                    instance = new CreateDatabase();
+                }
             }
         }
-        return DriverManager.getConnection(URL);
+        return instance;
+    }
+    public static DSLContext getDSLContext() throws SQLException {
+        return getInstance().dslContext;  // Usa l'istanza esistente
     }
 
-    // Metodo main per testare la connessione e creazione tabelle
-    public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
-            LOGGER.info("Connessione al database stabilita con successo!");
-        } catch (SQLException e) {
-        	LOGGER.log(Level.SEVERE, "Errore nella connessione al database:", e);
+
+    public synchronized Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {  // Controllo se la connessione è chiusa
+            connection = DriverManager.getConnection(URL);
+            dslContext = DSL.using(connection, SQLDialect.SQLITE);
         }
+        return connection;
     }
+*/
 }
+

@@ -59,11 +59,6 @@ public class Carrello extends TableImpl<CarrelloRecord> {
     public final TableField<CarrelloRecord, Float> TOTALE = createField(DSL.name("totale"), SQLDataType.REAL, this, "");
 
     /**
-     * The column <code>carrello.prodotto_selezionato</code>.
-     */
-    public final TableField<CarrelloRecord, Integer> PRODOTTO_SELEZIONATO = createField(DSL.name("prodotto_selezionato"), SQLDataType.INTEGER, this, "");
-
-    /**
      * The column <code>carrello.id_cliente</code>.
      */
     public final TableField<CarrelloRecord, Integer> ID_CLIENTE = createField(DSL.name("id_cliente"), SQLDataType.INTEGER.nullable(false), this, "");

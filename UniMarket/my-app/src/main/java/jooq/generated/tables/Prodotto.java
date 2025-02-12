@@ -11,6 +11,7 @@ import jooq.generated.tables.records.ProdottoRecord;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
@@ -50,7 +51,7 @@ public class Prodotto extends TableImpl<ProdottoRecord> {
     /**
      * The column <code>prodotto.codice</code>.
      */
-    public final TableField<ProdottoRecord, Integer> CODICE = createField(DSL.name("codice"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProdottoRecord, Integer> CODICE = createField(DSL.name("codice"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>prodotto.nome</code>.
@@ -104,6 +105,11 @@ public class Prodotto extends TableImpl<ProdottoRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
+    }
+
+    @Override
+    public Identity<ProdottoRecord, Integer> getIdentity() {
+        return (Identity<ProdottoRecord, Integer>) super.getIdentity();
     }
 
     @Override
